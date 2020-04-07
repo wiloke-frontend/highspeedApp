@@ -1,0 +1,21 @@
+import { getTrending } from 'screens/SearchScreen/actions/actionSearch';
+import { createReducer, ActionTypes } from 'utils/functions/reduxActions';
+import { handleAsyncAction } from 'utils/functions/reduxActions/helpers';
+import { Posts } from 'api/Posts';
+
+type GetTrendingAction = ActionTypes<typeof getTrending>;
+
+type TrendingPostsState = ReducerState<Posts['data']>;
+
+const initialState: TrendingPostsState = {
+  status: 'loading',
+  data: [],
+  message: '',
+};
+
+const trendingPosts = createReducer<TrendingPostsState, GetTrendingAction>(
+  initialState,
+  handleAsyncAction(['@getTrendingRequest', '@getTrendingSuccess', '@getTrendingFailure']),
+);
+
+export default trendingPosts;

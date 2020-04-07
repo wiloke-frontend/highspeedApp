@@ -1,0 +1,65 @@
+import React, { FC, memo, ComponentType, ReactElement } from 'react';
+import { View, FlatList, useTheme, tachyons } from 'shared';
+import { Category } from 'api/Categories';
+import { Link } from 'navigation';
+import CategoryCard from 'components/CategoryCard/CategoryCard';
+import { PostsScreenParams } from 'screens/PostsScreen/PostsScreen';
+import { SCREEN_WIDTH } from 'shared/utils/screen';
+
+export interface SliderCategoriesProps {
+  data: Category[];
+  ListFooterComponent?: ComponentType<any> | ReactElement | null;
+}
+
+const SliderCategories: FC<SliderCategoriesProps> = ({ data, ListFooterComponent }) => {
+  const { sizes } = useTheme();
+  const isContainer = SCREEN_WIDTH > sizes.container;
+  const sizeContainer = isContainer ? sizes.container : SCREEN_WIDTH;
+  const containerMarginLeft = isContainer ? (SCREEN_WIDTH - sizes.container) / 2 : tachyons.mr3.marginRight;
+  const footerMarginRight = isContainer ? SCREEN_WIDTH - sizes.container : tachyons.mr4.marginRight;
+  const itemWidth = sizeContainer / 2.5;
+
+  return (
+    <FlatList
+      horizontal
+      data={data}
+      keyExtractor={item => String(item.id)}
+      renderItem={({ item }) => (
+        <View style={{ width: itemWidth }} tachyons={['mr3', 'pb3']}>
+          <Link
+            to="PostsScreen"
+            params={
+              {
+                requestParams: {
+                  postType: 'post',
+                  taxonomies: { category: [item.id] },
+                },
+                name: item.name,
+              } as PostsScreenParams
+            }
+          >
+            <CategoryCard imageUri={item.featuredImage.thumbnail} imagePreview={item.featuredImage.preview} title={item.name} />
+          </Link>
+        </View>
+      )}
+      showsHorizontalScrollIndicator={false}
+      ListFooterComponent={
+        ListFooterComponent && (
+          <View
+            flex
+            tachyons={['pb3']}
+            style={{
+              width: itemWidth,
+              marginRight: footerMarginRight,
+            }}
+          >
+            {ListFooterComponent}
+          </View>
+        )
+      }
+      contentContainerStyle={{ marginLeft: containerMarginLeft }}
+    />
+  );
+};
+
+export default memo(SliderCategories);

@@ -1,0 +1,188 @@
+import React, { useEffect, useState, useRef } from 'react';
+import { NavigationSuspense } from 'navigation';
+import ArchiveTemplate from 'templates/ArchiveTemplate/ArchiveTemplate';
+import { DataDefaultType } from 'components/Categories/Categories';
+import Magazine from 'components/Magazine/Magazine';
+import WilTabs, { TabItem } from 'components/WilTabs/WilTabs';
+import { ds } from 'utils/constants/base';
+import { StackScreenFC } from 'types/Navigation';
+import { CategoryPostsScreenProps } from 'containers/CategoryPostsScreenContainer';
+import { View, Text, useMount } from 'shared';
+import { Platform } from 'react-native';
+import { Transition, Transitioning } from 'react-native-reanimated';
+
+const cats = [
+  {
+    title: 'Music',
+    key: 'music',
+  },
+  {
+    title: 'Travel',
+    key: 'travel',
+  },
+  {
+    title: 'Tech',
+    key: 'tech',
+  },
+  {
+    title: 'Life',
+    key: 'life',
+  },
+  {
+    title: 'Design',
+    key: 'design',
+  },
+  {
+    title: 'Photography',
+    key: 'photography',
+  },
+];
+
+const totalPage = 6;
+
+const transitions = (
+  <Transition.Sequence>
+    <Transition.Change interpolation="easeIn" />
+    <Transition.In type="fade" durationMs={500} />
+  </Transition.Sequence>
+);
+
+const CategoryPostsScreen: StackScreenFC<DataDefaultType, CategoryPostsScreenProps> = ({ navigation, categoryPost, getCategoryPost }) => {
+  const { key } = navigation.state.params;
+  const firstLoadMore = useRef(true);
+  const viewRef = useRef(null);
+  const [page, setPage] = useState(1);
+  const [refresing, setRefreshing] = useState(false);
+  const [endpoint, setEndpoint] = useState(`category/${key}`);
+
+  useEffect(() => {
+    console.log('page=== ', page);
+    if (page > 1 && page < totalPage) {
+      getCategoryPost(endpoint, page);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
+
+  useMount(() => {
+    viewRef.current.animateNextTransition();
+    getCategoryPost(endpoint);
+  });
+
+  const _handleChangeTab = (item: TabItem) => {
+    firstLoadMore.current = true;
+    setPage(1);
+    setEndpoint(`category/${item.key}`);
+    getCategoryPost(`category/${item.key}`);
+  };
+
+  const _handleRefresh = () => {
+    setPage(1);
+    setRefreshing(true);
+    getCategoryPost(endpoint);
+    setRefreshing(false);
+  };
+
+  const _renderEmptyComponent = () => {
+    return (
+      <View justifyContent="center" alignItems="center" flex style={ds.pv20}>
+        <Text size={20} color="dark1">
+          {categoryPost[endpoint]?.message}
+        </Text>
+      </View>
+    );
+  };
+
+  const _renderFooterComponent = () => {
+    if (page < totalPage) {
+      return <Magazine isLoading type="grid1" firstType="grid1" loadingItems={2} useFlatList containerStyle={[ds.ma10]} />;
+    }
+    return null;
+  };
+
+  const onEndReachedHandlerAndroid = () => {
+    if (categoryPost[endpoint].status === 'success') {
+      setPage(page + 1);
+    }
+  };
+
+  const onEndReachedHandlerIos = () => {
+    if (!firstLoadMore.current && categoryPost[endpoint]?.data.length >= 8) {
+      setPage(page + 1);
+      firstLoadMore.current = true;
+    }
+  };
+
+  const onEndReachedHandler = Platform.select({
+    android: onEndReachedHandlerAndroid,
+    ios: onEndReachedHandlerIos,
+  });
+
+  // const _onScroll = ({ nativeEvent }) => {
+  //   let previousOffsetY = 0;
+  //   if (nativeEventRef.current) {
+  //     previousOffsetY = nativeEventRef.current.contentOffset.y;
+  //   }
+  //   const offsetY = nativeEvent.contentOffset.y;
+  //   const aaa = nativeEvent.contentSize.height + nativeEvent.contentInset.bottom - nativeEvent.layoutMeasurement.height;
+  //   if (offsetY - previousOffsetY > 0 && offsetY > aaa) {
+  //     firstLoadMore.current = true;
+  //   }
+  //   nativeEventRef.current = nativeEvent;
+  // };
+
+  const _renderItem = () => {
+    switch (categoryPost[endpoint]?.status) {
+      case 'loading':
+        return <Magazine isLoading type="grid1" firstType="grid1" loadingItems={10} useFlatList containerStyle={[ds.ma10]} />;
+      case 'success':
+      case 'loadmore':
+        return (
+          <Magazine
+            containerStyle={[ds.mt10]}
+            data={categoryPost[endpoint]?.data}
+            type="grid1"
+            firstType="grid1"
+            useFlatList
+            flatListProps={{
+              style: ds.ph10,
+              ListEmptyComponent: _renderEmptyComponent,
+              ListFooterComponent: _renderFooterComponent,
+              refreshing: refresing,
+              onRefresh: _handleRefresh,
+              onEndReachedThreshold: 0.01,
+              onEndReached: onEndReachedHandler,
+              onMomentumScrollBegin: () => {
+                if (categoryPost[endpoint]?.data.length >= 8) {
+                  firstLoadMore.current = false;
+                }
+              },
+              removeClippedSubviews: true,
+            }}
+          />
+        );
+      default:
+        return _renderEmptyComponent();
+    }
+  };
+
+  return (
+    <ArchiveTemplate
+      headerText="Categories"
+      Body={
+        <NavigationSuspense>
+          <Transitioning.View ref={viewRef} transition={transitions} style={{ flex: 1 }}>
+            <WilTabs
+              indexActive={cats.findIndex(item => item.key === navigation.state.params.key)}
+              data={cats}
+              renderItem={_renderItem}
+              // onTabPress={_handleChangeTab}
+              lazy={true}
+            />
+          </Transitioning.View>
+        </NavigationSuspense>
+      }
+    />
+  );
+};
+
+export default CategoryPostsScreen;

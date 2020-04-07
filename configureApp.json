@@ -1,0 +1,12 @@
+{
+  "api": {
+    "baseUrl": "https://highspeedblog.com/wp-json/hsblog/v1",
+    "timeout": 10000
+  },
+  "settings": {
+    "youtubeKey": "AIzaSyDxJaU8bLdx7sSJ8fcRdhYS1pLk8Jdvnx0",
+    "colorPrimary": "#ff6c5f",
+    "tabNavigator": "material",
+    "applicationUpdateMessage": "Our application has released new version including bug fixes and functional updates. We recommend that you upgrade to have the best experience."
+  }
+}

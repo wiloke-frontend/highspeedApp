@@ -1,0 +1,5 @@
+{
+  "axiosDefaults": {
+    "baseURL": "https://highspeedblog.com/wp-json/hsblog/v1/"
+  }
+}

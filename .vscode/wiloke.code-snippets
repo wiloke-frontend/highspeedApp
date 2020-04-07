@@ -1,0 +1,12 @@
+{
+	"@received": {
+		"body": "<@received>\n\t$1\n</@received>",
+		"prefix": "<@received> wiloke-api-test",
+		"scope": "javascriptreact,javascript"
+  },
+  "@expected": {
+		"body": "<@expected>\n\t$1\n</@expected>",
+		"prefix": "<@expected> wiloke-api-test",
+		"scope": "javascriptreact,javascript"
+	}
+}
