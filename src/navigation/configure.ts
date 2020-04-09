@@ -12,43 +12,30 @@ import CommentScreen from 'screens/CommentScreen/CommentsScreen';
 import ReplyScreen from 'screens/CommentScreen/ReplyScreen';
 import ChangePasswordScreen from 'screens/ChangePasswordScreen/ChangePasswordScreen';
 
-// Tab screen và các màn hình thuộc tab đó
-const HomeTabNavigator = {
-  HomeScreen,
-  HomePostsScreen: PostsScreen,
-};
-
-const MyPostsNavigator = {
-  SelectCatScreen,
-};
-
-const NotifyNavigator = {
-  NotifyScreen,
-};
-
-const SearchNavigator = {
-  SearchScreen,
-};
-
-const CategoryNavigator = {
-  CategoryScreen,
-};
-
-const MenuNavigator = {
-  MenuScreen,
-};
-
-// Tab lớn nhất
+// RootTab
 export const rootTabNavigators = {
-  HomeTabNavigator,
-  MyPostsNavigator,
-  NotifyNavigator,
-  SearchNavigator,
-  CategoryNavigator,
-  MenuNavigator,
+  HomeTabNavigator: {
+    HomeScreen,
+    HomePostsScreen: PostsScreen,
+  },
+  MyPostsNavigator: {
+    SelectCatScreen,
+  },
+  NotifyNavigator: {
+    NotifyScreen,
+  },
+  SearchNavigator: {
+    SearchScreen,
+  },
+  CategoryNavigator: {
+    CategoryScreen,
+  },
+  MenuNavigator: {
+    MenuScreen,
+  },
 };
 
-// Stack ngang hàng với root tab
+// Stack ngang hàng với RootTab
 export const rootStackNavigators = {
   SearchScreen,
   Comments: CommentScreen,
