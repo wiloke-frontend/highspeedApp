@@ -22,12 +22,12 @@ import { isLoggedInSelector } from 'store/selectors';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import DetailFeatured from './DetailFeatured';
 import DetailToastFavorite from './DetailToastFavorite';
-import { isEmpty } from 'ramda';
 import DetailTutorial from './DetailTutorial';
 import { NavigationSuspense } from 'navigation';
 import { Post } from 'api/Post';
 
-export interface PostDetailScreenParams extends Pick<Post, 'id' | 'slug' | 'title' | 'dateFull' | 'author'> {}
+export interface PostDetailScreenParams
+  extends Pick<Post, 'id' | 'slug' | 'title' | 'dateFull' | 'author' | 'previewFeaturedImage' | 'featuredImage'> {}
 
 const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigation }) => {
   const postDetails = useSelector(postDetailsSelector);
@@ -126,10 +126,7 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
             if (item.key === tabs[indexFocused]?.key) {
               // lắng nghe navigate did focus thì thực hiện
               navigation.addListener('didFocus', () => {
-                // nếu postDetailRelated rỗng thì mới request
-                if (isEmpty(postDetailRelatedPostCurrent?.data)) {
-                  getRelatedPosts.request({ endpoint: tabs[indexFocused]?.key });
-                }
+                getRelatedPosts.request({ endpoint: tabs[indexFocused]?.key });
                 getFavorite.request({
                   endpoint: 'user/favorite',
                   postEndpoint: tabs[indexFocused]?.key,
