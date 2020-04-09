@@ -11,10 +11,7 @@ interface NavigationSuspenseState {
 
 type DefaultProps = Pick<NavigationSuspenseProps, 'fallback'>;
 
-export default class NavigationSuspense extends PureComponent<
-  NavigationSuspenseProps,
-  NavigationSuspenseState
-> {
+export default class NavigationSuspense extends PureComponent<NavigationSuspenseProps, NavigationSuspenseState> {
   static defaultProps: DefaultProps = {
     fallback: null,
   };

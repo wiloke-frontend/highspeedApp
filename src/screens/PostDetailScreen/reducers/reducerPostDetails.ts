@@ -51,9 +51,12 @@ const postDetails = createReducer<PostDetailState, PostDetailAction>(initialStat
       data: {
         ...state[action.payload.postEndpoint].data,
         isMyFavorite: action.payload.isAdded,
-        favoriteCount: action.payload.isAdded
-          ? (state[action.payload.postEndpoint].data.favoriteCount ?? 0) + 1
-          : (state[action.payload.postEndpoint].data.favoriteCount ?? 0) - 1,
+        favoriteCount:
+          action.type === '@postFavoriteSuccess'
+            ? action.payload.isAdded
+              ? (state[action.payload.postEndpoint].data.favoriteCount ?? 0) + 1
+              : (state[action.payload.postEndpoint].data.favoriteCount ?? 0) - 1
+            : state[action.payload.postEndpoint].data.favoriteCount,
       },
     },
   })),

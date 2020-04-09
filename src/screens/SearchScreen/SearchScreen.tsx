@@ -9,27 +9,27 @@ import BarHeightSpacer from 'components/BarHeightSpacer/BarHeightSpacer';
 import { NavigationSuspense } from 'navigation';
 import HeaderSearch from 'components/HeaderSearch/HeaderSearch';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
-import { ScreenParams } from 'types/ScreenParams';
 import { useSearchScreenMounted, useSearchChangeRequest } from './actions/actionSearch';
 import { useSelector } from 'react-redux';
 import { trendingPostsSelector, searchResultSelector } from './selectors';
 import { isEmpty } from 'ramda';
+import Layout from 'components/Layout/Layout';
 
-const SearchScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
+const SearchScreen: StackScreenFC<'SearchScreen'> = ({ route }) => {
   const searchScreenMounted = useSearchScreenMounted();
   const searchChangeRequest = useSearchChangeRequest();
   const trendingPosts = useSelector(trendingPostsSelector);
   const searchResult = useSelector(searchResultSelector);
   const [value, setValue] = useState('');
 
+  useMount(() => {
+    searchScreenMounted();
+  });
+
   const handleSearch = (value: string) => {
     setValue(value);
     searchChangeRequest({ endpoint: 'search', query: value });
   };
-
-  useMount(() => {
-    searchScreenMounted();
-  });
 
   const DefaultContent = (
     <NavigationSuspense>
@@ -39,10 +39,6 @@ const SearchScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
       >
-        {/* <View tachyons="ph2">
-          <SectionTitle text="Categories" color="primary" arrowRightEnabled={false} />
-          <Categories data={categories.data?.data} />
-        </View> */}
         <AsyncComponent
           status={trendingPosts.status}
           Request={
@@ -66,34 +62,38 @@ const SearchScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
   );
 
   return (
-    <View flex safeAreaView>
-      <Container>
-        <HeaderSearch onSearch={handleSearch} backButtonEnabled={!!navigation?.state?.params?.backButtonEnabled} />
-      </Container>
-      {!!value ? (
-        <View flex tachyons={['pv2', 'ph3']}>
-          <AsyncComponent
-            status={searchResult.status}
-            isDataEmpty={isEmpty(searchResult.data)}
-            Request={<Magazine isLoading type="list2" firstType="list2" />}
-            Success={
-              <Magazine
-                data={searchResult.data}
-                type="list2"
-                firstType="list2"
-                useFlatList
-                flatListProps={{
-                  showsVerticalScrollIndicator: false,
-                }}
-              />
-            }
-            Empty={<Empty />}
-          />
-        </View>
-      ) : (
-        DefaultContent
-      )}
-    </View>
+    <Layout
+      Header={
+        <Container>
+          <HeaderSearch onSearch={handleSearch} backButtonEnabled={!!route.params.backButtonEnabled} />
+        </Container>
+      }
+      Content={
+        !!value ? (
+          <View flex tachyons={['pv2', 'ph3']}>
+            <AsyncComponent
+              status={searchResult.status}
+              isDataEmpty={isEmpty(searchResult.data)}
+              Request={<Magazine isLoading type="list2" firstType="list2" />}
+              Success={
+                <Magazine
+                  data={searchResult.data}
+                  type="list2"
+                  firstType="list2"
+                  useFlatList
+                  flatListProps={{
+                    showsVerticalScrollIndicator: false,
+                  }}
+                />
+              }
+              Empty={<Empty />}
+            />
+          </View>
+        ) : (
+          DefaultContent
+        )
+      }
+    />
   );
 };
 

@@ -1,38 +1,42 @@
 import React, { ReactNode, useCallback } from 'react';
 import { TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
-import { withNavigation, NavigationParams, NavigationAction, NavigationInjectedProps } from 'react-navigation';
-import { RouteNameType } from 'types/routeNameType';
-import { withViewStyles, WithViewStylesProps } from 'shared';
+import { useNavigation, NavigationAction } from '@react-navigation/native';
+import { RootStackParamList } from 'types/Navigation';
+import { Tachyons } from 'shared';
+import { getTachyonsStyle } from 'shared/utils/getTachyonsStyle';
 
-export interface LinkProps extends WithViewStylesProps {
+type RouteName = keyof RootStackParamList;
+
+export interface LinkProps<RouteNameT extends RouteName> {
   children?: ReactNode;
-  to?: RouteNameType | '../';
-  push?: RouteNameType;
-  params?: NavigationParams;
+  to?: RouteNameT | '../';
+  push?: RouteNameT;
+  params?: RootStackParamList[RouteNameT];
   activeOpacity?: number;
   style?: StyleProp<ViewStyle>;
-  navigation?: NavigationInjectedProps['navigation'] & {
-    push?: (routeNameOrOptions: string, params?: NavigationParams, action?: NavigationAction) => boolean;
-  };
+  tachyons?: Tachyons;
   onBeforeNavigate?: () => void;
   onAfterNavigate?: () => void;
 }
 
-function Link({
+function Link<RouteNameT extends RouteName>({
   children,
   activeOpacity = 1,
   style = {},
+  tachyons = [],
   to,
   params,
-  navigation,
   push,
   onBeforeNavigate,
   onAfterNavigate,
-}: LinkProps & NavigationInjectedProps) {
+}: LinkProps<RouteNameT>) {
+  const navigation = useNavigation();
   const _handlePress = useCallback(() => {
     onBeforeNavigate?.();
     if (!!push) {
-      navigation?.push?.(push, params);
+      (navigation as {
+        push?: (routeNameOrOptions: string, params?: any, action?: NavigationAction) => boolean;
+      })?.push?.(push, params);
     } else {
       if (to === '../') {
         navigation.goBack();
@@ -44,10 +48,10 @@ function Link({
   }, [navigation, onAfterNavigate, onBeforeNavigate, params, push, to]);
 
   return (
-    <TouchableOpacity activeOpacity={activeOpacity} onPress={_handlePress} style={style}>
+    <TouchableOpacity activeOpacity={activeOpacity} onPress={_handlePress} style={[getTachyonsStyle(tachyons), style]}>
       {children}
     </TouchableOpacity>
   );
 }
 
-export default withNavigation(withViewStyles(Link));
+export default Link;

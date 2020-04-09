@@ -4,20 +4,18 @@ import List from 'components/List/List';
 import { Divider } from 'shared';
 import { MenuItem } from 'api/Menu';
 import * as WebBrowser from 'expo-web-browser';
-import { NavigationInjectedProps, NavigationParams, NavigationAction, withNavigation } from 'react-navigation';
 import { useSelector } from 'react-redux';
 import { isLoggedInSelector } from 'store/selectors';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
+import { useNavigation } from '@react-navigation/native';
 
 export interface MenuListItemProps {
   item: MenuItem;
   index: number;
-  navigation?: NavigationInjectedProps['navigation'] & {
-    push?: (routeNameOrOptions: string, params?: NavigationParams, action?: NavigationAction) => boolean;
-  };
 }
 
-const MenuListItem: FC<MenuListItemProps & NavigationInjectedProps> = ({ item, index, navigation }) => {
+const MenuListItem: FC<MenuListItemProps> = ({ item, index }) => {
+  const navigation = useNavigation();
   const isLoggedIn = useSelector(isLoggedInSelector);
 
   return (
@@ -46,4 +44,4 @@ const MenuListItem: FC<MenuListItemProps & NavigationInjectedProps> = ({ item, i
   );
 };
 
-export default withNavigation(MenuListItem);
+export default MenuListItem;

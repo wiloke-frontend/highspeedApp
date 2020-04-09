@@ -3,24 +3,28 @@ import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { sizeBase } from 'utils/constants/base';
 import { Icons, HeaderBase, View, Text, OfflineNotice } from 'shared';
 import { tabNavigatorSelector } from 'store/selectors';
-import { NavigationRoute, withNavigation } from 'react-navigation';
-import { NavigationStackProp } from 'react-navigation-stack';
 import { useSelector } from 'react-redux';
 import { Link } from 'navigation';
 import BackButton from 'components/BackButton/BackButton';
 import i18n from 'utils/functions/i18n';
+import { useNavigation, useRoute, useNavigationState } from '@react-navigation/native';
 
 export interface HeaderCatFollowProps {
   title?: string;
   backButtonEnabled?: boolean;
-  navigation: NavigationStackProp<NavigationRoute, {}>;
   onEditing?: TouchableOpacityProps['onPress'];
 }
 
-const HeaderCatFollow: FC<HeaderCatFollowProps> = ({ title = '', backButtonEnabled = false, onEditing, navigation }) => {
+const HeaderCatFollow: FC<HeaderCatFollowProps> = ({ title = '', backButtonEnabled = false, onEditing }) => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const isFirstRouteInParent = useNavigationState(state => state);
   const tabNavigator = useSelector(tabNavigatorSelector);
-  const parentRouteName = !!navigation ? navigation.dangerouslyGetParent()?.state.routeName : '';
-  const _title = !!title ? title : !!navigation ? tabNavigator.data.find(item => item.name === parentRouteName)?.label : '';
+  // const parentRouteName = !!navigation ? navigation.dangerouslyGetParent()?.state.routeName : '';
+  // const _title = !!title ? title : !!navigation ? tabNavigator.data.find(item => item.name === parentRouteName)?.label : '';
+  const parentRouteName = '';
+  const _title = '';
+  console.log(route, isFirstRouteInParent);
 
   return (
     <>
@@ -49,4 +53,4 @@ const HeaderCatFollow: FC<HeaderCatFollowProps> = ({ title = '', backButtonEnabl
   );
 };
 
-export default memo(withNavigation(HeaderCatFollow));
+export default memo(HeaderCatFollow);

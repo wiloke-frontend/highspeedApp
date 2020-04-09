@@ -8,33 +8,35 @@ import Logo from 'components/Logo/Logo';
 import useHeaderAnimated from 'shared/hooks/useAnimation';
 import { Link } from 'navigation';
 import { tabNavigatorSelector, userAvatarSelector, isLoggedInSelector, userNameSelector } from 'store/selectors';
-import { NavigationRoute, withNavigation } from 'react-navigation';
-import { NavigationStackProp } from 'react-navigation-stack';
 import BackButton from 'components/BackButton/BackButton';
 import Avatar from 'components/Avatar/Avatar';
 import i18n from 'utils/functions/i18n';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 export interface HeaderDefaultProps {
   title?: string;
   backButtonEnabled?: boolean;
-  navigation: NavigationStackProp<NavigationRoute, {}>;
 }
 
-const HeaderDefault: FC<HeaderDefaultProps> = ({ title = '', backButtonEnabled = false, navigation }) => {
+const HeaderDefault: FC<HeaderDefaultProps> = ({ title = '', backButtonEnabled = false }) => {
+  const navigation = useNavigation();
+  const route = useRoute();
   const avatar = useSelector(userAvatarSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
   const name = useSelector(userNameSelector);
   const { opacityText } = useHeaderAnimated();
   const tabNavigator = useSelector(tabNavigatorSelector);
-  const parentRouteName = !!navigation ? navigation.dangerouslyGetParent()?.state.routeName ?? '' : '';
-  const _title = !!title ? title : !!navigation ? tabNavigator.data.find(item => item.name === parentRouteName)?.label : '';
+  // const parentRouteName = !!navigation ? navigation.dangerouslyGetParent()?.state.routeName ?? '' : '';
+  // const _title = !!title ? title : !!navigation ? tabNavigator.data.find(item => item.name === parentRouteName)?.label : '';
+  const parentRouteName = '';
+  const _title = '';
 
   const handleOpenModal = () => {
     onOpenModalLogin();
   };
 
   return (
-    <>
+    <View style={{ height: 50 }}>
       <HeaderBase
         Left={[
           backButtonEnabled && <BackButton key="item1" tachyons={['pa1', 'nl2', 'mr2']} />,
@@ -68,8 +70,8 @@ const HeaderDefault: FC<HeaderDefaultProps> = ({ title = '', backButtonEnabled =
         ]}
       />
       <OfflineNotice>{i18n.t('noInternet')}</OfflineNotice>
-    </>
+    </View>
   );
 };
 
-export default memo(withNavigation(HeaderDefault));
+export default memo(HeaderDefault);

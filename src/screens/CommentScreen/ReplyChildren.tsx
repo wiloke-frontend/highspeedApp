@@ -6,8 +6,8 @@ import { Link } from 'navigation';
 import { Text } from 'shared';
 import i18n from 'utils/functions/i18n';
 import CommentCard from 'components/CommentCard/CommentCard';
-import { withNavigation, NavigationInjectedProps, NavigationParams, NavigationAction } from 'react-navigation';
 import timeAgo from 'utils/functions/timeAgo';
+import { useNavigation } from '@react-navigation/native';
 
 export interface ReplyChildrenProps {
   parentComment: Comment;
@@ -15,12 +15,10 @@ export interface ReplyChildrenProps {
   isEdit: boolean;
   commentEditID?: number;
   onCancel: () => void;
-  navigation?: NavigationInjectedProps['navigation'] & {
-    push?: (routeNameOrOptions: string, params?: NavigationParams, action?: NavigationAction) => boolean;
-  };
 }
 
-function ReplyChildren({ parentComment, postID, isEdit, commentEditID, onCancel, navigation }: ReplyChildrenProps) {
+function ReplyChildren({ parentComment, postID, isEdit, commentEditID, onCancel }: ReplyChildrenProps) {
+  const navigation = useNavigation();
   const _renderHeaderReply = () => {
     if (parentComment.childCommentTotal < 4) return null;
     return (
@@ -59,4 +57,4 @@ function ReplyChildren({ parentComment, postID, isEdit, commentEditID, onCancel,
   );
 }
 
-export default React.memo(withNavigation(ReplyChildren));
+export default React.memo(ReplyChildren);

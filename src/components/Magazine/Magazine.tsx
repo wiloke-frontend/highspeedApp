@@ -92,7 +92,7 @@ const Magazine: FC<MagazineProps> = ({
     const _type = index === 0 ? firstType : type;
     return (
       <View key={keyExtractor(item, index)} column={getColumn(index)} tachyons={['pb3', 'ph2']}>
-        <Link push="PostDetailNotGetureDistance" params={item} activeOpacity={0.8}>
+        <Link push="PostDetailScreen" params={item} activeOpacity={0.8}>
           {checkRenderPost(_type, item)}
         </Link>
       </View>
@@ -102,7 +102,7 @@ const Magazine: FC<MagazineProps> = ({
   const renderPostItemFlatList = ({ item }: { item: DataItemType }) => {
     return (
       <View tachyons="pb3">
-        <Link push="PostDetailNotGetureDistance" params={item} activeOpacity={0.8}>
+        <Link push="PostDetailScreen" params={item} activeOpacity={0.8}>
           {checkRenderPost(type, item)}
         </Link>
       </View>
@@ -135,7 +135,7 @@ const Magazine: FC<MagazineProps> = ({
             keyExtractor={handleKeyExtractor}
             ListHeaderComponent={
               <View tachyons="mb3">
-                <Link push="PostDetailNotGetureDistance" params={firstItem} activeOpacity={0.8}>
+                <Link push="PostDetailScreen" params={firstItem} activeOpacity={0.8}>
                   {checkRenderPost(firstType, firstItem)}
                 </Link>
               </View>

@@ -1,10 +1,10 @@
 import React, { memo, FC } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { Link, LinkProps } from 'navigation';
-import { Icons, Color, Text, useTheme } from 'shared';
+import { Icons, Color, Text, useTheme, WithViewStylesProps } from 'shared';
 import styles from './styles';
 
-interface BackButtonProps extends LinkProps {
+interface BackButtonProps extends LinkProps<'PostDetailScreen'>, WithViewStylesProps {
   backText?: string;
   color?: Color;
   containerStyle?: StyleProp<ViewStyle>;

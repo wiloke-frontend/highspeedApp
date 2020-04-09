@@ -4,7 +4,7 @@ import { StackScreenFC } from 'types/Navigation';
 import HeaderSecondary from 'components/HeaderSecondary/HeaderSecondary';
 import Magazine from 'components/Magazine/Magazine';
 import { NavigationSuspense } from 'navigation';
-import { useGetPostsWithParamsRequest, PostWithParams } from './actions/actionPosts';
+import { useGetPostsWithParamsRequest } from './actions/actionPosts';
 import { useSelector } from 'react-redux';
 import { postsWithParamsSelector, pageSelector, maxNumPagesSelector } from './selectors';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
@@ -12,29 +12,22 @@ import { isEmpty } from 'ramda';
 import Empty from 'components/Empty/Empty';
 import Retry from 'components/Retry/Retry';
 
-export interface PostsScreenParams {
-  requestParams: PostWithParams;
-  name: string;
-}
-
-const PostsScreen: StackScreenFC<{}, PostsScreenParams> = ({ navigation }) => {
+const PostsScreen: StackScreenFC<'PostsScreen'> = ({ route }) => {
   const getPostsWithParamsRequest = useGetPostsWithParamsRequest();
   const postsWithParams = useSelector(postsWithParamsSelector);
   const page = useSelector(pageSelector);
   const maxNumPages = useSelector(maxNumPagesSelector);
 
   const handleGetPostsWithParams = (page: number) => {
-    if (!!navigation.state.params?.requestParams) {
-      getPostsWithParamsRequest({
-        endpoint: 'search',
-        params: {
-          ...navigation.state.params?.requestParams,
-          postType: 'post',
-          page,
-          postsPerPage: 20,
-        },
-      });
-    }
+    getPostsWithParamsRequest({
+      endpoint: 'search',
+      params: {
+        ...route.params.requestParams,
+        postType: 'post',
+        page,
+        postsPerPage: 20,
+      },
+    });
   };
 
   const handleLoadmore = () => {
@@ -61,7 +54,7 @@ const PostsScreen: StackScreenFC<{}, PostsScreenParams> = ({ navigation }) => {
   return (
     <View flex safeAreaView>
       <Container>
-        <HeaderSecondary title={navigation.state.params.name} />
+        <HeaderSecondary title={route.params.name} />
       </Container>
       <View flex tachyons="ph3">
         <NavigationSuspense fallback={<Magazine isLoading type="list2" firstType="standard1" />}>

@@ -10,10 +10,10 @@ import { StackScreenFC } from 'types/Navigation';
 import List from 'components/List/List';
 import { Link } from 'navigation';
 import InterestCategories from './InterestCategories';
-import { PostsScreenParams } from 'screens/PostsScreen/PostsScreen';
 import Avatar from 'components/Avatar/Avatar';
+import Layout from 'components/Layout/Layout';
 
-const ProfileScreen: StackScreenFC = ({ navigation }) => {
+const ProfileScreen: StackScreenFC<'ProfileScreen'> = ({ navigation }) => {
   const auth = useSelector(authSelector);
   const logout = useLogOut();
 
@@ -42,42 +42,46 @@ const ProfileScreen: StackScreenFC = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView>
-      <Container>
-        <HeaderSecondary title={i18n.t('myProfile')} />
-      </Container>
-      <ScrollView>
+    <Layout
+      Header={
         <Container>
-          <View alignItems="center" tachyons="pv4">
-            <Avatar uri={uri} size={80} name={auth.data.displayName} />
-            <View tachyons="mt1">
-              <Text type="h7" tachyons="tc">
-                {auth.data.displayName}
-              </Text>
-            </View>
-          </View>
-          <Divider />
-          <InterestCategories />
-          <Divider />
-          <Link to="HistoryPostsScreen">
-            <List iconName="clock" text={i18n.t('history')} />
-            <Divider />
-          </Link>
-          <Link to="ChangePasswordScreen">
-            <List iconName="lock" text={i18n.t('changePassword')} />
-          </Link>
-          <Divider />
-          <Link to="PostsScreen" params={{ name: i18n.t('favoritePosts'), requestParams: { is_my_favorites: 'yes' } } as PostsScreenParams}>
-            <List iconName="heart" text={i18n.t('favoritePosts')} />
-            <Divider />
-          </Link>
-          <TouchableOpacity onPress={_handleLogout}>
-            <List iconName="log-out" text={i18n.t('logout')} />
-          </TouchableOpacity>
-          <Divider />
+          <HeaderSecondary title={i18n.t('myProfile')} />
         </Container>
-      </ScrollView>
-    </View>
+      }
+      Content={
+        <ScrollView>
+          <Container>
+            <View alignItems="center" tachyons="pv4">
+              <Avatar uri={uri} size={80} name={auth.data.displayName} />
+              <View tachyons="mt1">
+                <Text type="h7" tachyons="tc">
+                  {auth.data.displayName}
+                </Text>
+              </View>
+            </View>
+            <Divider />
+            <InterestCategories />
+            <Divider />
+            <Link to="HistoryPostsScreen">
+              <List iconName="clock" text={i18n.t('history')} />
+              <Divider />
+            </Link>
+            <Link to="ChangePasswordScreen">
+              <List iconName="lock" text={i18n.t('changePassword')} />
+            </Link>
+            <Divider />
+            <Link to="PostsScreen" params={{ name: i18n.t('favoritePosts'), requestParams: { is_my_favorites: 'yes' } }}>
+              <List iconName="heart" text={i18n.t('favoritePosts')} />
+              <Divider />
+            </Link>
+            <TouchableOpacity onPress={_handleLogout}>
+              <List iconName="log-out" text={i18n.t('logout')} />
+            </TouchableOpacity>
+            <Divider />
+          </Container>
+        </ScrollView>
+      }
+    />
   );
 };
 

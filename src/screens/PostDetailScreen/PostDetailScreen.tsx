@@ -1,13 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, Container, Toast } from 'shared';
 import DetailCategories from './DetailCategories';
-import { StackScreenFC } from 'types/Navigation';
+import { StackScreenFC, CommentScreenParams } from 'types/Navigation';
 import DetailContent from './DetailContent';
 import { ScrollView } from 'react-native';
 import DetailHeader from './DetailHeader';
 import AuthorInfoCard from 'components/AuthorInfoCard/AuthorInfoCard';
 import WilTabs, { TabItem } from 'components/WilTabs/WilTabs';
-import { TextSize } from 'components/FontSizeConfig/FontSizeConfig';
 import { useSelector } from 'react-redux';
 import { postDetailsSelector, postDetailRelatedPostsSelector } from './selectors';
 import {
@@ -26,10 +25,11 @@ import { isEmpty } from 'ramda';
 import DetailTutorial from './DetailTutorial';
 import { NavigationSuspense } from 'navigation';
 import { Post } from 'api/Post';
+import Layout from 'components/Layout/Layout';
 
 export interface PostDetailScreenParams extends Pick<Post, 'id' | 'slug' | 'title' | 'dateFull' | 'author'> {}
 
-const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigation }) => {
+const PostDetailScreen: StackScreenFC<'PostDetailScreen'> = ({ route, navigation }) => {
   const postDetails = useSelector(postDetailsSelector);
   const postDetailRelatedPosts = useSelector(postDetailRelatedPostsSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
@@ -39,7 +39,7 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
   const getRelatedPosts = useGetRelatedPosts();
   const getPostDetailRequest = useGetPostDetailRequest();
   const getFavorite = useGetFavorite();
-  const { params } = navigation.state;
+  const { params } = route;
 
   const [postsLoaded, setPostsLoaded] = useState<{ [key: string]: boolean }>({});
   const [slugCurrent, setSlugCurrent] = useState('');
@@ -70,10 +70,6 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
     setPostsLoaded({});
   };
 
-  const handleChangeTextSize = (size: TextSize) => {
-    changePostTextSize(size);
-  };
-
   const handleToastFavorite = (isAdded: boolean) => {
     if (isAdded) {
       Toast.show({
@@ -96,7 +92,10 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
   };
 
   const handleNavigateToComment = () => {
-    navigation.navigate('Comments', { id: postDetails[slugCurrent]?.data?.id, title: postDetails[slugCurrent]?.data?.title });
+    navigation.navigate('Comments', {
+      id: postDetails[slugCurrent]?.data?.id,
+      title: postDetails[slugCurrent]?.data?.title,
+    } as CommentScreenParams);
   };
 
   const renderTabContent = useMemo(() => {
@@ -125,7 +124,7 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
             setSlugCurrent(tabs[indexFocused]?.key);
             if (item.key === tabs[indexFocused]?.key) {
               // lắng nghe navigate did focus thì thực hiện
-              navigation.addListener('didFocus', () => {
+              navigation.addListener('focus', () => {
                 // nếu postDetailRelated rỗng thì mới request
                 if (isEmpty(postDetailRelatedPostCurrent?.data)) {
                   getRelatedPosts.request({ endpoint: tabs[indexFocused]?.key });
@@ -142,7 +141,7 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
                 });
               });
               // lắng nghe navigate did blur thì thực hiện cancel
-              navigation.addListener('didBlur', () => {
+              navigation.addListener('blur', () => {
                 postView.cancel();
                 getRelatedPosts.cancel();
               });
@@ -199,43 +198,49 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
   ]);
 
   return (
-    <View flex safeAreaView>
-      <NavigationSuspense>
-        <DetailTutorial />
-      </NavigationSuspense>
-      <Container>
-        <DetailHeader
-          onAfterBack={handleHeaderBack}
-          onChangeTextSize={handleChangeTextSize}
-          onFavorite={handleFavorite}
-          isFavorite={isMyFavoriteCurrent}
-          isFavoriteLoading={isMyFavoriteLoading}
-          onNavigateToComment={handleNavigateToComment}
-          detailWebLink={postDetails[slugCurrent]?.data?.link ?? ''}
-        />
-      </Container>
-      <WilTabs
-        tabDisabled
-        data={tabs}
-        renderItem={renderTabContent}
-        onSwipeEnd={(_item, _nextItem, index) => {
-          setSlugCurrent(tabs[index]?.key);
-          postView.cancel();
-          getRelatedPosts.cancel();
-          getRelatedPosts.request({ endpoint: tabs[index]?.key });
-          getFavorite.request({
-            endpoint: 'user/favorite',
-            postEndpoint: tabs[index]?.key,
-            postID: tabs[index]?.id,
-          });
-          postView.request({
-            endpoint: 'views',
-            postEndpoint: tabs[index]?.key,
-            postID: tabs[index]?.id,
-          });
-        }}
-      />
-    </View>
+    <Layout
+      Header={
+        <Container>
+          <DetailHeader
+            onAfterBack={handleHeaderBack}
+            onChangeTextSize={changePostTextSize}
+            onFavorite={handleFavorite}
+            isFavorite={isMyFavoriteCurrent}
+            isFavoriteLoading={isMyFavoriteLoading}
+            onNavigateToComment={handleNavigateToComment}
+            detailWebLink={postDetails[slugCurrent]?.data?.link ?? ''}
+          />
+        </Container>
+      }
+      Content={
+        <>
+          <NavigationSuspense>
+            <DetailTutorial />
+          </NavigationSuspense>
+          <WilTabs
+            tabDisabled
+            data={tabs}
+            renderItem={renderTabContent}
+            onSwipeEnd={(_item, _nextItem, index) => {
+              setSlugCurrent(tabs[index]?.key);
+              postView.cancel();
+              getRelatedPosts.cancel();
+              getRelatedPosts.request({ endpoint: tabs[index]?.key });
+              getFavorite.request({
+                endpoint: 'user/favorite',
+                postEndpoint: tabs[index]?.key,
+                postID: tabs[index]?.id,
+              });
+              postView.request({
+                endpoint: 'views',
+                postEndpoint: tabs[index]?.key,
+                postID: tabs[index]?.id,
+              });
+            }}
+          />
+        </>
+      }
+    />
   );
 };
 

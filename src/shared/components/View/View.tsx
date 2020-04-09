@@ -1,11 +1,10 @@
 import React, { ReactNode, forwardRef, memo } from 'react';
-import { View as RNView, ViewProps as RNViewProps, SafeAreaView, ViewStyle, StyleProp } from 'react-native';
+import { View as RNView, ViewProps as RNViewProps, ViewStyle, StyleProp } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { Flex } from 'shared/types/types';
 import getFlexStyle from 'shared/utils/getFlexStyle';
 import { useMount } from 'shared/hooks/useMount';
 import styles from './styles';
-import isAndroid from 'shared/utils/isAndroid';
 import { withViewStyles, WithViewStylesProps } from 'shared/hocs/withViewStyles';
 
 export interface ViewProps extends RNViewProps, WithViewStylesProps {
@@ -17,25 +16,23 @@ export interface ViewProps extends RNViewProps, WithViewStylesProps {
   onMount?: () => void;
 }
 
-const SafeAreaViewWithStyles = withViewStyles<SafeAreaView, ViewProps>(SafeAreaView);
 const ViewWithStyles = withViewStyles<RNView, ViewProps>(RNView);
 
-const ViewComponent = forwardRef<RNView | SafeAreaView, ViewProps>(
+const ViewComponent = forwardRef<RNView, ViewProps>(
   ({ children, flex = false, safeAreaView = false, shadow = false, style = {}, onMount, ...ortherProps }, ref) => {
     const insets = useSafeArea();
     const flexStyle = getFlexStyle(flex);
     const shadowStyle = shadow ? styles.shadow : {};
-    const SwitchView = safeAreaView ? SafeAreaViewWithStyles : ViewWithStyles;
 
     useMount(() => {
       onMount?.();
     });
 
     return (
-      <SwitchView ref={ref} style={[shadowStyle, flexStyle, style]} {...ortherProps}>
-        {isAndroid && safeAreaView && <RNView style={{ height: insets.top }} />}
+      <ViewWithStyles ref={ref} style={[shadowStyle, flexStyle, style]} {...ortherProps}>
+        {safeAreaView && <RNView style={{ height: insets.top }} />}
         {children}
-      </SwitchView>
+      </ViewWithStyles>
     );
   },
 );
