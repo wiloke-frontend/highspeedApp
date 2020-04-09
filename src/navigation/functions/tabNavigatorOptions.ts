@@ -1,14 +1,6 @@
 import React from 'react';
-import {
-  CreateNavigatorConfig,
-  NavigationTabRouterConfig,
-  NavigationRoute,
-} from 'react-navigation';
-import {
-  NavigationTabProp,
-  NavigationBottomTabOptions,
-  BottomTabBarOptions,
-} from 'react-navigation-tabs/lib/typescript/src/types';
+import { CreateNavigatorConfig, NavigationTabRouterConfig, NavigationRoute } from 'react-navigation';
+import { NavigationTabProp, NavigationBottomTabOptions, BottomTabBarOptions } from 'react-navigation-tabs/lib/typescript/src/types';
 import configureApp from 'utils/constants/configureApp';
 
 interface Config {

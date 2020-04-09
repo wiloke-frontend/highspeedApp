@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   label: {
     paddingLeft: 3,
     paddingRight: 3,
+    fontSize: 10,
   },
 });
 

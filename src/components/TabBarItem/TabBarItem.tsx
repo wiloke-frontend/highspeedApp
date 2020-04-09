@@ -13,13 +13,13 @@ interface TabBarItemProps {
 function TabBarItem({ iconName, iconColor, labelName = '', focused }: TabBarItemProps) {
   const { colors, styled } = useTheme();
   const iconStyleColor = focused ? colors.primary : iconColor ?? colors.dark2;
-  const labelStyle = focused ? styled.colorPrimary : styled.colorDark2;
+  const labelStyle = focused ? styled.colorPrimary : styled.colorDark3;
 
   return (
     <View style={styles.container}>
       {!!iconName && <Icons.Feather name={iconName} size={22} style={styles.icon} colorNative={iconStyleColor} />}
       {!!labelName && (
-        <Text tachyons={['f7', 'mt1']} style={[labelStyle, styles.label]}>
+        <Text numberOfLines={1} tachyons={['f7', 'mt1']} style={[labelStyle, styles.label]}>
           {labelName}
         </Text>
       )}
