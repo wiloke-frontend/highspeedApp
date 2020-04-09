@@ -16,8 +16,7 @@ import Avatar from 'components/Avatar/Avatar';
 const ProfileScreen: StackScreenFC = ({ navigation }) => {
   const auth = useSelector(authSelector);
   const logout = useLogOut();
-
-  const uri = auth.data?.avatar ?? 'https://thuatnguyencorp.com/uploads/product/thiet-ke-avatar-facebook-1.jpg';
+  const uri = auth.data?.avatar ?? '';
 
   useEffect(() => {
     if (!auth.isLoggedIn) {
