@@ -3,7 +3,7 @@ import { View, Container, Divider, Text } from 'shared';
 import { CommentScreenParams } from 'screens/CommentScreen/CommentsScreen';
 import { PostDetailScreenParams } from 'screens/PostDetailScreen/PostDetailScreen';
 import { Notify } from 'api/Notifications';
-import { RouteNameType } from 'types/routeNameType';
+import { RouteName } from 'types/RouteName';
 import { useDeleteNotifyRequest, usePostNotifyRequest } from './actions/actionNotifications';
 import timeAgo from 'utils/functions/timeAgo';
 import NotifyCard from 'components/NotifyCard/NotifyCard';
@@ -21,7 +21,7 @@ const NotifyItem: FC<NotifyItemProps> = ({ item, index }) => {
   const deleteNotifyRequest = useDeleteNotifyRequest();
   const postNotifyRequest = usePostNotifyRequest();
   const { showActionSheetWithOptions } = useActionSheet();
-  const linkTo: RouteNameType = !!item.parentComment ? 'ReplyScreen' : item.type === 'post' ? 'PostDetailNotGetureDistance' : 'Comments';
+  const linkTo: RouteName = !!item.parentComment ? 'ReplyScreen' : item.type === 'post' ? 'PostDetailNotGetureDistance' : 'Comments';
   const regexp = /\*_\*_\*_\*.*\*_\*_\*_\*/g;
   const titleReplace = item.title.replace(regexp, '');
   const titleMatch = item.title.match(regexp);

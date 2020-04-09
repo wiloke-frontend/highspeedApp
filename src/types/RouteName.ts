@@ -4,6 +4,6 @@ type T = typeof rootTabNavigators;
 type P = {
   [K in keyof T]: T[K] extends {} ? keyof T[K] : K;
 };
-type TabNavigatorRouteNameType = P[keyof P];
+type TabNavigatorRouteName = P[keyof P];
 
-export type RouteNameType = TabNavigatorRouteNameType | keyof typeof rootStackNavigators;
+export type RouteName = TabNavigatorRouteName | keyof typeof rootStackNavigators;

@@ -1,13 +1,13 @@
 import React, { ReactNode, useCallback } from 'react';
 import { TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import { withNavigation, NavigationParams, NavigationAction, NavigationInjectedProps } from 'react-navigation';
-import { RouteNameType } from 'types/routeNameType';
+import { RouteName } from 'types/RouteName';
 import { withViewStyles, WithViewStylesProps } from 'shared';
 
 export interface LinkProps extends WithViewStylesProps {
   children?: ReactNode;
-  to?: RouteNameType | '../';
-  push?: RouteNameType;
+  to?: RouteName | '../';
+  push?: RouteName;
   params?: NavigationParams;
   activeOpacity?: number;
   style?: StyleProp<ViewStyle>;

@@ -1,13 +1,13 @@
 import { NavigationScreenProp, NavigationParams, NavigationNavigateAction, NavigationAction } from 'react-navigation';
-import { RouteNameType } from 'types/routeNameType';
+import { RouteName } from 'types/RouteName';
 
 export type NavigationScreenPropType<TParams = {}> = Omit<NavigationScreenProp<{}, TParams>, 'navigate' | 'state'> & {
   state: { params: TParams };
   navigate(options: {
     routeName:
-      | RouteNameType
+      | RouteName
       | {
-          routeName: RouteNameType;
+          routeName: RouteName;
           params?: NavigationParams;
           action?: NavigationNavigateAction;
           key?: string;
@@ -16,5 +16,5 @@ export type NavigationScreenPropType<TParams = {}> = Omit<NavigationScreenProp<{
     action?: NavigationAction;
     key?: string;
   }): boolean;
-  navigate(routeNameOrOptions: RouteNameType, params?: NavigationParams, action?: NavigationAction): boolean;
+  navigate(routeNameOrOptions: RouteName, params?: NavigationParams, action?: NavigationAction): boolean;
 };
