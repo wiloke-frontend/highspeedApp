@@ -221,11 +221,13 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
           postView.cancel();
           getRelatedPosts.cancel();
           getRelatedPosts.request({ endpoint: tabs[index]?.key });
-          getFavorite.request({
-            endpoint: 'user/favorite',
-            postEndpoint: tabs[index]?.key,
-            postID: tabs[index]?.id,
-          });
+          if (isLoggedIn) {
+            getFavorite.request({
+              endpoint: 'user/favorite',
+              postEndpoint: tabs[index]?.key,
+              postID: tabs[index]?.id,
+            });
+          }
           postView.request({
             endpoint: 'views',
             postEndpoint: tabs[index]?.key,
