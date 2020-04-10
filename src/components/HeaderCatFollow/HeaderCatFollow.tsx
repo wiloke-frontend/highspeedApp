@@ -3,17 +3,16 @@ import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { sizeBase } from 'utils/constants/base';
 import { Icons, HeaderBase, View, Text, OfflineNotice } from 'shared';
 import { tabNavigatorSelector } from 'store/selectors';
-import { NavigationRoute, withNavigation } from 'react-navigation';
-import { NavigationStackProp } from 'react-navigation-stack';
+import { withNavigation } from 'react-navigation';
 import { useSelector } from 'react-redux';
-import { Link } from 'navigation';
+import { Link, NavigationScreenProp } from 'navigation';
 import BackButton from 'components/BackButton/BackButton';
 import i18n from 'utils/functions/i18n';
 
 export interface HeaderCatFollowProps {
   title?: string;
   backButtonEnabled?: boolean;
-  navigation: NavigationStackProp<NavigationRoute, {}>;
+  navigation: NavigationScreenProp;
   onEditing?: TouchableOpacityProps['onPress'];
 }
 

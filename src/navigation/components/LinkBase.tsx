@@ -1,7 +1,8 @@
 import React, { ReactNode, useCallback } from 'react';
 import { TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
-import { withNavigation, NavigationParams, NavigationAction, NavigationInjectedProps } from 'react-navigation';
+import { withNavigation, NavigationParams, NavigationInjectedProps } from 'react-navigation';
 import { withViewStyles, WithViewStylesProps } from 'shared';
+import { NavigationStackProp } from 'react-navigation-stack';
 
 export interface LinkBaseProps extends WithViewStylesProps {
   children?: ReactNode;
@@ -10,9 +11,7 @@ export interface LinkBaseProps extends WithViewStylesProps {
   params?: NavigationParams;
   activeOpacity?: number;
   style?: StyleProp<ViewStyle>;
-  navigation?: NavigationInjectedProps['navigation'] & {
-    push?: (routeNameOrOptions: string, params?: NavigationParams, action?: NavigationAction) => boolean;
-  };
+  navigation?: NavigationStackProp;
   onBeforeNavigate?: () => void;
   onAfterNavigate?: () => void;
 }

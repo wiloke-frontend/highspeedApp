@@ -5,4 +5,5 @@ import NavigationSuspense from './components/NavigationSuspense';
 
 export { RouteName, Params } from './types/RouteName';
 export { StackScreenFC } from './types/StackScreenFC';
+export { NavigationScreenProp } from './types/NavigationScreenProp';
 export { RootNavigator, Link, LinkProps, NavigationConsumer, NavigationSuspense, NavigationParamType };

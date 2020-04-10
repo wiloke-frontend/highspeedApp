@@ -1,7 +1,8 @@
-import { NavigationScreenProp as RNNavigationScreenProp, NavigationParams, NavigationNavigateAction, NavigationAction } from 'react-navigation';
+import { NavigationParams, NavigationNavigateAction, NavigationAction, NavigationRoute } from 'react-navigation';
+import { NavigationStackProp } from 'react-navigation-stack';
 import { RouteName } from 'navigation';
 
-export type NavigationScreenProp<TParams = {}> = Omit<RNNavigationScreenProp<{}, TParams>, 'navigate' | 'state'> & {
+export type NavigationScreenProp<TParams = {}> = NavigationStackProp<NavigationRoute, TParams> & {
   state: { params: TParams };
   navigate(options: {
     routeName:
