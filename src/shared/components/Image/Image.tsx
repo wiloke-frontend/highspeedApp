@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef, memo } from 'react';
-import { Image as RNImage, ViewStyle, ImageProps as ImageRNProps } from 'react-native';
+import { Image as RNImage, ViewStyle, ImageProps as ImageRNProps, Animated } from 'react-native';
 import * as R from 'ramda';
 import styles from './styles';
 import { View } from 'shared/components/View/View';
@@ -9,6 +9,7 @@ import { tachyonsStyles } from 'shared/themes/tachyons';
 import { useMount } from 'shared/hooks/useMount';
 import { useUnmount } from 'shared/hooks/useUnmount';
 import { useTheme } from 'shared/components/ThemeContext/ThemeContext';
+import { PinchGestureHandler, PinchGestureHandlerStateChangeEvent, State } from 'react-native-gesture-handler';
 
 export interface ImageProps extends Omit<ImageRNProps, 'source' | 'defaultSource' | 'borderRadius' | 'style' | 'width' | 'height'> {
   uri?: string;
@@ -19,6 +20,7 @@ export interface ImageProps extends Omit<ImageRNProps, 'source' | 'defaultSource
   tachyons?: Tachyons;
   height?: number | string;
   width?: number | string;
+  zoomEnabled?: boolean;
 }
 
 const DEFAULT_IMAGE =
@@ -35,6 +37,7 @@ const ImageComponent: FC<ImageProps> = ({
   resizeMode = 'cover',
   width,
   height,
+  zoomEnabled = false,
   ...rest
 }) => {
   const [percentRatioState, setPercentRatioState] = useState(percentRatio || '75%');
@@ -43,6 +46,10 @@ const ImageComponent: FC<ImageProps> = ({
   const req = useRef(-1);
   const checkHeight = R.path(['height'], containerStyle);
   const { styled } = useTheme();
+  const baseScale = useRef(new Animated.Value(1)).current;
+  const pinchScale = useRef(new Animated.Value(1)).current;
+  const scale = Animated.multiply(baseScale, pinchScale);
+  const lastScale = useRef(1);
 
   useMount(() => {
     if (!!percentRatio) {
@@ -77,6 +84,71 @@ const ImageComponent: FC<ImageProps> = ({
     setPreviewLoaded(true);
   };
 
+  const handleZoomEvent = Animated.event(
+    [
+      {
+        nativeEvent: { scale: pinchScale },
+      },
+    ],
+    {
+      useNativeDriver: true,
+    },
+  );
+
+  const handleZoomStateChange = (event: PinchGestureHandlerStateChangeEvent) => {
+    if (event.nativeEvent.oldState === State.ACTIVE) {
+      lastScale.current *= event.nativeEvent.scale;
+      baseScale.setValue(lastScale.current);
+      pinchScale.setValue(1);
+      if (lastScale.current < 1) {
+        Animated.spring(baseScale, {
+          toValue: 1,
+          useNativeDriver: true,
+        }).start();
+        lastScale.current = 1;
+      }
+      if (lastScale.current > 4) {
+        Animated.spring(baseScale, {
+          toValue: 4,
+          useNativeDriver: true,
+        }).start();
+        lastScale.current = 4;
+      }
+    }
+  };
+
+  const renderImage = () => {
+    if (zoomEnabled) {
+      return (
+        <PinchGestureHandler onGestureEvent={handleZoomEvent} onHandlerStateChange={handleZoomStateChange}>
+          <Animated.Image
+            {...rest}
+            resizeMode={resizeMode}
+            source={{ uri }}
+            style={[
+              tachyonsStyles.absolute,
+              tachyonsStyles.absoluteFill,
+              tachyonsStyles.z2,
+              {
+                transform: [{ perspective: 200 }, { scale }],
+              },
+            ]}
+            onLoadEnd={handleLoadEnd}
+          />
+        </PinchGestureHandler>
+      );
+    }
+    return (
+      <RNImage
+        {...rest}
+        resizeMode={resizeMode}
+        source={{ uri }}
+        style={[tachyonsStyles.absolute, tachyonsStyles.absoluteFill, tachyonsStyles.z2]}
+        onLoadEnd={handleLoadEnd}
+      />
+    );
+  };
+
   return (
     <View
       tachyons={tachyons}
@@ -99,15 +171,7 @@ const ImageComponent: FC<ImageProps> = ({
           blurRadius={1}
         />
       )}
-      {isPreviewLoaded && !!uri && (
-        <RNImage
-          {...rest}
-          resizeMode={resizeMode}
-          source={{ uri }}
-          style={[tachyonsStyles.absolute, tachyonsStyles.absoluteFill, tachyonsStyles.z2]}
-          onLoadEnd={handleLoadEnd}
-        />
-      )}
+      {isPreviewLoaded && !!uri && renderImage()}
     </View>
   );
 };
