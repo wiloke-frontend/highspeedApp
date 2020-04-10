@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StackScreenFC } from 'types/Navigation';
+import { StackScreenFC } from 'navigation';
 import { View, Text, Container, HeaderBase, FormCallbackParams, Toast, useTheme } from 'shared';
 import isIOS from 'shared/utils/isIOS';
 import i18n from 'utils/functions/i18n';

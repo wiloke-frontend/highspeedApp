@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Container, useMount, tachyons } from 'shared';
-import { StackScreenFC } from 'types/Navigation';
 import HeaderSecondary from 'components/HeaderSecondary/HeaderSecondary';
 import Magazine from 'components/Magazine/Magazine';
-import { NavigationSuspense } from 'navigation';
+import { NavigationSuspense, StackScreenFC } from 'navigation';
 import { useGetPostsWithParamsRequest, PostWithParams } from './actions/actionPosts';
 import { useSelector } from 'react-redux';
 import { postsWithParamsSelector, pageSelector, maxNumPagesSelector } from './selectors';
@@ -13,22 +12,22 @@ import Empty from 'components/Empty/Empty';
 import Retry from 'components/Retry/Retry';
 
 export interface PostsScreenParams {
-  requestParams: PostWithParams;
+  requestParams: Pick<PostWithParams, 'taxonomies' | 'is_my_favorites'>;
   name: string;
 }
 
-const PostsScreen: StackScreenFC<{}, PostsScreenParams> = ({ navigation }) => {
+const PostsScreen: StackScreenFC<PostsScreenParams> = ({ navigation }) => {
   const getPostsWithParamsRequest = useGetPostsWithParamsRequest();
   const postsWithParams = useSelector(postsWithParamsSelector);
   const page = useSelector(pageSelector);
   const maxNumPages = useSelector(maxNumPagesSelector);
 
   const handleGetPostsWithParams = (page: number) => {
-    if (!!navigation.state.params?.requestParams) {
+    if (!!navigation.state.params.requestParams) {
       getPostsWithParamsRequest({
         endpoint: 'search',
         params: {
-          ...navigation.state.params?.requestParams,
+          ...navigation.state.params.requestParams,
           postType: 'post',
           page,
           postsPerPage: 20,

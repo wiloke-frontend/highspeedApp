@@ -4,4 +4,5 @@ import StackComponent from 'navigation/components/StackComponent';
 import NavigationConsumer, { NavigationParamType } from './components/NavigationConsumer';
 import NavigationSuspense from './components/NavigationSuspense';
 
+export * from './types';
 export { RootNavigator, Link, LinkProps, StackComponent, NavigationConsumer, NavigationSuspense, NavigationParamType };

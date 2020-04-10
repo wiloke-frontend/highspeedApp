@@ -1,13 +1,12 @@
 import React from 'react';
 import { View, Container } from 'shared';
-import { StackScreenFC } from 'types/Navigation';
 import HeaderSecondary from 'components/HeaderSecondary/HeaderSecondary';
 import Magazine from 'components/Magazine/Magazine';
 import { useSelector } from 'react-redux';
 import { historyPostsSelector } from 'screens/PostDetailScreen/selectors';
 import { isEmpty } from 'ramda';
 import Empty from 'components/Empty/Empty';
-import { NavigationSuspense } from 'navigation';
+import { NavigationSuspense, StackScreenFC } from 'navigation';
 
 const HistoryPostsScreen: StackScreenFC = () => {
   const historyPosts = useSelector(historyPostsSelector);

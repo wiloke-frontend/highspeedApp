@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { StackScreenFC } from 'types/Navigation';
 import { useMount, View, Container, tachyons } from 'shared';
 import Magazine from 'components/Magazine/Magazine';
 import Empty from 'components/Empty/Empty';
 import SectionTitle from 'components/SectionTitle/SectionTitle';
 import { ScrollView } from 'react-native';
 import BarHeightSpacer from 'components/BarHeightSpacer/BarHeightSpacer';
-import { NavigationSuspense } from 'navigation';
+import { NavigationSuspense, StackScreenFC } from 'navigation';
 import HeaderSearch from 'components/HeaderSearch/HeaderSearch';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import { ScreenParams } from 'types/ScreenParams';
@@ -15,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { trendingPostsSelector, searchResultSelector } from './selectors';
 import { isEmpty } from 'ramda';
 
-const SearchScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
+const SearchScreen: StackScreenFC<ScreenParams> = ({ navigation }) => {
   const searchScreenMounted = useSearchScreenMounted();
   const searchChangeRequest = useSearchChangeRequest();
   const trendingPosts = useSelector(trendingPostsSelector);

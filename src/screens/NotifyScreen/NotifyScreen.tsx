@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, useMount, Text, Button, Container, withViewStyles } from 'shared';
-import { StackScreenFC } from 'types/Navigation';
+import { StackScreenFC } from 'navigation';
 import HeaderDefault from 'components/HeaderDefault/HeaderDefault';
 import { useGetNotificationsRequest } from './actions/actionNotifications';
 import { useSelector } from 'react-redux';
@@ -20,7 +20,7 @@ import NotifyItem from './NotifyItem';
 const ActivityIndicator = withViewStyles(RNActivityIndicator);
 const Image = withViewStyles(RNImage);
 
-const NotifyScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
+const NotifyScreen: StackScreenFC<ScreenParams> = ({ navigation }) => {
   const getNotificationsRequest = useGetNotificationsRequest();
   const notifications = useSelector(notificationsSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);

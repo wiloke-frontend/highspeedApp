@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, Container, Toast } from 'shared';
 import DetailCategories from './DetailCategories';
-import { StackScreenFC } from 'types/Navigation';
 import DetailContent from './DetailContent';
 import { ScrollView } from 'react-native';
 import DetailHeader from './DetailHeader';
@@ -23,13 +22,12 @@ import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import DetailFeatured from './DetailFeatured';
 import DetailToastFavorite from './DetailToastFavorite';
 import DetailTutorial from './DetailTutorial';
-import { NavigationSuspense } from 'navigation';
-import { Post } from 'api/Post';
+import { NavigationSuspense, StackScreenFC } from 'navigation';
+import { PostDefaultProps } from 'types/PostDefaultProps';
 
-export interface PostDetailScreenParams
-  extends Pick<Post, 'id' | 'slug' | 'title' | 'dateFull' | 'author' | 'previewFeaturedImage' | 'featuredImage'> {}
+export interface PostDetailScreenParams extends PostDefaultProps {}
 
-const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigation }) => {
+const PostDetailScreen: StackScreenFC<PostDetailScreenParams> = ({ navigation }) => {
   const postDetails = useSelector(postDetailsSelector);
   const postDetailRelatedPosts = useSelector(postDetailRelatedPostsSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
@@ -163,7 +161,7 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
                       <View tachyons={['pa3', 'pb1']} />
                       <AuthorInfoCard
                         authorName={(postDetail?.data?.author?.displayName ?? displayName) || ''}
-                        authorEmail={(postDetail?.data?.dateFull ?? dateFull) || ''}
+                        authorEmail={postDetail?.data?.dateFull ?? dateFull ?? ''}
                         authorAvatar={(postDetail?.data?.author?.avatar ?? avatar) || ''}
                         likeTotal={postDetail?.data?.favoriteCount}
                         viewTotal={postDetail?.data?.viewCount}

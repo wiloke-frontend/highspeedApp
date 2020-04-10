@@ -1,53 +1,15 @@
-import React, { ReactNode, useCallback } from 'react';
-import { TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
-import { withNavigation, NavigationParams, NavigationAction, NavigationInjectedProps } from 'react-navigation';
-import { RouteName } from 'types/RouteName';
-import { withViewStyles, WithViewStylesProps } from 'shared';
+import React from 'react';
+import LinkBase, { LinkBaseProps } from './LinkBase';
+import { RouteName, Params } from 'navigation/types';
 
-export interface LinkProps extends WithViewStylesProps {
-  children?: ReactNode;
-  to?: RouteName | '../';
-  push?: RouteName;
-  params?: NavigationParams;
-  activeOpacity?: number;
-  style?: StyleProp<ViewStyle>;
-  navigation?: NavigationInjectedProps['navigation'] & {
-    push?: (routeNameOrOptions: string, params?: NavigationParams, action?: NavigationAction) => boolean;
-  };
-  onBeforeNavigate?: () => void;
-  onAfterNavigate?: () => void;
+export interface LinkProps<RouteNameT extends RouteName> extends Omit<LinkBaseProps, 'to' | 'push' | 'params'> {
+  to?: RouteNameT | '../';
+  push?: RouteNameT;
+  params?: Params<RouteNameT>;
 }
 
-function Link({
-  children,
-  activeOpacity = 1,
-  style = {},
-  to,
-  params,
-  navigation,
-  push,
-  onBeforeNavigate,
-  onAfterNavigate,
-}: LinkProps & NavigationInjectedProps) {
-  const _handlePress = useCallback(() => {
-    onBeforeNavigate?.();
-    if (!!push) {
-      navigation?.push?.(push, params);
-    } else {
-      if (to === '../') {
-        navigation.goBack();
-      } else if (!!to) {
-        navigation.navigate(to, params);
-      }
-    }
-    onAfterNavigate?.();
-  }, [navigation, onAfterNavigate, onBeforeNavigate, params, push, to]);
-
-  return (
-    <TouchableOpacity activeOpacity={activeOpacity} onPress={_handlePress} style={style}>
-      {children}
-    </TouchableOpacity>
-  );
+function Link<RouteNameT extends RouteName>({ ...rest }: LinkProps<RouteNameT>) {
+  return <LinkBase {...rest} />;
 }
 
-export default withNavigation(withViewStyles(Link));
+export default Link;

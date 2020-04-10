@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, View, useMount } from 'shared';
-import { StackScreenFC } from 'types/Navigation';
+import { StackScreenFC } from 'navigation';
 import HeaderDefault from 'components/HeaderDefault/HeaderDefault';
 import { useSelector } from 'react-redux';
 import { menuSelector } from './selectors';

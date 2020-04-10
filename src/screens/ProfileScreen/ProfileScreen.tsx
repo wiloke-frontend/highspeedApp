@@ -6,11 +6,9 @@ import HeaderSecondary from 'components/HeaderSecondary/HeaderSecondary';
 import i18n from 'utils/functions/i18n';
 import { authSelector } from 'store/selectors';
 import { useLogOut } from 'store/storeAuth/actions/actionAuth';
-import { StackScreenFC } from 'types/Navigation';
 import List from 'components/List/List';
-import { Link } from 'navigation';
+import { Link, StackScreenFC } from 'navigation';
 import InterestCategories from './InterestCategories';
-import { PostsScreenParams } from 'screens/PostsScreen/PostsScreen';
 import Avatar from 'components/Avatar/Avatar';
 
 const ProfileScreen: StackScreenFC = ({ navigation }) => {
@@ -66,7 +64,7 @@ const ProfileScreen: StackScreenFC = ({ navigation }) => {
             <List iconName="lock" text={i18n.t('changePassword')} />
           </Link>
           <Divider />
-          <Link to="PostsScreen" params={{ name: i18n.t('favoritePosts'), requestParams: { is_my_favorites: 'yes' } } as PostsScreenParams}>
+          <Link to="PostsScreen" params={{ name: i18n.t('favoritePosts'), requestParams: { is_my_favorites: 'yes' } }}>
             <List iconName="heart" text={i18n.t('favoritePosts')} />
             <Divider />
           </Link>

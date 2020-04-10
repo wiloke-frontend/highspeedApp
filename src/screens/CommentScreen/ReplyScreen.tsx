@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Clipboard, FlatList as RNFlatList } from 'react-native';
-import { StackScreenFC } from 'types/Navigation';
+import { StackScreenFC } from 'navigation';
 import { useSelector } from 'react-redux';
 import { ActivityIndicator } from 'react-native-paper';
 import { View, Container, useMount, useTheme } from 'shared';
@@ -32,7 +32,7 @@ export interface ReplyScreenParams {
   isFocus?: boolean;
 }
 
-const ReplyScreen: StackScreenFC<{}, ReplyScreenParams> = ({ navigation }) => {
+const ReplyScreen: StackScreenFC<ReplyScreenParams> = ({ navigation }) => {
   const comment = navigation.state.params.item;
   const postID = navigation.state.params?.postID;
   const replyItemChild = navigation.state.params?.reply;

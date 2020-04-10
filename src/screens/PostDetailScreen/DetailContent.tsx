@@ -9,7 +9,6 @@ import i18n from 'utils/functions/i18n';
 import Skeleton from 'components/Skeleton/Skeleton';
 import { useSelector } from 'react-redux';
 import { historyPostsSelector, postTextSizeSelector } from './selectors';
-import { CommentScreenParams } from 'screens/CommentScreen/CommentsScreen';
 import getHtmlViewerTextStyles from 'utils/functions/getHtmlViewerTextStyles';
 
 interface DetailContentProps {
@@ -49,12 +48,7 @@ const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPo
       {!!postDetail?.data?.postTags && <DetailTags postTags={postDetail?.data?.postTags} />}
       {!!postDetail?.data && (
         <>
-          <Link
-            to="Comments"
-            activeOpacity={0.7}
-            tachyons="mb3"
-            params={{ id: postDetail?.data?.id, title: postDetail?.data?.title } as CommentScreenParams}
-          >
+          <Link to="Comments" activeOpacity={0.7} tachyons="mb3" params={{ id: postDetail?.data?.id ?? -1, title: postDetail?.data?.title ?? '' }}>
             <Button disabled block borderRadius="round" backgroundColor="transparent" borderColor="primary" color="primary" tachyons="mt2">
               {`${i18n.t('seeResponse')} (${postDetail?.data?.commentCount})`}
             </Button>

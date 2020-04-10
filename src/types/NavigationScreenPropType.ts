@@ -1,5 +1,5 @@
 import { NavigationScreenProp, NavigationParams, NavigationNavigateAction, NavigationAction } from 'react-navigation';
-import { RouteName } from 'types/RouteName';
+import { RouteName } from 'navigation';
 
 export type NavigationScreenPropType<TParams = {}> = Omit<NavigationScreenProp<{}, TParams>, 'navigate' | 'state'> & {
   state: { params: TParams };
