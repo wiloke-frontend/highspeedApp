@@ -23,9 +23,9 @@ import DetailFeatured from './DetailFeatured';
 import DetailToastFavorite from './DetailToastFavorite';
 import DetailTutorial from './DetailTutorial';
 import { NavigationSuspense, StackScreenFC } from 'navigation';
-import { PostDefaultProps } from 'types/PostDefaultProps';
+import { Post } from 'api/Post';
 
-export interface PostDetailScreenParams extends PostDefaultProps {}
+export interface PostDetailScreenParams extends Post {}
 
 const PostDetailScreen: StackScreenFC<PostDetailScreenParams> = ({ navigation }) => {
   const postDetails = useSelector(postDetailsSelector);

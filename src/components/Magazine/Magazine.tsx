@@ -5,10 +5,10 @@ import { Link } from 'navigation';
 import { View, FlatList, FlatListProps, useMount, Container } from 'shared';
 import Post1 from 'components/Post1/Post1';
 import PostList1 from 'components/PostList1/PostList1';
-import { PostDefaultProps } from 'types/PostDefaultProps';
 import Skeleton from 'components/Skeleton/Skeleton';
+import { Post } from 'api/Post';
 
-interface DataItemType extends PostDefaultProps {}
+interface DataItemType extends Post {}
 
 export type TypeProp = 'standard1' | 'standard2' | 'list1' | 'list2' | 'list3' | 'list4' | 'grid1' | 'grid2';
 

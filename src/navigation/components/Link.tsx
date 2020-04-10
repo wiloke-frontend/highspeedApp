@@ -1,6 +1,6 @@
 import React from 'react';
 import LinkBase, { LinkBaseProps } from './LinkBase';
-import { RouteName, Params } from 'navigation/types';
+import { RouteName, Params } from 'navigation/types/RouteName';
 
 export interface LinkProps<RouteNameT extends RouteName> extends Omit<LinkBaseProps, 'to' | 'push' | 'params'> {
   to?: RouteNameT | '../';
