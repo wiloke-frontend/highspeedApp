@@ -125,11 +125,13 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
               // lắng nghe navigate did focus thì thực hiện
               navigation.addListener('didFocus', () => {
                 getRelatedPosts.request({ endpoint: tabs[indexFocused]?.key });
-                getFavorite.request({
-                  endpoint: 'user/favorite',
-                  postEndpoint: tabs[indexFocused]?.key,
-                  postID: tabs[indexFocused]?.id,
-                });
+                if (isLoggedIn) {
+                  getFavorite.request({
+                    endpoint: 'user/favorite',
+                    postEndpoint: tabs[indexFocused]?.key,
+                    postID: tabs[indexFocused]?.id,
+                  });
+                }
                 postView.request({
                   endpoint: 'views',
                   postEndpoint: tabs[indexFocused]?.key,
@@ -181,6 +183,7 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
     getFavorite,
     getRelatedPosts,
     handleContentMounted,
+    isLoggedIn,
     navigation,
     params.author,
     params.dateFull,
