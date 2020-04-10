@@ -11,17 +11,17 @@ type Navigators = RootStackNavigators & UnionToIntersection<RootTabNavigators[ke
 export type RouteName = keyof Navigators;
 export type Params<RouteNameT extends RouteName> = NonNullable<NonNullable<Navigators[RouteNameT]['defaultProps']>['navigation']>['state']['params'];
 
-type NavigationStackScreenProps<TParams = NavigationParams, TScreenProps = unknown> = TScreenProps & {
+type NavigationStackScreenProps<ParamsT = NavigationParams, ScreenPropsT = unknown> = ScreenPropsT & {
   theme: SupportedThemes;
-  navigation: NavigationStackProp<NavigationRoute, TParams>;
+  navigation: NavigationStackProp<NavigationRoute, ParamsT>;
 };
-type NavigationStackScreenPropsCustom<TParams, TScreenProps> = NavigationStackScreenProps<TParams, TScreenProps> & {
-  navigation: NavigationScreenPropType<TParams>;
+type NavigationStackScreenPropsCustom<ParamsT, ScreenPropsT> = NavigationStackScreenProps<ParamsT, ScreenPropsT> & {
+  navigation: NavigationScreenPropType<ParamsT>;
 };
-type NavigationStackScreenComponent<TParams = NavigationParams, TScreenProps = unknown> = React.ComponentType<
-  NavigationStackScreenPropsCustom<TParams, TScreenProps>
+type NavigationStackScreenComponent<ParamsT = NavigationParams, ScreenPropsT = unknown> = React.ComponentType<
+  NavigationStackScreenPropsCustom<ParamsT, ScreenPropsT>
 > & {
-  navigationOptions?: NavigationScreenConfig<NavigationStackOptions, NavigationStackProp<NavigationRoute, TParams>, TScreenProps>;
+  navigationOptions?: NavigationScreenConfig<NavigationStackOptions, NavigationStackProp<NavigationRoute, ParamsT>, ScreenPropsT>;
 };
 
-export type StackScreenFC<TParams = {}, TProps = {}> = NavigationStackScreenComponent<TParams, TProps>;
+export type StackScreenFC<ParamsT = {}, PropsT = {}> = NavigationStackScreenComponent<ParamsT, PropsT>;
