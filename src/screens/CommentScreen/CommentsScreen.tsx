@@ -14,7 +14,7 @@ import { useGetPostComment, useDeleteComment, useAddNewComment, useDeleteOffline
 import { useSelector } from 'react-redux';
 import { commentSelector, usersCommentSelector } from './selector';
 import { userIdSelector, isLoggedInSelector } from 'store/selectors';
-import { NavigationSuspense, StackScreenFC } from 'navigation';
+import { NavigationSuspense, ScreenFC } from 'navigation';
 import Empty from 'components/Empty/Empty';
 import KeyboardSpacer from 'components/KeyboardSpacer/KeyboardSpacer';
 import { getTagHighlightValuesFromDraftJs } from 'utils/functions/supportDraftJs';
@@ -31,7 +31,7 @@ export interface CommentScreenParams {
   title: string;
 }
 
-const CommentScreen: StackScreenFC<CommentScreenParams> = ({ navigation }) => {
+const CommentScreen: ScreenFC<CommentScreenParams> = ({ navigation }) => {
   const { showActionSheetWithOptions } = useActionSheet();
   const getComments = useGetPostComment();
   const deleteComment = useDeleteComment();

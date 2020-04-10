@@ -6,12 +6,12 @@ import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import { useSelector } from 'react-redux';
 import { homeSkeletonSelector, homeSectionsSelector } from './selectors';
 import { useHomeMounted } from './actions/actionHome';
-import { StackScreenFC } from 'navigation';
+import { ScreenFC } from 'navigation';
 import Section from './Section';
 import { FlatList } from 'react-native';
 import HeaderDefault from 'components/HeaderDefault/HeaderDefault';
 
-const HomeScreen: StackScreenFC = () => {
+const HomeScreen: ScreenFC = () => {
   const homeMounted = useHomeMounted();
   const homeSkeleton = useSelector(homeSkeletonSelector);
   const homeSections = useSelector(homeSectionsSelector);

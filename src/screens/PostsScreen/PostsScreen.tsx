@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Container, useMount, tachyons } from 'shared';
 import HeaderSecondary from 'components/HeaderSecondary/HeaderSecondary';
 import Magazine from 'components/Magazine/Magazine';
-import { NavigationSuspense, StackScreenFC } from 'navigation';
+import { NavigationSuspense, ScreenFC } from 'navigation';
 import { useGetPostsWithParamsRequest, PostWithParams } from './actions/actionPosts';
 import { useSelector } from 'react-redux';
 import { postsWithParamsSelector, pageSelector, maxNumPagesSelector } from './selectors';
@@ -16,7 +16,7 @@ export interface PostsScreenParams {
   name: string;
 }
 
-const PostsScreen: StackScreenFC<PostsScreenParams> = ({ navigation }) => {
+const PostsScreen: ScreenFC<PostsScreenParams> = ({ navigation }) => {
   const getPostsWithParamsRequest = useGetPostsWithParamsRequest();
   const postsWithParams = useSelector(postsWithParamsSelector);
   const page = useSelector(pageSelector);

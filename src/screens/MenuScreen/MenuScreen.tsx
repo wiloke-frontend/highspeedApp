@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, View, useMount } from 'shared';
-import { StackScreenFC } from 'navigation';
+import { ScreenFC } from 'navigation';
 import HeaderDefault from 'components/HeaderDefault/HeaderDefault';
 import { useSelector } from 'react-redux';
 import { menuSelector } from './selectors';
@@ -9,7 +9,7 @@ import { useGetMenuRequest } from './actions/actionMenu';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import MenuListItem from './MenuListItem';
 
-const MenuScreen: StackScreenFC = () => {
+const MenuScreen: ScreenFC = () => {
   const menu = useSelector(menuSelector);
   const getMenuRequest = useGetMenuRequest();
 

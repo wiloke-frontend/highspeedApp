@@ -22,12 +22,12 @@ import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import DetailFeatured from './DetailFeatured';
 import DetailToastFavorite from './DetailToastFavorite';
 import DetailTutorial from './DetailTutorial';
-import { NavigationSuspense, StackScreenFC } from 'navigation';
+import { NavigationSuspense, ScreenFC } from 'navigation';
 import { Post } from 'api/Post';
 
 export interface PostDetailScreenParams extends Post {}
 
-const PostDetailScreen: StackScreenFC<PostDetailScreenParams> = ({ navigation }) => {
+const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
   const postDetails = useSelector(postDetailsSelector);
   const postDetailRelatedPosts = useSelector(postDetailRelatedPostsSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);

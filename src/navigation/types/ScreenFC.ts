@@ -15,4 +15,4 @@ type NavigationStackScreenComponent<ParamsT = NavigationParams, ScreenPropsT = u
   navigationOptions?: NavigationScreenConfig<NavigationStackOptions, NavigationStackProp<NavigationRoute, ParamsT>, ScreenPropsT>;
 };
 
-export type StackScreenFC<ParamsT = {}, PropsT = {}> = NavigationStackScreenComponent<ParamsT, PropsT>;
+export type ScreenFC<ParamsT = {}, PropsT = {}> = NavigationStackScreenComponent<ParamsT, PropsT>;

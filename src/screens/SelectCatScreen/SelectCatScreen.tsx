@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { View, Text, Container, useToggle, Button, useSelectList, useMount, tachyons, withViewStyles } from 'shared';
 import HeaderCatFollow from 'components/HeaderCatFollow/HeaderCatFollow';
 import i18n from 'utils/functions/i18n';
-import { StackScreenFC } from 'navigation';
+import { ScreenFC } from 'navigation';
 import { isEmpty } from 'ramda';
 import Magazine from 'components/Magazine/Magazine';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
@@ -18,7 +18,7 @@ import { useFollowCategoryRequest, useGetCategoriesFollowed } from 'store/storeC
 
 const Image = withViewStyles(RNImage);
 
-const SelectCatScreen: StackScreenFC = () => {
+const SelectCatScreen: ScreenFC = () => {
   const getPostsWithCatSelected = useGetPostsWithCatSelected();
   const getCategoriesFollowed = useGetCategoriesFollowed();
   const selectCategory = useSelectCategory();

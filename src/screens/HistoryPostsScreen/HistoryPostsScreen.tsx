@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 import { historyPostsSelector } from 'screens/PostDetailScreen/selectors';
 import { isEmpty } from 'ramda';
 import Empty from 'components/Empty/Empty';
-import { NavigationSuspense, StackScreenFC } from 'navigation';
+import { NavigationSuspense, ScreenFC } from 'navigation';
 
-const HistoryPostsScreen: StackScreenFC = () => {
+const HistoryPostsScreen: ScreenFC = () => {
   const historyPosts = useSelector(historyPostsSelector);
 
   return (

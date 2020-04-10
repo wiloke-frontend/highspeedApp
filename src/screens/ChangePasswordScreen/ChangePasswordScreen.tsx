@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StackScreenFC } from 'navigation';
+import { ScreenFC } from 'navigation';
 import { View, Text, Container, HeaderBase, FormCallbackParams, Toast, useTheme } from 'shared';
 import isIOS from 'shared/utils/isIOS';
 import i18n from 'utils/functions/i18n';
@@ -18,7 +18,7 @@ export interface ChangePasswordResult {
   confirmpassword: string;
 }
 
-const ChangePasswordScreen: StackScreenFC = ({ navigation }) => {
+const ChangePasswordScreen: ScreenFC = ({ navigation }) => {
   const [error, setError] = useState('');
   const changePassword = useChangePassword();
   const auth = useSelector(authSelector);

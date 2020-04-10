@@ -7,11 +7,11 @@ import i18n from 'utils/functions/i18n';
 import { authSelector } from 'store/selectors';
 import { useLogOut } from 'store/storeAuth/actions/actionAuth';
 import List from 'components/List/List';
-import { Link, StackScreenFC } from 'navigation';
+import { Link, ScreenFC } from 'navigation';
 import InterestCategories from './InterestCategories';
 import Avatar from 'components/Avatar/Avatar';
 
-const ProfileScreen: StackScreenFC = ({ navigation }) => {
+const ProfileScreen: ScreenFC = ({ navigation }) => {
   const auth = useSelector(authSelector);
   const logout = useLogOut();
   const uri = auth.data?.avatar ?? '';

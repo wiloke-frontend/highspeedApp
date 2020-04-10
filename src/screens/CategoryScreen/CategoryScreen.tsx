@@ -3,14 +3,14 @@ import { View, useMount, Container, tachyons, FlatList } from 'shared';
 import HeaderDefault from 'components/HeaderDefault/HeaderDefault';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import CategoryCard from 'components/CategoryCard/CategoryCard';
-import { Link, StackScreenFC } from 'navigation';
+import { Link, ScreenFC } from 'navigation';
 import { Category } from 'api/Categories';
 import { useGetCategoriesRequest } from 'store/storeCategories/actions/actionCategories';
 import { useSelector } from 'react-redux';
 import { categoriesSelector } from 'store/selectors';
 import { ScreenParams } from 'types/ScreenParams';
 
-const CategoryScreen: StackScreenFC<ScreenParams> = ({ navigation }) => {
+const CategoryScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   const getCategoriesRequest = useGetCategoriesRequest();
   const categories = useSelector(categoriesSelector);
   const numColumns = 2;
