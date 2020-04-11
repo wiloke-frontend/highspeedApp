@@ -69,7 +69,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     // const attrWidth = Number(attr.width);
     // const containerWidth = containerMaxWidth;
     // const width = attrWidth < containerWidth ? attrWidth : containerWidth;
-    return <Image key={passProps.key} uri={attr.src} containerStyle={styles.image} />;
+    return <Image zoomEnabled key={passProps.key} uri={attr.src} containerStyle={styles.image} />;
   };
 
   _renderFigure = (_attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {

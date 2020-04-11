@@ -9,7 +9,7 @@ import { tachyonsStyles } from 'shared/themes/tachyons';
 import { useMount } from 'shared/hooks/useMount';
 import { useUnmount } from 'shared/hooks/useUnmount';
 import { useTheme } from 'shared/components/ThemeContext/ThemeContext';
-import { PinchGestureHandler, PinchGestureHandlerStateChangeEvent, State } from 'react-native-gesture-handler';
+import useZoom from './useZoom';
 
 export interface ImageProps extends Omit<ImageRNProps, 'source' | 'defaultSource' | 'borderRadius' | 'style' | 'width' | 'height'> {
   uri?: string;
@@ -46,10 +46,7 @@ const ImageComponent: FC<ImageProps> = ({
   const req = useRef(-1);
   const checkHeight = R.path(['height'], containerStyle);
   const { styled } = useTheme();
-  const baseScale = useRef(new Animated.Value(1)).current;
-  const pinchScale = useRef(new Animated.Value(1)).current;
-  const scale = Animated.multiply(baseScale, pinchScale);
-  const lastScale = useRef(1);
+  const { PinchGestureHandler, scale, handleZoomEvent, handleZoomStateChange } = useZoom();
 
   useMount(() => {
     if (!!percentRatio) {
@@ -82,39 +79,6 @@ const ImageComponent: FC<ImageProps> = ({
 
   const handlePreviewLoadEnd = () => {
     setPreviewLoaded(true);
-  };
-
-  const handleZoomEvent = Animated.event(
-    [
-      {
-        nativeEvent: { scale: pinchScale },
-      },
-    ],
-    {
-      useNativeDriver: true,
-    },
-  );
-
-  const handleZoomStateChange = (event: PinchGestureHandlerStateChangeEvent) => {
-    if (event.nativeEvent.oldState === State.ACTIVE) {
-      lastScale.current *= event.nativeEvent.scale;
-      baseScale.setValue(lastScale.current);
-      pinchScale.setValue(1);
-      if (lastScale.current < 1) {
-        Animated.spring(baseScale, {
-          toValue: 1,
-          useNativeDriver: true,
-        }).start();
-        lastScale.current = 1;
-      }
-      if (lastScale.current > 4) {
-        Animated.spring(baseScale, {
-          toValue: 4,
-          useNativeDriver: true,
-        }).start();
-        lastScale.current = 4;
-      }
-    }
   };
 
   const renderImage = () => {
