@@ -47,7 +47,6 @@ const Gallery: FC<GalleryProps> = ({ data, onClose, ...rest }) => {
       <View style={styles.item} tachyons={['justifyCenter', 'itemsCenter']}>
         {!indexImagesLoaded.includes(index) && <ActivityIndicator size="small" />}
         <Image
-          zoomEnabled
           uri={item.uri}
           width="100%"
           height="100%"
