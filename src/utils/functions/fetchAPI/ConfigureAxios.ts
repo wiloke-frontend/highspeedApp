@@ -1,7 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosInstance, AxiosError, AxiosResponse } from 'axios';
 
-type ResponseData = any;
-
 interface Configure {
   configure: AxiosRequestConfig;
   setAccessToken(): string;
@@ -80,7 +78,7 @@ export default class ConfigureAxios {
     }
   };
 
-  public refreshToken = <ResponseDataT extends ResponseData = any, AxiosDataReturnT = any>(config: Config<ResponseDataT, AxiosDataReturnT>) => {
+  public refreshToken = <ResponseDataT extends any = any, AxiosDataReturnT = any>(config: Config<ResponseDataT, AxiosDataReturnT>) => {
     const interceptor = this.axiosInstance.interceptors.response.use(undefined, (error: AxiosError) => {
       if (!config.setRefreshCondition(error)) {
         return Promise.reject(error);

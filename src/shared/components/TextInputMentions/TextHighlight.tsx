@@ -7,9 +7,18 @@ import { isEmpty } from 'ramda';
 
 export interface TextHighlightProps<UserT> extends Pick<TextInputMentionsProps<UserT>, 'mentionStyle' | 'entityMap' | 'value'> {
   containerStyle?: StyleProp<TextStyle>;
+  onPressHighlightEnabled?: boolean;
+  onPressHighlight: (user: UserT) => void;
 }
 
-function TextHighlight<UserT extends User>({ value, mentionStyle = {}, entityMap, containerStyle = {} }: TextHighlightProps<UserT>) {
+function TextHighlight<UserT extends User>({
+  value,
+  mentionStyle = {},
+  entityMap,
+  containerStyle = {},
+  onPressHighlight,
+  onPressHighlightEnabled = false,
+}: TextHighlightProps<UserT>) {
   return (
     <Text style={containerStyle}>
       {joinStringInArray(
@@ -21,7 +30,11 @@ function TextHighlight<UserT extends User>({ value, mentionStyle = {}, entityMap
               !isEmpty(entityMap[i].mentions);
             if (condition) {
               return (
-                <Text key={String(index)} style={mentionStyle}>
+                <Text
+                  key={String(index)}
+                  style={mentionStyle}
+                  onPress={onPressHighlightEnabled ? () => onPressHighlight(entityMap[i]?.mentions) : () => {}}
+                >
                   {char}
                 </Text>
               );
@@ -34,4 +47,6 @@ function TextHighlight<UserT extends User>({ value, mentionStyle = {}, entityMap
   );
 }
 
-export default memo(TextHighlight);
+const typedMemo: IdentityFunction = memo;
+
+export default typedMemo(TextHighlight);
