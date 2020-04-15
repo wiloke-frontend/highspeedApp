@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useMount, View, Container, useTheme } from 'shared';
 import { ActivityIndicator } from 'react-native-paper';
 import { isEmpty } from 'ramda';
-import { FlatList, Clipboard } from 'react-native';
+import { FlatList, Clipboard, StatusBar } from 'react-native';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import CommentCard from 'components/CommentCard/CommentCard';
 import { Comment, UserComment, Description } from 'api/Comment';
@@ -18,7 +18,7 @@ import { NavigationSuspense, ScreenFC } from 'navigation';
 import Empty from 'components/Empty/Empty';
 import KeyboardSpacer from 'components/KeyboardSpacer/KeyboardSpacer';
 import { getTagHighlightValuesFromDraftJs } from 'utils/functions/supportDraftJs';
-import isIOS, { isIpad, isSmallDevice } from 'shared/utils/isIOS';
+import isIOS from 'shared/utils/isIOS';
 import { updateLayouAnimation, notifyDelete, options2, options, alertAuthentication, setUIManager, retryOptions } from './notify';
 import HeaderComment from './HeaderComment';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
@@ -30,6 +30,8 @@ export interface CommentScreenParams {
   id: number;
   title: string;
 }
+
+StatusBar.setBarStyle('dark-content');
 
 const CommentScreen: ScreenFC<CommentScreenParams> = ({ navigation }) => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -291,7 +293,7 @@ const CommentScreen: ScreenFC<CommentScreenParams> = ({ navigation }) => {
     <View flex safeAreaView>
       <HeaderComment title={i18n.t('comments')} subTitle={titlePost} />
       {Body}
-      {isIOS && <KeyboardSpacer topSpacing={isIpad || isSmallDevice ? 0 : -33} />}
+      {isIOS && <KeyboardSpacer topSpacing={0} />}
     </View>
   );
 };
