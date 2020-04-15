@@ -77,7 +77,7 @@ const DetailHeader: FC<DetailHeaderProps> = ({
   const handleActionSheet = () => {
     showActionSheetWithOptions(
       {
-        options: [i18n.t('share'), i18n.t('comment'), i18n.t('cancel')],
+        options: [i18n.t('share'), i18n.t('seeResponse'), i18n.t('cancel')],
         cancelButtonIndex: 2,
       },
       buttonIndex => {
