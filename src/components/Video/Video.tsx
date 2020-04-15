@@ -30,7 +30,7 @@ const Video: FC<VideoProps> = ({ percentRatio = `${(9 / 16) * 100}%`, uri, style
     <View onLayout={handleLayout} style={[styles.container, style]} tachyons={tachyons}>
       <TouchableOpacity style={styles.container} activeOpacity={1} onPress={handlePress}>
         <Image uri={thumbnailUri} preview={thumbnailPreview} percentRatio={percentRatio} />
-        <View tachyons={['absolute', 'absoluteFill', 'z1', 'itemsCenter', 'justifyCenter']}>
+        <View tachyons={['absolute', 'absoluteFill', 'z1', 'itemsCenter', 'justifyCenter']} style={styles.overlay}>
           <View
             style={[
               styles.iconWrap,
@@ -41,7 +41,7 @@ const Video: FC<VideoProps> = ({ percentRatio = `${(9 / 16) * 100}%`, uri, style
               },
             ]}
           >
-            <Icons.Feather name="play" size={sizePlayButton / 2} color="light" />
+            <Icons.Feather name="play" size={sizePlayButton / 2.2} color="light" style={styles.icon} />
           </View>
         </View>
       </TouchableOpacity>
