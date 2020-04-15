@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef, memo } from 'react';
-import { Image as RNImage, ViewStyle, ImageProps as ImageRNProps, Animated } from 'react-native';
+import { Image as RNImage, ViewStyle, ImageProps as ImageRNProps } from 'react-native';
 import * as R from 'ramda';
 import styles from './styles';
 import { View } from 'shared/components/View/View';
@@ -9,7 +9,6 @@ import { tachyonsStyles } from 'shared/themes/tachyons';
 import { useMount } from 'shared/hooks/useMount';
 import { useUnmount } from 'shared/hooks/useUnmount';
 import { useTheme } from 'shared/components/ThemeContext/ThemeContext';
-import useZoom from './useZoom';
 
 export interface ImageProps extends Omit<ImageRNProps, 'source' | 'defaultSource' | 'borderRadius' | 'style' | 'width' | 'height'> {
   uri?: string;
@@ -20,7 +19,6 @@ export interface ImageProps extends Omit<ImageRNProps, 'source' | 'defaultSource
   tachyons?: Tachyons;
   height?: number | string;
   width?: number | string;
-  zoomEnabled?: boolean;
 }
 
 const DEFAULT_IMAGE =
@@ -37,7 +35,6 @@ const ImageComponent: FC<ImageProps> = ({
   resizeMode = 'cover',
   width,
   height,
-  zoomEnabled = false,
   ...rest
 }) => {
   const [percentRatioState, setPercentRatioState] = useState(percentRatio || '75%');
@@ -46,7 +43,6 @@ const ImageComponent: FC<ImageProps> = ({
   const req = useRef(-1);
   const checkHeight = R.path(['height'], containerStyle);
   const { styled } = useTheme();
-  const { PinchGestureHandler, scale, handleZoomEvent, handleZoomStateChange } = useZoom();
 
   useMount(() => {
     if (!!percentRatio) {
@@ -81,38 +77,6 @@ const ImageComponent: FC<ImageProps> = ({
     setPreviewLoaded(true);
   };
 
-  const renderImage = () => {
-    if (zoomEnabled) {
-      return (
-        <PinchGestureHandler onGestureEvent={handleZoomEvent} onHandlerStateChange={handleZoomStateChange}>
-          <Animated.Image
-            {...rest}
-            resizeMode={resizeMode}
-            source={{ uri }}
-            style={[
-              tachyonsStyles.absolute,
-              tachyonsStyles.absoluteFill,
-              tachyonsStyles.z2,
-              {
-                transform: [{ perspective: 200 }, { scale }],
-              },
-            ]}
-            onLoadEnd={handleLoadEnd}
-          />
-        </PinchGestureHandler>
-      );
-    }
-    return (
-      <RNImage
-        {...rest}
-        resizeMode={resizeMode}
-        source={{ uri }}
-        style={[tachyonsStyles.absolute, tachyonsStyles.absoluteFill, tachyonsStyles.z2]}
-        onLoadEnd={handleLoadEnd}
-      />
-    );
-  };
-
   return (
     <View
       tachyons={tachyons}
@@ -135,7 +99,15 @@ const ImageComponent: FC<ImageProps> = ({
           blurRadius={1}
         />
       )}
-      {isPreviewLoaded && !!uri && renderImage()}
+      {isPreviewLoaded && !!uri && (
+        <RNImage
+          {...rest}
+          resizeMode={resizeMode}
+          source={{ uri }}
+          style={[tachyonsStyles.absolute, tachyonsStyles.absoluteFill, tachyonsStyles.z2]}
+          onLoadEnd={handleLoadEnd}
+        />
+      )}
     </View>
   );
 };

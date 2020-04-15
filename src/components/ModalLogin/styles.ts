@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
   },
   logo: {
     width: '80%',
-    height: 100,
+    height: 80,
   },
   wrapper: {
     position: 'relative',

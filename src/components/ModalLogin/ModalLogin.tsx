@@ -83,9 +83,7 @@ export function ModalLogin({ onLogin, onRegister, isLoading }: ModalLoginProps) 
       <StatusBar barStyle="light-content" />
       <View style={styles.wrapper}>
         <Image source={require('assets/login-cover.png')} resizeMode="cover" style={styles.imageBg} />
-
-        <View backgroundColor="dark1" style={styles.overlay} />
-        <View safeAreaView flex style={styles.wrapper}>
+        <View safeAreaView safeAreaViewBottom flex style={styles.wrapper}>
           <View flex justifyContent="space-between">
             <View alignItems="flex-end" tachyons={['ph2', 'pv1']}>
               <TouchableOpacity activeOpacity={0.7} onPress={handleClose}>
