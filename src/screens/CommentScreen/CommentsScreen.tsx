@@ -18,7 +18,7 @@ import { NavigationSuspense, ScreenFC } from 'navigation';
 import Empty from 'components/Empty/Empty';
 import KeyboardSpacer from 'components/KeyboardSpacer/KeyboardSpacer';
 import { getTagHighlightValuesFromDraftJs } from 'utils/functions/supportDraftJs';
-import isIOS from 'shared/utils/isIOS';
+import isIOS, { isIpad, isSmallDevice } from 'shared/utils/isIOS';
 import { updateLayouAnimation, notifyDelete, options2, options, alertAuthentication, setUIManager, retryOptions } from './notify';
 import HeaderComment from './HeaderComment';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
@@ -290,10 +290,10 @@ const CommentScreen: ScreenFC<CommentScreenParams> = ({ navigation }) => {
   );
 
   return (
-    <View flex safeAreaView>
+    <View flex safeAreaView safeAreaViewBottom>
       <HeaderComment title={i18n.t('comments')} subTitle={titlePost} />
       {Body}
-      {isIOS && <KeyboardSpacer topSpacing={0} />}
+      {isIOS && <KeyboardSpacer topSpacing={isIpad || isSmallDevice ? 0 : -30} />}
     </View>
   );
 };
