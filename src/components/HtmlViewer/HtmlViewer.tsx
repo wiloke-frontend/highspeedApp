@@ -1,5 +1,5 @@
 import React, { PureComponent, CSSProperties } from 'react';
-import { StyleProp, ViewStyle, Platform } from 'react-native';
+import { StyleProp, ViewStyle, Platform, TextStyle } from 'react-native';
 import HTML, { AttrType, PassPropsType, ChildrenType } from 'react-native-render-html';
 import { encode, decode } from 'he';
 import { WebView } from 'react-native-webview';
@@ -18,13 +18,17 @@ interface HtmlViewerProps {
   containerStyle?: StyleProp<ViewStyle>;
   justifyTextEnabled?: boolean;
   tagsStyles?: {
-    [key: string]: CSSProperties;
+    [key: string]: ViewStyle & TextStyle;
   };
   theme?: Theme;
+  colorBase?: string;
 }
 const IOS = Platform.OS === 'ios';
 
-type DefaultProps = Pick<HtmlViewerProps, 'containerMaxWidth' | 'containerStyle' | 'htmlWrapCssString' | 'justifyTextEnabled' | 'tagsStyles'>;
+type DefaultProps = Pick<
+  HtmlViewerProps,
+  'containerMaxWidth' | 'containerStyle' | 'htmlWrapCssString' | 'justifyTextEnabled' | 'tagsStyles' | 'colorBase'
+>;
 
 const CONTAINER_PADDING = 10;
 const WTF = '<--WTF-->';
@@ -38,6 +42,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     htmlWrapCssString: '',
     justifyTextEnabled: false,
     tagsStyles: {},
+    colorBase: '',
   };
 
   _handleLinkPress = (_event: React.MouseEvent, href: string) => {
@@ -162,7 +167,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
   // };
 
   render() {
-    const { htmlWrapCssString, containerMaxWidth, containerStyle, justifyTextEnabled, tagsStyles, theme, ...otherProps } = this.props;
+    const { htmlWrapCssString, containerMaxWidth, containerStyle, justifyTextEnabled, tagsStyles, theme, colorBase, ...otherProps } = this.props;
     const textJustifyStyle = justifyTextEnabled
       ? `
     text-align: justify;
@@ -170,9 +175,9 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
       : '';
     const _htmlWrapCssString =
       `
-      font-size: ${isEmpty(tagsStyles) ? '15' : tagsStyles?.div.fontSize}px;
-      line-height: ${isEmpty(tagsStyles) ? '1.6em' : tagsStyles?.div.lineHeight};
-      color: ${theme?.colors.dark2};
+      font-size: ${isEmpty(tagsStyles) ? '15' : tagsStyles?.text.fontSize}px;
+      line-height: ${isEmpty(tagsStyles) ? '1.6em' : tagsStyles?.text.lineHeight};
+      color: ${colorBase || theme?.colors.dark2};
     ` +
       textJustifyStyle +
       htmlWrapCssString;
@@ -193,7 +198,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
           // li: this._renderGallaryGrid,
         }}
         onLinkPress={this._handleLinkPress}
-        tagsStyles={{ ...tagsStaticStyles, a: { color: theme?.colors.primary }, ...tagsStyles }}
+        tagsStyles={{ ...tagsStaticStyles, a: { color: theme?.colors.primary }, li: { color: colorBase || theme?.colors.dark2 } }}
       />
     );
   }

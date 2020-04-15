@@ -1,4 +1,4 @@
-import React, { FC, CSSProperties } from 'react';
+import React, { FC } from 'react';
 import { NavigationSuspense, Link } from 'navigation';
 import HtmlViewer from 'components/HtmlViewer/HtmlViewer';
 import { Button, Text, View, useTheme } from 'shared';
@@ -21,7 +21,7 @@ const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPo
   const historyPosts = useSelector(historyPostsSelector);
   const postTextSize = useSelector(postTextSizeSelector);
 
-  const checkTagStyles = (): { [key: string]: CSSProperties } => {
+  const checkTagStyles = () => {
     switch (postTextSize) {
       case 'large':
         return getHtmlViewerTextStyles(20, colors.primary);

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { View, Text, Container, Toast } from 'shared';
+import { View, Text, Container, Toast, useTheme } from 'shared';
 import DetailCategories from './DetailCategories';
 import DetailContent from './DetailContent';
 import { ScrollView } from 'react-native';
@@ -24,10 +24,13 @@ import DetailToastFavorite from './DetailToastFavorite';
 import DetailTutorial from './DetailTutorial';
 import { NavigationSuspense, ScreenFC } from 'navigation';
 import { Post } from 'api/Post';
+import HtmlViewer from 'components/HtmlViewer/HtmlViewer';
+import getHtmlViewerTextStyles from 'utils/functions/getHtmlViewerTextStyles';
 
 export interface PostDetailScreenParams extends Post {}
 
 const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
+  const { colors } = useTheme();
   const postDetails = useSelector(postDetailsSelector);
   const postDetailRelatedPosts = useSelector(postDetailRelatedPostsSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
@@ -159,7 +162,15 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
                   {checkTabVisible && (
                     <>
                       <DetailCategories postCategories={postDetail?.data?.postCategories ?? []} />
-                      <Text type="h2">{postDetail?.data?.title ?? item?.title}</Text>
+                      {/<(\|)|>/g.test(postDetail?.data?.title ?? item?.title) ? (
+                        <HtmlViewer
+                          html={`<h2>${postDetail?.data?.title ?? item?.title}</h2>`}
+                          tagsStyles={getHtmlViewerTextStyles(14, colors.primary)}
+                          colorBase={colors.dark1}
+                        />
+                      ) : (
+                        <Text type="h2">{postDetail?.data?.title ?? item?.title}</Text>
+                      )}
                       <View tachyons={['pa3', 'pb1']} />
                       <AuthorInfoCard
                         authorName={(postDetail?.data?.author?.displayName ?? displayName) || ''}
@@ -180,6 +191,8 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
       );
     };
   }, [
+    colors.dark1,
+    colors.primary,
     getFavorite,
     getRelatedPosts,
     handleContentMounted,
