@@ -1,5 +1,5 @@
 import React, { useState, memo } from 'react';
-import { Keyboard, LayoutAnimation, Platform, KeyboardEvent, LayoutAnimationConfig, EmitterSubscription } from 'react-native';
+import { Keyboard, LayoutAnimation, Platform, KeyboardEvent, LayoutAnimationConfig, EmitterSubscription, StatusBar } from 'react-native';
 import { View, useUnmount, useMount } from 'shared';
 import styles from './styles';
 import { SCREEN_HEIGHT } from 'shared/utils/screen';
@@ -35,6 +35,7 @@ function KeyboardSpacer({ topSpacing = 0, onToggle }: KeyboardSpacerProps) {
   const [_, setKeyboardOpened] = useState(false);
 
   const _updateKeyboardSpace = (event: KeyboardEvent) => {
+    StatusBar.setBarStyle('dark-content');
     if (!event.endCoordinates) {
       return;
     }

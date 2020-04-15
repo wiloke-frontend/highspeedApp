@@ -17,7 +17,7 @@ import { getTagHighlightValuesFromDraftJs } from 'utils/functions/supportDraftJs
 import KeyBoardComments, { OnEditCallBack } from './KeyBoardComments';
 import { isEmpty } from 'ramda';
 import { notify, updateLayouAnimation, notifyDelete, options, options2, alertAuthentication, setUIManager, retryOptions } from './notify';
-import isIOS, { isIpad, isSmallDevice } from 'shared/utils/isIOS';
+import isIOS from 'shared/utils/isIOS';
 import KeyboardSpacer from 'components/KeyboardSpacer/KeyboardSpacer';
 import HeaderComment from './HeaderComment';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
@@ -281,7 +281,7 @@ const ReplyScreen: ScreenFC<ReplyScreenParams> = ({ navigation }) => {
         <Container>
           <KeyBoardComments usersTag={usersTag as UserComment[]} onComment={_handleNewReply} onEdit={onEdit} />
         </Container>
-        {isIOS && <KeyboardSpacer topSpacing={isIpad || isSmallDevice ? 0 : -33} />}
+        {isIOS && <KeyboardSpacer topSpacing={0} />}
       </View>
     </View>
   );
