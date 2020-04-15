@@ -32,7 +32,7 @@ const defaultColors = {
   gray3: '#f0f0f3',
   gray4: '#fafafb',
   gray5: '#fbfbfc',
-  light: '#fdfdfd',
+  light: '#fff',
   transparent: 'transparent',
 };
 
