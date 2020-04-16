@@ -45,7 +45,7 @@ function* handleSections(dataHomeSkeleton: Home['data']) {
     const dataHomeSections: DataSectionAll = getObjectFromResponse<string, AxiosResponse<HomeSection | Categories>>(resHomeSections, 'section');
     yield put(getHomeSections.success(dataHomeSections));
   } catch (err) {
-    console.log(err.request);
+    console.log(err.response);
     yield put(getHomeSections.failure('Loi cmnnr'));
   }
 }

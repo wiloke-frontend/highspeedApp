@@ -30,7 +30,7 @@ function* handlePostNotify({ payload }: ReturnType<typeof postNotify.request>) {
     } as AxiosRequestConfig);
     yield put(postNotify.success({ id: payload.id }));
   } catch (err) {
-    console.log(err.request);
+    console.log(err.response);
     yield put(postNotify.failure('Error'));
   }
 }
@@ -47,7 +47,7 @@ function* handleDeleteNotify({ payload }: ReturnType<typeof deleteNotify.request
     } as AxiosRequestConfig);
     yield put(deleteNotify.success({ id: payload.id }));
   } catch (err) {
-    console.log(err.request);
+    console.log(err.response);
     yield put(deleteNotify.failure('Error'));
   }
 }

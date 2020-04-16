@@ -8,6 +8,4 @@ export const isIpad = PlatformIOS.isPad;
 
 export const isSmallDevice = SCREEN_HEIGHT < 700;
 
-console.log({ SCREEN_HEIGHT });
-
 export default isIOS;
