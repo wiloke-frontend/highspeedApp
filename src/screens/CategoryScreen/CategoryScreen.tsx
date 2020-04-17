@@ -30,7 +30,7 @@ const CategoryScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView>
+    <View flex safeAreaView backgroundColor="light">
       <Container>
         <HeaderDefault title={navigation.state?.params?.title} backButtonEnabled={navigation.state?.params?.backButtonEnabled} />
       </Container>

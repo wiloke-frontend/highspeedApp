@@ -290,7 +290,7 @@ const CommentScreen: ScreenFC<CommentScreenParams> = ({ navigation }) => {
   );
 
   return (
-    <View flex safeAreaView safeAreaViewBottom>
+    <View flex safeAreaView safeAreaViewBottom backgroundColor="light">
       <HeaderComment title={i18n.t('comments')} subTitle={titlePost} />
       {Body}
       {isIOS && <KeyboardSpacer topSpacing={isIpad || isSmallDevice ? 0 : -30} />}

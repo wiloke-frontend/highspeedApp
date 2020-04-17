@@ -12,7 +12,7 @@ const HistoryPostsScreen: ScreenFC = () => {
   const historyPosts = useSelector(historyPostsSelector);
 
   return (
-    <View flex safeAreaView>
+    <View flex safeAreaView backgroundColor="light">
       <Container>
         <HeaderSecondary title="History" />
       </Container>

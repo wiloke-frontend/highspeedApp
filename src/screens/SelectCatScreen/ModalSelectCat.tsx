@@ -33,6 +33,7 @@ const ModalSelectCat: FC<ModalSelectCatProps> = ({ onCancel, onDone, onSelect, i
           getCategoriesRequest({ endpoint: 'category', params: { number: 0 } });
         }}
         safeAreaView
+        backgroundColor="light"
       >
         <Container>
           <HeaderTertiary onCancel={onCancel} onDone={onDone} centerText={i18n.t('chooseText', { text: i18n.t('categories') })} />

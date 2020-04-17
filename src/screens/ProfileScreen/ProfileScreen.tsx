@@ -4,15 +4,19 @@ import { View, Text, Container, Divider } from 'shared';
 import { useSelector } from 'react-redux';
 import HeaderSecondary from 'components/HeaderSecondary/HeaderSecondary';
 import i18n from 'utils/functions/i18n';
-import { authSelector } from 'store/selectors';
+import { authSelector, nightModeSelector } from 'store/selectors';
 import { useLogOut } from 'store/storeAuth/actions/actionAuth';
 import List from 'components/List/List';
 import { Link, ScreenFC } from 'navigation';
 import InterestCategories from './InterestCategories';
 import Avatar from 'components/Avatar/Avatar';
+import { Switch } from 'react-native-gesture-handler';
+import { useChangeNightMode } from './actions/actionNightMode';
 
 const ProfileScreen: ScreenFC = ({ navigation }) => {
   const auth = useSelector(authSelector);
+  const nightMode = useSelector(nightModeSelector);
+  const changeNightMode = useChangeNightMode();
   const logout = useLogOut();
   const uri = auth.data?.avatar ?? '';
 
@@ -39,7 +43,7 @@ const ProfileScreen: ScreenFC = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView>
+    <View flex safeAreaView backgroundColor="light">
       <Container>
         <HeaderSecondary title={i18n.t('myProfile')} />
       </Container>
@@ -55,6 +59,12 @@ const ProfileScreen: ScreenFC = ({ navigation }) => {
           </View>
           <Divider />
           <InterestCategories />
+          <Divider />
+          <List
+            iconName={nightMode ? 'moon' : 'sun'}
+            text={i18n.t('nightMode')}
+            Right={<Switch value={nightMode} onValueChange={() => changeNightMode()} />}
+          />
           <Divider />
           <Link to="HistoryPostsScreen">
             <List iconName="clock" text={i18n.t('history')} />

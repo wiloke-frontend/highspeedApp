@@ -20,8 +20,21 @@ const HomeScreen: ScreenFC = () => {
     homeMounted();
   });
 
+  // return (
+  //   <ScrollView
+  //     alwaysBounceHorizontal
+  //     alwaysBounceVertical
+  //     showsVerticalScrollIndicator={false}
+  //     showsHorizontalScrollIndicator={false}
+  //     minimumZoomScale={1}
+  //     maximumZoomScale={4}
+  //   >
+  //     <Image uri={`https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500`} />
+  //   </ScrollView>
+  // );
+
   return (
-    <View flex safeAreaView>
+    <View flex safeAreaView backgroundColor="light">
       <Container>
         <HeaderDefault />
       </Container>

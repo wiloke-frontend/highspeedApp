@@ -265,7 +265,7 @@ const ReplyScreen: ScreenFC<ReplyScreenParams> = ({ navigation }) => {
     );
   };
   return (
-    <View safeAreaView flex safeAreaViewBottom>
+    <View safeAreaView flex safeAreaViewBottom backgroundColor="light">
       <HeaderComment title={i18n.t('replyCommentOf', { name: comment?.author.displayName || comment?.author.email })} />
       <View flex renderToHardwareTextureAndroid={true}>
         <AsyncComponent

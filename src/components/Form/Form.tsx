@@ -1,6 +1,6 @@
 import React, { PureComponent, ReactNode } from 'react';
 import { TextInput, Keyboard } from 'react-native';
-import { FormItem, Button, Input, Icons, View, FormCallbackParams } from 'shared';
+import { FormItem, Button, Input, Icons, View, FormCallbackParams, Text } from 'shared';
 import { Form as SForm, FormHandleSubmitType, FormFieldType, FormCallbackPropsType, FormConstraints } from 'shared';
 import { FeatherNameType } from 'types/FeatherNameType';
 
@@ -80,6 +80,7 @@ export default class Form<TResult> extends PureComponent<FormProps<TResult>> {
           returnKeyType={index !== fields.length - 1 ? 'next' : 'go'}
           // returnKeyLabel={index !== fields.length - 1 ? 'Next' : 'Login'}
           autoCapitalize="none"
+          placeholderTextColor="#999"
         />
       </FormItem>
     );
@@ -91,7 +92,7 @@ export default class Form<TResult> extends PureComponent<FormProps<TResult>> {
       <View>
         {customText?.()}
         <Button block onPress={handleSubmit} tachyons={['wAuto', 'br2']} loading={buttonLoading}>
-          {buttonText}
+          <Text style={{ color: '#fff' }}>{buttonText}</Text>
         </Button>
       </View>
     );

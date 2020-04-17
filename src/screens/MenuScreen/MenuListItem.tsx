@@ -39,7 +39,7 @@ const MenuListItem: FC<MenuListItemProps & NavigationInjectedProps> = ({ item, i
       }}
     >
       {index === 0 && <Divider />}
-      <List iconName={item?.iconName} iconColor={item?.iconColor} text={item?.label ?? ''} />
+      <List iconName={item?.iconName} text={item?.label ?? ''} />
       <Divider />
     </TouchableOpacity>
   );

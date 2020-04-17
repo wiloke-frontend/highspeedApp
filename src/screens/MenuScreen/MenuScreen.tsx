@@ -18,7 +18,7 @@ const MenuScreen: ScreenFC = () => {
   });
 
   return (
-    <View flex safeAreaView>
+    <View flex safeAreaView backgroundColor="light">
       <Container>
         <HeaderDefault />
       </Container>

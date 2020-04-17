@@ -22,7 +22,7 @@ const Avatar: FC<AvatarProps> = ({ uri, size = 30, name = '' }) => {
   return (
     <View justifyContent="center" alignItems="center" tachyons="brPill" style={{ backgroundColor, width: size, height: size }}>
       {!!name && (
-        <Text color="light" size={textSize} style={{ lineHeight: textSize * 2 }}>
+        <Text size={textSize} style={{ lineHeight: textSize * 2, color: '#fff' }}>
           {text}
         </Text>
       )}

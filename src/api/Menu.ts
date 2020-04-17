@@ -4,7 +4,6 @@ export interface MenuItem {
   key: string;
   label: string;
   iconName: FeatherNameType | '';
-  iconColor: string;
   enable: boolean;
   screen: string;
   type: 'screen' | 'webview';

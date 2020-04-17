@@ -1,7 +1,7 @@
 import React, { FC, useState, memo } from 'react';
 import { TouchableOpacity, StyleProp, ViewStyle, LayoutChangeEvent } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import { Icons, Tachyons, View, Image } from 'shared';
+import { Icons, Tachyons, View, Image, useTheme } from 'shared';
 import styles from './styles';
 
 export interface VideoProps {
@@ -14,6 +14,7 @@ export interface VideoProps {
 }
 
 const Video: FC<VideoProps> = ({ percentRatio = `${(9 / 16) * 100}%`, uri, style, thumbnailUri, thumbnailPreview, tachyons }) => {
+  const { colors } = useTheme();
   const [width, setWidth] = useState(0);
   const sizePlayButton = width / 4 < 60 ? width / 4 : 60;
 
@@ -38,10 +39,11 @@ const Video: FC<VideoProps> = ({ percentRatio = `${(9 / 16) * 100}%`, uri, style
                 width: sizePlayButton,
                 height: sizePlayButton,
                 borderRadius: sizePlayButton / 2,
+                borderColor: colors.primary,
               },
             ]}
           >
-            <Icons.Feather name="play" size={sizePlayButton / 2.2} color="light" style={styles.icon} />
+            <Icons.Feather name="play" size={sizePlayButton / 2.2} color="primary" style={styles.icon} />
           </View>
         </View>
       </TouchableOpacity>

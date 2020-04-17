@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ScreenFC } from 'navigation';
 import { View, Text, Container, HeaderBase, FormCallbackParams, Toast, useTheme } from 'shared';
-import isIOS from 'shared/utils/isIOS';
 import i18n from 'utils/functions/i18n';
 import BackButton from 'components/BackButton/BackButton';
 import Form from 'components/Form/Form';
@@ -64,7 +63,7 @@ const ChangePasswordScreen: ScreenFC = ({ navigation }) => {
 
   return (
     <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
-      <View safeAreaView={isIOS} flex>
+      <View flex safeAreaView backgroundColor="light">
         <Container>
           <HeaderBase
             Left={<BackButton tachyons={['pa1', 'nl2', 'mr2']} />}

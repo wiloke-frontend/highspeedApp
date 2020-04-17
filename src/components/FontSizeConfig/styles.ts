@@ -8,17 +8,16 @@ export const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    opacity: 0.6,
   },
   content: {
     position: 'relative',
     zIndex: 9,
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
     padding: 5,
     borderRadius: 18,
+    overflow: 'hidden',
   },
   contentInner: {
-    backgroundColor: '#fff',
     overflow: 'hidden',
     borderRadius: 15,
   },
@@ -29,4 +28,5 @@ export const styles = StyleSheet.create({
     height: 70,
     borderLeftWidth: 1,
   },
+  border: { ...StyleSheet.absoluteFillObject, opacity: 0.4 },
 });

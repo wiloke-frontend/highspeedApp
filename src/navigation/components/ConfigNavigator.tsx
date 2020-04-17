@@ -49,17 +49,10 @@ const ConfigNavigator = () => {
   };
 
   const createRootTabNavigatorRoutes = () => {
-    return handleTabNavigator(tabNavigator.data, rootTabNavigators, ({ tabBarLabel, iconName, iconColor }) => ({
+    return handleTabNavigator(tabNavigator.data, rootTabNavigators, ({ tabBarLabel, iconName }) => ({
       tabBarLabel,
       tabBarIcon: ({ focused }) => {
-        return (
-          <TabBarItem
-            focused={focused}
-            iconName={iconName}
-            iconColor={iconColor}
-            labelName={settings.tabNavigator === 'default' ? tabBarLabel : ''}
-          />
-        );
+        return <TabBarItem focused={focused} iconName={iconName} labelName={settings.tabNavigator === 'default' ? tabBarLabel : ''} />;
       },
     }));
   };

@@ -58,7 +58,7 @@ const NotifyScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView>
+    <View flex safeAreaView backgroundColor="light">
       <Container>
         <HeaderDefault title={navigation.state?.params?.title} backButtonEnabled={navigation.state?.params?.backButtonEnabled} />
       </Container>
@@ -92,7 +92,7 @@ const NotifyScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
             </Text>
             <Image source={require('assets/vectors/notify.jpg')} tachyons={['w100', 'h50']} resizeMode="contain" />
             <Button borderRadius="round" size="medium" onPress={onOpenModalLogin}>
-              <Text type="h7" color="light" tachyons="ph4">
+              <Text type="h7" tachyons="ph4" style={{ color: '#fff' }}>
                 {i18n.t('login')}
               </Text>
             </Button>

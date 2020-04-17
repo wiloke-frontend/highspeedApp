@@ -65,7 +65,7 @@ const SearchScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   );
 
   return (
-    <View flex safeAreaView>
+    <View flex safeAreaView backgroundColor="light">
       <Container>
         <HeaderSearch onSearch={handleSearch} backButtonEnabled={!!navigation?.state?.params?.backButtonEnabled} />
       </Container>

@@ -12,7 +12,7 @@ import { locale } from 'utils/functions/getCurrentLocale';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['categoriesSelected', 'auth', 'postDetailTutorial', 'postTextSize'] as (keyof Reducers)[],
+  whitelist: ['nightMode', 'categoriesSelected', 'auth', 'postDetailTutorial', 'postTextSize'] as (keyof Reducers)[],
 };
 
 const _combineReducers = combineReducers({

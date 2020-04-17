@@ -7,9 +7,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { store, persistor } from './store/configureStore';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import { ThemeProvider } from './shared';
 import { RootNavigator } from './navigation';
-import configureApp from 'utils/constants/configureApp';
 
 interface AppProps {
   skipLoadingScreen: boolean;
@@ -25,15 +23,9 @@ export default function App(props: AppProps) {
   return (
     <PersistGate loading={<AppLoading />} persistor={persistor}>
       <Provider store={store}>
-        <ThemeProvider
-          themeOverrides={{
-            colors: { primary: configureApp.settings.colorPrimary },
-          }}
-        >
-          <ActionSheetProvider>
-            <RootNavigator />
-          </ActionSheetProvider>
-        </ThemeProvider>
+        <ActionSheetProvider>
+          <RootNavigator />
+        </ActionSheetProvider>
       </Provider>
     </PersistGate>
   );

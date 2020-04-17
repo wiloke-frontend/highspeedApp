@@ -6,13 +6,12 @@ import { useTheme, View, Text, Icons } from 'shared';
 interface TabBarItemProps {
   iconName: FeatherNameType | '';
   focused: boolean;
-  iconColor?: string;
   labelName?: string;
 }
 
-function TabBarItem({ iconName, iconColor, labelName = '', focused }: TabBarItemProps) {
+function TabBarItem({ iconName, labelName = '', focused }: TabBarItemProps) {
   const { colors, styled } = useTheme();
-  const iconStyleColor = focused ? colors.primary : iconColor ?? colors.dark2;
+  const iconStyleColor = focused ? colors.primary : colors.dark2;
   const labelStyle = focused ? styled.colorPrimary : styled.colorDark3;
 
   return (

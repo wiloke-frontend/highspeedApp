@@ -19,6 +19,7 @@ import { menu } from 'screens/MenuScreen/reducers/reducerMenu';
 import replyComments from 'screens/CommentScreen/reducers/reducerReply';
 import { forgetPass } from './storeAuth/reducers/reducerPassword';
 import { postDetailTutorial } from 'screens/PostDetailScreen/reducers/reducerPostDetailTutorial';
+import { nightMode } from 'screens/ProfileScreen/reducers/reducerNightMode';
 
 const reducers = {
   // general
@@ -54,6 +55,7 @@ const reducers = {
 
   replyComments,
   forgetPass,
+  nightMode,
 };
 
 export default reducers;

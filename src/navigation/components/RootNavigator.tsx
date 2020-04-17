@@ -1,10 +1,10 @@
 import React from 'react';
 import ConfigNavigator from './ConfigNavigator';
 import { ModalLogin, RegisterResult, onCloseModalLogin } from 'components/ModalLogin/ModalLogin';
-import { View, FormCallbackParams, useTheme, useMount, Toast, Text } from 'shared';
+import { View, FormCallbackParams, useTheme, useMount, Toast, Text, ThemeProvider } from 'shared';
 import { useSelector } from 'react-redux';
 import { useAuthentication, Authentication, BodyRequest } from 'store/storeAuth/actions/actionAuth';
-import { authSelector } from 'store/selectors';
+import { authSelector, nightModeSelector } from 'store/selectors';
 import { useGetTabNavigatorRequest } from 'store/storeTabNavigator/actions';
 import { Alert } from 'react-native';
 import { LoginResult } from 'components/ModalLogin/Login';
@@ -14,6 +14,20 @@ import { useGetPostsWithCatSelected } from 'screens/SelectCatScreen/actions/acti
 import { useGetCategoriesFollowed } from 'store/storeCategories/actions/actionFollowCategory';
 import ModalAppUpdate from 'components/ModalAppUpdate/ModalAppUpdate';
 import configureApp from 'utils/constants/configureApp';
+import invertObjectColorHex from 'utils/functions/invertObjectColorHex';
+
+const colors = {
+  dark1: '#111111',
+  dark2: '#444444',
+  dark3: '#888888',
+  dark4: '#cccccc',
+  gray1: '#d6d6da',
+  gray2: '#e7e7ed',
+  gray3: '#f0f0f3',
+  gray4: '#fafafb',
+  gray5: '#fbfbfc',
+  light: '#ffffff',
+};
 
 export default function RootNavigator() {
   const getTabNavigator = useGetTabNavigatorRequest();
@@ -23,6 +37,7 @@ export default function RootNavigator() {
   const getCategoriesFollowed = useGetCategoriesFollowed();
   const auth = useSelector(authSelector);
   const { styled } = useTheme();
+  const nightMode = useSelector(nightModeSelector);
 
   useMount(() => {
     getTabNavigator({ endpoint: 'tab-navigators' });
@@ -125,14 +140,23 @@ export default function RootNavigator() {
   };
 
   return (
-    <View flex>
-      <ModalLogin onLogin={_handleLogin} onRegister={_handleRegister} isLoading={auth?.status === 'loading'} message={auth?.message} />
-      <ModalAppUpdate
-        text={configureApp.settings.applicationUpdateMessage}
-        buttonUpdateText={i18n.t('updateNow')}
-        moreText={i18n.t('seeMoreUpdateDetails')}
-      />
-      <ConfigNavigator />
-    </View>
+    <ThemeProvider
+      themeOverrides={{
+        colors: {
+          primary: configureApp.settings.colorPrimary,
+          ...(nightMode ? invertObjectColorHex(colors) : colors),
+        },
+      }}
+    >
+      <View flex>
+        <ModalLogin onLogin={_handleLogin} onRegister={_handleRegister} isLoading={auth?.status === 'loading'} message={auth?.message} />
+        <ModalAppUpdate
+          text={configureApp.settings.applicationUpdateMessage}
+          buttonUpdateText={i18n.t('updateNow')}
+          moreText={i18n.t('seeMoreUpdateDetails')}
+        />
+        <ConfigNavigator />
+      </View>
+    </ThemeProvider>
   );
 }

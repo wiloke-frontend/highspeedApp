@@ -32,4 +32,7 @@ export const styles = StyleSheet.create({
   error: {
     marginBottom: 4,
   },
+  colorLight: {
+    color: '#fff',
+  },
 });

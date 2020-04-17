@@ -26,6 +26,7 @@ import { NavigationSuspense, ScreenFC } from 'navigation';
 import { Post } from 'api/Post';
 import HtmlViewer from 'components/HtmlViewer/HtmlViewer';
 import getHtmlViewerTextStyles from 'utils/functions/getHtmlViewerTextStyles';
+import BarHeightSpacer from 'components/BarHeightSpacer/BarHeightSpacer';
 
 export interface PostDetailScreenParams extends Post {}
 
@@ -186,6 +187,7 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
                 </View>
               )}
             </Container>
+            <BarHeightSpacer />
           </ScrollView>
         </View>
       );
@@ -210,7 +212,7 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
   ]);
 
   return (
-    <View flex safeAreaView>
+    <View flex safeAreaView backgroundColor="light">
       <NavigationSuspense>
         <DetailTutorial />
       </NavigationSuspense>

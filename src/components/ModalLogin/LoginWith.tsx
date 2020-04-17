@@ -13,6 +13,7 @@ import { alertMessage } from './utils/alertMessage';
 import { isEmpty } from 'ramda';
 import { notificationsSelector } from 'screens/NotifyScreen/selectors';
 import { useGetNotificationsRequest } from 'screens/NotifyScreen/actions/actionNotifications';
+import { styles } from './styles';
 
 export interface LoginWithProps {
   appID?: string;
@@ -100,15 +101,15 @@ const LoginWith = ({ appID = '2759040360883740' }: LoginWithProps) => {
         loading={auth.statusFacebook === 'loading'}
       >
         <View tachyons="mr1">
-          <Icons.Feather name="facebook" size={18} color="light" />
+          <Icons.Feather name="facebook" size={18} colorNative="#fff" />
         </View>
-        <Text color="light">Login with Facebook</Text>
+        <Text style={styles.colorLight}>Login with Facebook</Text>
       </Button>
       <Button block tachyons={['wAuto', 'mt2', 'br2']} loading={auth.statusApple === 'loading'} backgroundColor="dark2" onPress={_handleLoginApple}>
         <View tachyons="mr1">
-          <Icons.FontAwesome5 name="apple" size={18} color="light" />
+          <Icons.FontAwesome5 name="apple" size={18} colorNative="#fff" />
         </View>
-        <Text color="light">Login with Apple</Text>
+        <Text style={styles.colorLight}>Login with Apple</Text>
       </Button>
     </View>
   );

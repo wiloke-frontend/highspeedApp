@@ -12,3 +12,4 @@ export const userAvatarSelector = (state: AppState) => state.auth.data?.avatar ?
 export const userNameSelector = (state: AppState) => state.auth.data?.displayName;
 export const i18nSelector = (state: AppState) => state.i18n;
 export const tabNavigatorSelector = (state: AppState) => state.tabNavigator;
+export const nightModeSelector = (state: AppState) => state.nightMode;

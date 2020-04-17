@@ -4,7 +4,6 @@ export interface TabNavigatorItem {
   name: string;
   label: string;
   iconName: FeatherNameType | '';
-  iconColor: string;
   enable: boolean;
   screen: 'HomeTabNavigator' | 'MyPostsNavigator' | 'NotifyNavigator' | 'CategoryNavigator' | 'SeachNavigator' | 'MenuNavigator';
 }

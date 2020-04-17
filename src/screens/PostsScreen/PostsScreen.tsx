@@ -58,7 +58,7 @@ const PostsScreen: ScreenFC<PostsScreenParams> = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView>
+    <View flex safeAreaView backgroundColor="light">
       <Container>
         <HeaderSecondary title={navigation.state.params.name} />
       </Container>
