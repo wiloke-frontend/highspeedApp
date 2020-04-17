@@ -3,6 +3,8 @@ import { TouchableOpacity } from 'react-native';
 import { Text, OfflineNotice } from 'shared';
 import { HeaderBase } from 'shared';
 import i18n from 'utils/functions/i18n';
+import { useSelector } from 'react-redux';
+import { nightModeSelector } from 'store/selectors';
 
 export interface HeaderTertiaryProps {
   centerText: string;
@@ -11,9 +13,12 @@ export interface HeaderTertiaryProps {
 }
 
 const HeaderTertiary: FC<HeaderTertiaryProps> = ({ onCancel, onDone, centerText }) => {
+  const nightMode = useSelector(nightModeSelector);
+
   return (
     <>
       <HeaderBase
+        statusBarStyle={nightMode ? 'light-content' : 'dark-content'}
         Left={
           <TouchableOpacity activeOpacity={0.7} onPress={onCancel}>
             <Text>{i18n.t('cancel')}</Text>

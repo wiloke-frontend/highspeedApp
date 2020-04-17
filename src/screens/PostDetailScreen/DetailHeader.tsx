@@ -1,17 +1,17 @@
 import React, { memo, FC } from 'react';
-import { StatusBarStyle, TouchableOpacity, ActivityIndicator, Share, ShareContent } from 'react-native';
+import { TouchableOpacity, ActivityIndicator, Share, ShareContent } from 'react-native';
 import { Link } from 'navigation';
 import BackButton from 'components/BackButton/BackButton';
-import { Icons, HeaderBase, View, useTheme, OfflineNotice, Appearance, Toast, Text } from 'shared';
+import { Icons, HeaderBase, View, useTheme, OfflineNotice, Toast, Text } from 'shared';
 import FontSizeConfig, { FontSizeConfigProps } from 'components/FontSizeConfig/FontSizeConfig';
 import { useSelector } from 'react-redux';
 import { postTextSizeSelector } from 'screens/PostDetailScreen/selectors';
 import i18n from 'utils/functions/i18n';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import isIOS from 'shared/utils/isIOS';
+import { nightModeSelector } from 'store/selectors';
 
 export interface DetailHeaderProps {
-  appearance?: Appearance;
   backText?: string;
   translucent?: boolean;
   backgroundColor?: string;
@@ -25,7 +25,6 @@ export interface DetailHeaderProps {
 }
 
 const DetailHeader: FC<DetailHeaderProps> = ({
-  appearance = 'light',
   backText = '',
   translucent = false,
   backgroundColor = '',
@@ -38,11 +37,9 @@ const DetailHeader: FC<DetailHeaderProps> = ({
   detailWebLink,
 }) => {
   const postTextSize = useSelector(postTextSizeSelector);
+  const nightMode = useSelector(nightModeSelector);
   const { colors, sizes } = useTheme();
   const { showActionSheetWithOptions } = useActionSheet();
-  const compColor = appearance === 'light' ? 'dark2' : 'light';
-  const barStyle: StatusBarStyle = appearance === 'light' ? 'dark-content' : 'light-content';
-  const bgColor = appearance === 'light' ? colors.light : colors.dark1;
   const shareContentIOS: ShareContent = {
     message: '',
     url: detailWebLink,
@@ -96,9 +93,9 @@ const DetailHeader: FC<DetailHeaderProps> = ({
   return (
     <>
       <HeaderBase
-        statusBarStyle={barStyle}
-        backgroundColor={translucent ? 'transparent' : backgroundColor || bgColor}
-        Left={<BackButton backText={backText} color={compColor} tachyons={['pa1', 'nl2', 'mr2']} onAfterBack={onAfterBack} />}
+        statusBarStyle={nightMode ? 'light-content' : 'dark-content'}
+        backgroundColor={translucent ? 'transparent' : backgroundColor || colors.light}
+        Left={<BackButton backText={backText} color="dark2" tachyons={['pa1', 'nl2', 'mr2']} onAfterBack={onAfterBack} />}
         Right={[
           <View key="item1" justifyContent="center" alignItems="center" tachyons={['w2', 'h2', 'mr1']}>
             <FontSizeConfig onChange={onChangeTextSize} fontSizeSelected={postTextSize} />
@@ -108,18 +105,18 @@ const DetailHeader: FC<DetailHeaderProps> = ({
               <ActivityIndicator size="small" />
             ) : (
               <TouchableOpacity activeOpacity={0.7} onPress={onFavorite}>
-                <Icons.FontAwesome name={isFavorite ? 'heart' : 'heart-o'} size={sizes.base * 1.4} color={isFavorite ? 'tertiary' : compColor} />
+                <Icons.FontAwesome name={isFavorite ? 'heart' : 'heart-o'} size={sizes.base * 1.4} color={isFavorite ? 'tertiary' : 'dark2'} />
               </TouchableOpacity>
             )}
           </View>,
           <View key="item3" justifyContent="center" alignItems="center" tachyons={['w2', 'h2']}>
             <Link to="SearchScreen" params={{ backButtonEnabled: true }} activeOpacity={0.7}>
-              <Icons.Feather name="search" size={sizes.base * 1.5} color={compColor} />
+              <Icons.Feather name="search" size={sizes.base * 1.5} color="dark2" />
             </Link>
           </View>,
           <View key="item4" justifyContent="center" alignItems="center" tachyons={['w2', 'h2']}>
             <TouchableOpacity activeOpacity={0.7} onPress={handleActionSheet}>
-              <Icons.Feather name="more-horizontal" size={sizes.base * 1.5} color={compColor} />
+              <Icons.Feather name="more-horizontal" size={sizes.base * 1.5} color="dark2" />
             </TouchableOpacity>
           </View>,
         ]}

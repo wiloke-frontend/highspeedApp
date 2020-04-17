@@ -7,7 +7,7 @@ import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import Logo from 'components/Logo/Logo';
 import useHeaderAnimated from 'shared/hooks/useAnimation';
 import { Link, NavigationScreenProp } from 'navigation';
-import { tabNavigatorSelector, userAvatarSelector, isLoggedInSelector, userNameSelector } from 'store/selectors';
+import { tabNavigatorSelector, userAvatarSelector, isLoggedInSelector, userNameSelector, nightModeSelector } from 'store/selectors';
 import { withNavigation } from 'react-navigation';
 import BackButton from 'components/BackButton/BackButton';
 import Avatar from 'components/Avatar/Avatar';
@@ -23,6 +23,7 @@ const HeaderDefault: FC<HeaderDefaultProps> = ({ title = '', backButtonEnabled =
   const avatar = useSelector(userAvatarSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
   const name = useSelector(userNameSelector);
+  const nightMode = useSelector(nightModeSelector);
   const { opacityText } = useHeaderAnimated();
   const tabNavigator = useSelector(tabNavigatorSelector);
   const parentRouteName = !!navigation ? navigation.dangerouslyGetParent()?.state.routeName ?? '' : '';
@@ -35,6 +36,7 @@ const HeaderDefault: FC<HeaderDefaultProps> = ({ title = '', backButtonEnabled =
   return (
     <>
       <HeaderBase
+        statusBarStyle={nightMode ? 'light-content' : 'dark-content'}
         Left={[
           backButtonEnabled && <BackButton key="item1" tachyons={['pa1', 'nl2', 'mr2']} />,
           !!_title && parentRouteName !== 'home' ? (

@@ -4,6 +4,8 @@ import { sizeBase } from 'utils/constants/base';
 import { Icons, HeaderBase, View, Text, OfflineNotice } from 'shared';
 import BackButton from 'components/BackButton/BackButton';
 import i18n from 'utils/functions/i18n';
+import { useSelector } from 'react-redux';
+import { nightModeSelector } from 'store/selectors';
 
 export interface HeaderSecondaryProps {
   backText?: string;
@@ -11,9 +13,12 @@ export interface HeaderSecondaryProps {
 }
 
 const HeaderSecondary: FC<HeaderSecondaryProps> = ({ backText, title }) => {
+  const nightMode = useSelector(nightModeSelector);
+
   return (
     <>
       <HeaderBase
+        statusBarStyle={nightMode ? 'light-content' : 'dark-content'}
         Left={<BackButton backText={backText} tachyons={['pa1', 'nl2', 'mr2']} />}
         Center={<Text type="h7">{title}</Text>}
         Right={[

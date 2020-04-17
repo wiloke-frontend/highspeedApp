@@ -2,7 +2,7 @@ import React, { memo, FC } from 'react';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { sizeBase } from 'utils/constants/base';
 import { Icons, HeaderBase, View, Text, OfflineNotice } from 'shared';
-import { tabNavigatorSelector } from 'store/selectors';
+import { tabNavigatorSelector, nightModeSelector } from 'store/selectors';
 import { withNavigation } from 'react-navigation';
 import { useSelector } from 'react-redux';
 import { Link, NavigationScreenProp } from 'navigation';
@@ -18,12 +18,14 @@ export interface HeaderCatFollowProps {
 
 const HeaderCatFollow: FC<HeaderCatFollowProps> = ({ title = '', backButtonEnabled = false, onEditing, navigation }) => {
   const tabNavigator = useSelector(tabNavigatorSelector);
+  const nightMode = useSelector(nightModeSelector);
   const parentRouteName = !!navigation ? navigation.dangerouslyGetParent()?.state.routeName : '';
   const _title = !!title ? title : !!navigation ? tabNavigator.data.find(item => item.name === parentRouteName)?.label : '';
 
   return (
     <>
       <HeaderBase
+        statusBarStyle={nightMode ? 'light-content' : 'dark-content'}
         Left={[
           backButtonEnabled && <BackButton key="item1" tachyons={['pa1', 'nl2', 'mr2']} />,
           <Text key="item2" type="h4">
