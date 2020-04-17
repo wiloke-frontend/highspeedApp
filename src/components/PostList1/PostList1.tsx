@@ -36,7 +36,7 @@ function PostList1({
   );
 
   return (
-    <View flexDirection="row" backgroundColor="light">
+    <View flexDirection="row">
       {!inverted && FeaturedImage}
       <View tachyons={['flex', 'pv1', 'ph2']} style={inverted ? styles.contentInverted : {}}>
         <Text type="h7" tachyons="mb1" numberOfLines={2}>
