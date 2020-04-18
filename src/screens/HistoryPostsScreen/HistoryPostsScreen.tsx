@@ -21,7 +21,7 @@ const HistoryPostsScreen: ScreenFC = () => {
       }
       safeAreaView
     >
-      <View flex tachyons="ph2">
+      <View flex tachyons="ph3">
         <NavigationSuspense fallback={<Magazine isLoading type="list2" firstType="list2" />}>
           {isEmpty(historyPosts) ? (
             <Empty />

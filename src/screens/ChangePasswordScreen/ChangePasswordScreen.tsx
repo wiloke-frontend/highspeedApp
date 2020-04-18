@@ -63,24 +63,24 @@ const ChangePasswordScreen: ScreenFC = ({ navigation }) => {
   };
 
   return (
-    <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
-      <ScreenContainer
-        Header={
-          <Container>
-            <HeaderBase
-              Left={<BackButton tachyons={['pa1', 'nl2', 'mr2']} />}
-              Center={
-                <View tachyons={['itemsCenter', 'w70']}>
-                  <Text type="h7" numberOfLines={1}>
-                    {i18n.t('changePassword')}
-                  </Text>
-                </View>
-              }
-            />
-          </Container>
-        }
-        safeAreaView
-      >
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderBase
+            Left={<BackButton tachyons={['pa1', 'nl2', 'mr2']} />}
+            Center={
+              <View tachyons={['itemsCenter', 'w70']}>
+                <Text type="h7" numberOfLines={1}>
+                  {i18n.t('changePassword')}
+                </Text>
+              </View>
+            }
+          />
+        </Container>
+      }
+      safeAreaView
+    >
+      <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
         <Container>
           <View tachyons={['pa3']}>
             <Form
@@ -126,8 +126,8 @@ const ChangePasswordScreen: ScreenFC = ({ navigation }) => {
             />
           </View>
         </Container>
-      </ScreenContainer>
-    </ScrollView>
+      </ScrollView>
+    </ScreenContainer>
   );
 };
 export default ChangePasswordScreen;
