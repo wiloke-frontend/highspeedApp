@@ -1,14 +1,12 @@
 import React, { memo } from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { createStackNavigator, NavigationStackOptions } from 'react-navigation-stack';
 import getSlideFromRightTransition from 'react-navigation-slide-from-right-transition';
 import handleTabNavigator from 'navigation/functions/handleTabNavigator';
 import { rootTabNavigators, rootStackNavigators } from 'navigation/configure';
 import TabBarItem from 'components/TabBarItem/TabBarItem';
 import tabNavigatorOptions from 'navigation/functions/tabNavigatorOptions';
-import configureApp from 'utils/constants/configureApp';
 import { useSelector } from 'react-redux';
 import { tabNavigatorSelector } from 'store/selectors';
 import isAndroid from 'shared/utils/isAndroid';
@@ -22,8 +20,6 @@ type HandleStackNavigatorsReturnType = {
     navigationOptions: NavigationStackOptions;
   };
 };
-
-const { settings } = configureApp;
 
 const ConfigNavigator = () => {
   const tabNavigator = useSelector(tabNavigatorSelector);
@@ -52,20 +48,18 @@ const ConfigNavigator = () => {
     return handleTabNavigator(tabNavigator.data, rootTabNavigators, ({ tabBarLabel, iconName }) => ({
       tabBarLabel,
       tabBarIcon: ({ focused }) => {
-        return <TabBarItem focused={focused} iconName={iconName} labelName={settings.tabNavigator === 'default' ? tabBarLabel : ''} />;
+        return <TabBarItem focused={focused} iconName={iconName} />;
       },
     }));
   };
 
   const rootTabNavigatorValue = () => {
-    if (settings.tabNavigator === 'default') {
-      return createBottomTabNavigator(createRootTabNavigatorRoutes(), tabNavigatorOptions);
-    }
-    return createMaterialBottomTabNavigator(createRootTabNavigatorRoutes(), {
-      activeColor: settings.colorPrimary,
-      barStyle: { backgroundColor: colors.light },
-      labeled: false,
-    });
+    return createBottomTabNavigator(createRootTabNavigatorRoutes(), tabNavigatorOptions(colors));
+    // return createMaterialBottomTabNavigator(createRootTabNavigatorRoutes(), {
+    //   activeColor: settings.colorPrimary,
+    //   barStyle: { backgroundColor: colors.light },
+    //   labeled: false,
+    // });
   };
 
   const RootStack = createStackNavigator(

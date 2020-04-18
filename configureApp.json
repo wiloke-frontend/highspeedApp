@@ -6,7 +6,6 @@
   "settings": {
     "youtubeKey": "AIzaSyDxJaU8bLdx7sSJ8fcRdhYS1pLk8Jdvnx0",
     "colorPrimary": "#ff3e3c",
-    "tabNavigator": "material",
     "applicationUpdateMessage": "Our application has released new version including bug fixes and functional updates. We recommend that you upgrade to have the best experience."
   }
 }
