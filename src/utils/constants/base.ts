@@ -26,16 +26,16 @@ export const lights = {
 };
 
 export const darks = {
-  dark1: '#F0F0F0',
-  dark2: '#E1E1E1',
-  dark3: '#8A8A8A',
-  dark4: '#4F4F4F',
-  gray1: '#474742',
-  gray2: '#383833',
-  gray3: '#30302D',
-  gray4: '#282827',
-  gray5: '#272726',
-  light: '#242424',
+  dark1: '#F1F1F1',
+  dark2: '#E3E3E3',
+  dark3: '#909090',
+  dark4: '#585858',
+  gray1: '#50504C',
+  gray2: '#42423D',
+  gray3: '#3B3B37',
+  gray4: '#333332',
+  gray5: '#323231',
+  light: '#2F2F2F',
 };
 
 // export const darks = {
