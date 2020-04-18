@@ -77,6 +77,10 @@ const KeyBoardComments: FC<KeyboardCommentProps> = ({ usersTag = [], onComment, 
           entityMap={entityMap}
           inputContainerStyle={[styles.input, { borderColor: colors.gray1 }]}
           containerStyle={styles.containerInput}
+          mentionStyle={{
+            backgroundColor: colors.gray3,
+            color: colors.primary,
+          }}
           onChange={({ value, entityMap }) => {
             const draftRes = getDraftJsResultFromTagHighlight({ value, entityMap });
             setComment(value);
