@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View, Button } from 'shared';
+import { View, Button, Text } from 'shared';
 import { CategoryItem } from 'api/PostDetail';
 import { Link } from 'navigation';
 import { isEmpty } from 'ramda';
@@ -16,7 +16,9 @@ const renderCatItem = (item: CategoryItem) => (
     tachyons={['mb1', 'mr1']}
   >
     <Button size="extra-small" borderRadius="round" disabled style={{ backgroundColor: item.color }}>
-      {item.name}
+      <Text colorNative="#fff" tailwind="text-xs">
+        {item.name}
+      </Text>
     </Button>
   </Link>
 );
