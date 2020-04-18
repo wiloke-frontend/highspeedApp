@@ -16,6 +16,7 @@ import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import { ScreenParams } from 'types/ScreenParams';
 import Retry from 'components/Retry/Retry';
 import NotifyItem from './NotifyItem';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 const ActivityIndicator = withViewStyles(RNActivityIndicator);
 const Image = withViewStyles(RNImage);
@@ -58,10 +59,14 @@ const NotifyScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView backgroundColor="light">
-      <Container>
-        <HeaderDefault title={navigation.state?.params?.title} backButtonEnabled={navigation.state?.params?.backButtonEnabled} />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderDefault title={navigation.state?.params?.title} backButtonEnabled={navigation.state?.params?.backButtonEnabled} />
+        </Container>
+      }
+      safeAreaView
+    >
       {isLoggedIn ? (
         <View flex>
           <AsyncComponent
@@ -99,7 +104,7 @@ const NotifyScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
           </View>
         </Container>
       )}
-    </View>
+    </ScreenContainer>
   );
 };
 

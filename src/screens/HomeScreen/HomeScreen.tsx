@@ -10,6 +10,7 @@ import { ScreenFC } from 'navigation';
 import Section from './Section';
 import { FlatList } from 'react-native';
 import HeaderDefault from 'components/HeaderDefault/HeaderDefault';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 const HomeScreen: ScreenFC = () => {
   const homeMounted = useHomeMounted();
@@ -34,10 +35,14 @@ const HomeScreen: ScreenFC = () => {
   // );
 
   return (
-    <View flex safeAreaView backgroundColor="light">
-      <Container>
-        <HeaderDefault />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderDefault />
+        </Container>
+      }
+      safeAreaView
+    >
       <View flex>
         <AsyncComponent
           status={homeSkeleton?.status}
@@ -57,7 +62,7 @@ const HomeScreen: ScreenFC = () => {
           Failure={<Retry tachyons={['pv4', 'mt3']} onPress={homeMounted} />}
         />
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 

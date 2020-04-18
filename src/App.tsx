@@ -1,17 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { store, persistor } from './store/configureStore';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import { ThemeProvider } from './shared';
 import { RootNavigator } from './navigation';
+import configureApp from 'utils/constants/configureApp';
+import { nightModeSelector } from 'store/selectors';
+import { lights, darks } from 'utils/constants/base';
 
 interface AppProps {
   skipLoadingScreen: boolean;
 }
+
+const AppContent = memo(() => {
+  const nightMode = useSelector(nightModeSelector);
+  return (
+    <ThemeProvider
+      themeOverrides={{
+        colors: {
+          primary: configureApp.settings.colorPrimary,
+          ...(nightMode ? darks : lights),
+        },
+      }}
+    >
+      <ActionSheetProvider>
+        <RootNavigator />
+      </ActionSheetProvider>
+    </ThemeProvider>
+  );
+});
 
 export default function App(props: AppProps) {
   const { skipLoadingScreen } = props;
@@ -23,9 +45,7 @@ export default function App(props: AppProps) {
   return (
     <PersistGate loading={<AppLoading />} persistor={persistor}>
       <Provider store={store}>
-        <ActionSheetProvider>
-          <RootNavigator />
-        </ActionSheetProvider>
+        <AppContent />
       </Provider>
     </PersistGate>
   );

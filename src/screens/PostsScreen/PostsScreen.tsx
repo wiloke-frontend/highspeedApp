@@ -10,6 +10,7 @@ import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import { isEmpty } from 'ramda';
 import Empty from 'components/Empty/Empty';
 import Retry from 'components/Retry/Retry';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 export interface PostsScreenParams {
   requestParams: Pick<PostWithParams, 'taxonomies' | 'is_my_favorites'>;
@@ -58,10 +59,14 @@ const PostsScreen: ScreenFC<PostsScreenParams> = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView backgroundColor="light">
-      <Container>
-        <HeaderSecondary title={navigation.state.params.name} />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderSecondary title={navigation.state.params.name} />
+        </Container>
+      }
+      safeAreaView
+    >
       <View flex tachyons="ph3">
         <NavigationSuspense fallback={<Magazine isLoading type="list2" firstType="standard1" />}>
           <AsyncComponent
@@ -88,7 +93,7 @@ const PostsScreen: ScreenFC<PostsScreenParams> = ({ navigation }) => {
           />
         </NavigationSuspense>
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 

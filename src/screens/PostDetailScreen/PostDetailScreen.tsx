@@ -27,6 +27,7 @@ import { Post } from 'api/Post';
 import HtmlViewer from 'components/HtmlViewer/HtmlViewer';
 import getHtmlViewerTextStyles from 'utils/functions/getHtmlViewerTextStyles';
 import BarHeightSpacer from 'components/BarHeightSpacer/BarHeightSpacer';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 export interface PostDetailScreenParams extends Post {}
 
@@ -212,21 +213,25 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
   ]);
 
   return (
-    <View flex safeAreaView backgroundColor="light">
+    <ScreenContainer
+      Header={
+        <Container>
+          <DetailHeader
+            onAfterBack={handleHeaderBack}
+            onChangeTextSize={handleChangeTextSize}
+            onFavorite={handleFavorite}
+            isFavorite={isMyFavoriteCurrent}
+            isFavoriteLoading={isMyFavoriteLoading}
+            onNavigateToComment={handleNavigateToComment}
+            detailWebLink={postDetails[slugCurrent]?.data?.link ?? ''}
+          />
+        </Container>
+      }
+      safeAreaView
+    >
       <NavigationSuspense>
         <DetailTutorial />
       </NavigationSuspense>
-      <Container>
-        <DetailHeader
-          onAfterBack={handleHeaderBack}
-          onChangeTextSize={handleChangeTextSize}
-          onFavorite={handleFavorite}
-          isFavorite={isMyFavoriteCurrent}
-          isFavoriteLoading={isMyFavoriteLoading}
-          onNavigateToComment={handleNavigateToComment}
-          detailWebLink={postDetails[slugCurrent]?.data?.link ?? ''}
-        />
-      </Container>
       <WilTabs
         tabDisabled
         data={tabs}
@@ -250,7 +255,7 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
           });
         }}
       />
-    </View>
+    </ScreenContainer>
   );
 };
 

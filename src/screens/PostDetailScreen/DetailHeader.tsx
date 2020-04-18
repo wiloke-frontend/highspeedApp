@@ -2,14 +2,13 @@ import React, { memo, FC } from 'react';
 import { TouchableOpacity, ActivityIndicator, Share, ShareContent } from 'react-native';
 import { Link } from 'navigation';
 import BackButton from 'components/BackButton/BackButton';
-import { Icons, HeaderBase, View, useTheme, OfflineNotice, Toast, Text } from 'shared';
+import { Icons, HeaderBase, View, useTheme, Toast, Text } from 'shared';
 import FontSizeConfig, { FontSizeConfigProps } from 'components/FontSizeConfig/FontSizeConfig';
 import { useSelector } from 'react-redux';
 import { postTextSizeSelector } from 'screens/PostDetailScreen/selectors';
 import i18n from 'utils/functions/i18n';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import isIOS from 'shared/utils/isIOS';
-import { nightModeSelector } from 'store/selectors';
 
 export interface DetailHeaderProps {
   backText?: string;
@@ -37,7 +36,6 @@ const DetailHeader: FC<DetailHeaderProps> = ({
   detailWebLink,
 }) => {
   const postTextSize = useSelector(postTextSizeSelector);
-  const nightMode = useSelector(nightModeSelector);
   const { colors, sizes } = useTheme();
   const { showActionSheetWithOptions } = useActionSheet();
   const shareContentIOS: ShareContent = {
@@ -93,7 +91,6 @@ const DetailHeader: FC<DetailHeaderProps> = ({
   return (
     <>
       <HeaderBase
-        statusBarStyle={nightMode ? 'light-content' : 'dark-content'}
         backgroundColor={translucent ? 'transparent' : backgroundColor || colors.light}
         Left={<BackButton backText={backText} color="dark2" tachyons={['pa1', 'nl2', 'mr2']} onAfterBack={onAfterBack} />}
         Right={[
@@ -121,7 +118,6 @@ const DetailHeader: FC<DetailHeaderProps> = ({
           </View>,
         ]}
       />
-      <OfflineNotice>{i18n.t('noInternet')}</OfflineNotice>
     </>
   );
 };

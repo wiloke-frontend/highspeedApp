@@ -10,6 +10,7 @@ import { alertMessage } from 'components/ModalLogin/utils/alertMessage';
 import { useSelector } from 'react-redux';
 import { useChangePassword } from 'store/storeAuth/actions/actionAuth';
 import { authSelector } from 'store/selectors';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 export interface ChangePasswordResult {
   oldpassword: string;
@@ -63,18 +64,24 @@ const ChangePasswordScreen: ScreenFC = ({ navigation }) => {
 
   return (
     <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
-      <View flex safeAreaView backgroundColor="light">
+      <ScreenContainer
+        Header={
+          <Container>
+            <HeaderBase
+              Left={<BackButton tachyons={['pa1', 'nl2', 'mr2']} />}
+              Center={
+                <View tachyons={['itemsCenter', 'w70']}>
+                  <Text type="h7" numberOfLines={1}>
+                    {i18n.t('changePassword')}
+                  </Text>
+                </View>
+              }
+            />
+          </Container>
+        }
+        safeAreaView
+      >
         <Container>
-          <HeaderBase
-            Left={<BackButton tachyons={['pa1', 'nl2', 'mr2']} />}
-            Center={
-              <View tachyons={['itemsCenter', 'w70']}>
-                <Text type="h7" numberOfLines={1}>
-                  {i18n.t('changePassword')}
-                </Text>
-              </View>
-            }
-          />
           <View tachyons={['pa3']}>
             <Form
               fields={[
@@ -119,7 +126,7 @@ const ChangePasswordScreen: ScreenFC = ({ navigation }) => {
             />
           </View>
         </Container>
-      </View>
+      </ScreenContainer>
     </ScrollView>
   );
 };

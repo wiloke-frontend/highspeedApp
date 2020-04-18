@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { TouchableOpacity, Alert, ScrollView } from 'react-native';
-import { View, Text, Container, Divider } from 'shared';
+import { TouchableOpacity, Alert, ScrollView, Switch } from 'react-native';
+import { View, Text, Container, Divider, useTheme } from 'shared';
 import { useSelector } from 'react-redux';
 import HeaderSecondary from 'components/HeaderSecondary/HeaderSecondary';
 import i18n from 'utils/functions/i18n';
@@ -10,10 +10,11 @@ import List from 'components/List/List';
 import { Link, ScreenFC } from 'navigation';
 import InterestCategories from './InterestCategories';
 import Avatar from 'components/Avatar/Avatar';
-import { Switch } from 'react-native-gesture-handler';
 import { useChangeNightMode } from './actions/actionNightMode';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 const ProfileScreen: ScreenFC = ({ navigation }) => {
+  const { colors } = useTheme();
   const auth = useSelector(authSelector);
   const nightMode = useSelector(nightModeSelector);
   const changeNightMode = useChangeNightMode();
@@ -43,10 +44,14 @@ const ProfileScreen: ScreenFC = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView backgroundColor="light">
-      <Container>
-        <HeaderSecondary title={i18n.t('myProfile')} />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderSecondary title={i18n.t('myProfile')} />
+        </Container>
+      }
+      safeAreaView
+    >
       <ScrollView>
         <Container>
           <View alignItems="center" tachyons="pv4">
@@ -63,7 +68,14 @@ const ProfileScreen: ScreenFC = ({ navigation }) => {
           <List
             iconName={nightMode ? 'moon' : 'sun'}
             text={i18n.t('nightMode')}
-            Right={<Switch value={nightMode} onValueChange={() => changeNightMode()} />}
+            Right={
+              <Switch
+                value={nightMode}
+                onValueChange={() => changeNightMode()}
+                tintColor={colors.gray2}
+                trackColor={{ true: colors.primary, false: 'transparent' }}
+              />
+            }
           />
           <Divider />
           <Link to="HistoryPostsScreen">
@@ -84,7 +96,7 @@ const ProfileScreen: ScreenFC = ({ navigation }) => {
           <Divider />
         </Container>
       </ScrollView>
-    </View>
+    </ScreenContainer>
   );
 };
 

@@ -12,6 +12,7 @@ import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import { useGetCategoriesRequest } from 'store/storeCategories/actions/actionCategories';
 import { categoriesSelector } from 'store/selectors';
 import { Category } from 'api/Categories';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 export interface ModalSelectCatProps {
   isVisible: boolean;
@@ -27,17 +28,17 @@ const ModalSelectCat: FC<ModalSelectCatProps> = ({ onCancel, onDone, onSelect, i
 
   return (
     <Modal visible={isVisible} animationType="slide" onRequestClose={onCancel}>
-      <View
-        flex
+      <ScreenContainer
         onMount={() => {
           getCategoriesRequest({ endpoint: 'category', params: { number: 0 } });
         }}
+        Header={
+          <Container>
+            <HeaderTertiary onCancel={onCancel} onDone={onDone} centerText={i18n.t('chooseText', { text: i18n.t('categories') })} />
+          </Container>
+        }
         safeAreaView
-        backgroundColor="light"
       >
-        <Container>
-          <HeaderTertiary onCancel={onCancel} onDone={onDone} centerText={i18n.t('chooseText', { text: i18n.t('categories') })} />
-        </Container>
         <NavigationSuspense fallback={<ActivityIndicator size="small" style={tachyons.pv4} />}>
           <AsyncComponent
             useOldData
@@ -70,7 +71,7 @@ const ModalSelectCat: FC<ModalSelectCatProps> = ({ onCancel, onDone, onSelect, i
             }
           />
         </NavigationSuspense>
-      </View>
+      </ScreenContainer>
     </Modal>
   );
 };

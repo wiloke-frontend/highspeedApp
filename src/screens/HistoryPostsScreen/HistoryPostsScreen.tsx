@@ -7,15 +7,20 @@ import { historyPostsSelector } from 'screens/PostDetailScreen/selectors';
 import { isEmpty } from 'ramda';
 import Empty from 'components/Empty/Empty';
 import { NavigationSuspense, ScreenFC } from 'navigation';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 const HistoryPostsScreen: ScreenFC = () => {
   const historyPosts = useSelector(historyPostsSelector);
 
   return (
-    <View flex safeAreaView backgroundColor="light">
-      <Container>
-        <HeaderSecondary title="History" />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderSecondary title="History" />
+        </Container>
+      }
+      safeAreaView
+    >
       <View flex tachyons="ph2">
         <NavigationSuspense fallback={<Magazine isLoading type="list2" firstType="list2" />}>
           {isEmpty(historyPosts) ? (
@@ -25,7 +30,7 @@ const HistoryPostsScreen: ScreenFC = () => {
           )}
         </NavigationSuspense>
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 

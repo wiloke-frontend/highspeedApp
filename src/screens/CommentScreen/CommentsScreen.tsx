@@ -25,6 +25,7 @@ import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import FooterListComment from './FooterListComment';
 import ReplyChildren from './ReplyChildren';
 import timeAgo from 'utils/functions/timeAgo';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 export interface CommentScreenParams {
   id: number;
@@ -290,11 +291,10 @@ const CommentScreen: ScreenFC<CommentScreenParams> = ({ navigation }) => {
   );
 
   return (
-    <View flex safeAreaView safeAreaViewBottom backgroundColor="light">
-      <HeaderComment title={i18n.t('comments')} subTitle={titlePost} />
+    <ScreenContainer Header={<HeaderComment title={i18n.t('comments')} subTitle={titlePost} />} safeAreaView safeAreaViewBottom>
       {Body}
       {isIOS && <KeyboardSpacer topSpacing={isIpad || isSmallDevice ? 0 : -30} />}
-    </View>
+    </ScreenContainer>
   );
 };
 

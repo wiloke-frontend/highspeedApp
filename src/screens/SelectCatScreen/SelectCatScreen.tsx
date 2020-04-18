@@ -15,6 +15,7 @@ import { useSelectCategory } from './actions/actionSelectCategory';
 import ModalSelectCat from './ModalSelectCat';
 import Retry from 'components/Retry/Retry';
 import { useFollowCategoryRequest, useGetCategoriesFollowed } from 'store/storeCategories/actions/actionFollowCategory';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 const Image = withViewStyles(RNImage);
 
@@ -162,15 +163,19 @@ const SelectCatScreen: ScreenFC = () => {
   };
 
   return (
-    <View flex safeAreaView backgroundColor="light">
-      <Container>
-        <HeaderCatFollow onEditing={onVisibleToggle} />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderCatFollow onEditing={onVisibleToggle} />
+        </Container>
+      }
+      safeAreaView
+    >
       <View flex tachyons="ph3">
         {renderContent()}
         <ModalSelectCat onDone={handleDone} onCancel={handleCancel} onSelect={onSelect} isSelected={isSelected} isVisible={isVisible} />
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 

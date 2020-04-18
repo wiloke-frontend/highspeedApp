@@ -13,6 +13,7 @@ import { useSearchScreenMounted, useSearchChangeRequest } from './actions/action
 import { useSelector } from 'react-redux';
 import { trendingPostsSelector, searchResultSelector } from './selectors';
 import { isEmpty } from 'ramda';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 const SearchScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   const searchScreenMounted = useSearchScreenMounted();
@@ -65,10 +66,14 @@ const SearchScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   );
 
   return (
-    <View flex safeAreaView backgroundColor="light">
-      <Container>
-        <HeaderSearch onSearch={handleSearch} backButtonEnabled={!!navigation?.state?.params?.backButtonEnabled} />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderSearch onSearch={handleSearch} backButtonEnabled={!!navigation?.state?.params?.backButtonEnabled} />
+        </Container>
+      }
+      safeAreaView
+    >
       {!!value ? (
         <View flex tachyons={['pv2', 'ph3']}>
           <AsyncComponent
@@ -92,7 +97,7 @@ const SearchScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
       ) : (
         DefaultContent
       )}
-    </View>
+    </ScreenContainer>
   );
 };
 

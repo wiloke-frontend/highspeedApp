@@ -9,6 +9,7 @@ import { useGetCategoriesRequest } from 'store/storeCategories/actions/actionCat
 import { useSelector } from 'react-redux';
 import { categoriesSelector } from 'store/selectors';
 import { ScreenParams } from 'types/ScreenParams';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 const CategoryScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   const getCategoriesRequest = useGetCategoriesRequest();
@@ -30,10 +31,14 @@ const CategoryScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView backgroundColor="light">
-      <Container>
-        <HeaderDefault title={navigation.state?.params?.title} backButtonEnabled={navigation.state?.params?.backButtonEnabled} />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderDefault title={navigation.state.params?.title} backButtonEnabled={navigation.state.params?.backButtonEnabled} />
+        </Container>
+      }
+      safeAreaView
+    >
       <AsyncComponent
         status={categories.status}
         Success={
@@ -48,7 +53,7 @@ const CategoryScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
           />
         }
       />
-    </View>
+    </ScreenContainer>
   );
 };
 

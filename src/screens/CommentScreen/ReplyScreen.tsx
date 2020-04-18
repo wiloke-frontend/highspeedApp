@@ -24,6 +24,7 @@ import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import FooterListComment from './FooterListComment';
 import ParentComment from './ParentComment';
 import timeAgo from 'utils/functions/timeAgo';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 export interface ReplyScreenParams {
   item: Comment;
@@ -265,8 +266,11 @@ const ReplyScreen: ScreenFC<ReplyScreenParams> = ({ navigation }) => {
     );
   };
   return (
-    <View safeAreaView flex safeAreaViewBottom backgroundColor="light">
-      <HeaderComment title={i18n.t('replyCommentOf', { name: comment?.author.displayName || comment?.author.email })} />
+    <ScreenContainer
+      Header={<HeaderComment title={i18n.t('replyCommentOf', { name: comment?.author.displayName || comment?.author.email })} />}
+      safeAreaView
+      safeAreaViewBottom
+    >
       <View flex renderToHardwareTextureAndroid={true}>
         <AsyncComponent
           status={replyComments?.status}
@@ -283,7 +287,7 @@ const ReplyScreen: ScreenFC<ReplyScreenParams> = ({ navigation }) => {
         </Container>
         {isIOS && <KeyboardSpacer topSpacing={isIpad || isSmallDevice ? 0 : -30} />}
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 

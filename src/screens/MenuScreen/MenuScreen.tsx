@@ -8,6 +8,7 @@ import { FlatList } from 'react-native';
 import { useGetMenuRequest } from './actions/actionMenu';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import MenuListItem from './MenuListItem';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 const MenuScreen: ScreenFC = () => {
   const menu = useSelector(menuSelector);
@@ -18,10 +19,14 @@ const MenuScreen: ScreenFC = () => {
   });
 
   return (
-    <View flex safeAreaView backgroundColor="light">
-      <Container>
-        <HeaderDefault />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderDefault />
+        </Container>
+      }
+      safeAreaView
+    >
       <View flex tachyons="ph2">
         <AsyncComponent
           status={menu.status}
@@ -36,7 +41,7 @@ const MenuScreen: ScreenFC = () => {
           }
         />
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 
