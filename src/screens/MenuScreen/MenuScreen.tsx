@@ -27,7 +27,7 @@ const MenuScreen: ScreenFC = () => {
       }
       safeAreaView
     >
-      <View flex tachyons="ph2">
+      <View flex>
         <AsyncComponent
           status={menu.status}
           Success={

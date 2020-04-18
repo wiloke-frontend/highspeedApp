@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    marginBottom: -5,
+    marginBottom: -1,
   },
   label: {
     paddingLeft: 3,

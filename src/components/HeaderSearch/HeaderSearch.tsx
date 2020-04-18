@@ -22,6 +22,7 @@ function HeaderSearch({ backButtonEnabled = false, onSearch = () => {} }: Header
         Right={
           <Input
             placeholder={i18n.t('search')}
+            placeholderTextColor="#999"
             borderColor="transparent"
             backgroundColor="gray2"
             clearButtonMode="while-editing"
