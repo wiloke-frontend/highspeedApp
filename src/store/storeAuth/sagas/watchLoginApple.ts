@@ -20,7 +20,7 @@ function* handleLoginApple({ payload }: ReturnType<typeof loginApple.request>) {
     payload?.cb?.(auth);
   } catch (err) {
     console.log(err.response);
-    yield put(loginApple.failure('Something went to error'));
+    yield put(loginApple.failure(err.response.data.error.msg));
     const auth: Authentication = yield select((state: AppState) => state.auth);
     payload?.cb?.(auth);
   }
