@@ -10,7 +10,7 @@ function* handleNavigationSwipe({ payload }: ReturnType<typeof getNavigationPost
     const res: AxiosResponse<HomeSection> = yield call(fetchAPI.request, { url: payload.endpoint, params: payload.params });
     yield put(getNavigationPosts.success({ endpoint: payload.endpoint, uid: payload.uid, data: res.data.data }));
   } catch {
-    yield put(getNavigationPosts.failure({ endpoint: payload.endpoint, uid: payload.uid, message: 'Loi cmnr' }));
+    yield put(getNavigationPosts.failure({ endpoint: payload.endpoint, uid: payload.uid, message: 'Error' }));
   }
 }
 

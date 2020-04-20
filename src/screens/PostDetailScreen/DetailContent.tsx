@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { NavigationSuspense, Link } from 'navigation';
 import HtmlViewer from 'components/HtmlViewer/HtmlViewer';
-import { Button, Text, View, useTheme } from 'shared';
+import { Button, View, useTheme } from 'shared';
 import DetailTags from './DetailTags';
 import Magazine from 'components/Magazine/Magazine';
 import SectionTitle from 'components/SectionTitle/SectionTitle';
@@ -39,7 +39,7 @@ const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPo
   }
 
   if (postDetail?.status === 'failure') {
-    return <Text>{postDetail?.message}</Text>;
+    return null;
   }
 
   return (

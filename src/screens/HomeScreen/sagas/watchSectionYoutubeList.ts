@@ -43,7 +43,7 @@ function* handleSectionYoutubeList(dataHomeSkeleton: Home['data']) {
     yield put(getYoutubeList.success(dataHomeSectionYoutube));
   } catch (err) {
     console.log('TCL: function*handleSectionYoutubeList -> err', err.response);
-    yield put(getYoutubeList.failure('Loi cmnr'));
+    yield put(getYoutubeList.failure('Error'));
   }
 }
 

@@ -21,7 +21,7 @@ function* handleSeachChange({ payload }: SearchChangeRequest) {
     });
     yield put(searchChange.success(res.data.data));
   } catch {
-    yield put(searchChange.failure('Loi cmnr'));
+    yield put(searchChange.failure('Error'));
   }
 }
 

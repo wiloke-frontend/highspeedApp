@@ -57,6 +57,8 @@ const HomeScreen: ScreenFC = () => {
               }}
               initialNumToRender={2}
               showsVerticalScrollIndicator={false}
+              refreshing={homeSkeleton?.status === 'loading'}
+              onRefresh={homeMounted}
             />
           }
           Failure={<Retry tachyons={['pv4', 'mt3']} onPress={homeMounted} />}
