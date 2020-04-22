@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Container, useMount, tachyons } from 'shared';
-import { StackScreenFC } from 'types/Navigation';
 import HeaderSecondary from 'components/HeaderSecondary/HeaderSecondary';
 import Magazine from 'components/Magazine/Magazine';
-import { NavigationSuspense } from 'navigation';
+import { NavigationSuspense, ScreenFC } from 'navigation';
 import { useGetPostsWithParamsRequest, PostWithParams } from './actions/actionPosts';
 import { useSelector } from 'react-redux';
 import { postsWithParamsSelector, pageSelector, maxNumPagesSelector } from './selectors';
@@ -11,24 +10,25 @@ import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import { isEmpty } from 'ramda';
 import Empty from 'components/Empty/Empty';
 import Retry from 'components/Retry/Retry';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 export interface PostsScreenParams {
-  requestParams: PostWithParams;
+  requestParams: Pick<PostWithParams, 'taxonomies' | 'is_my_favorites'>;
   name: string;
 }
 
-const PostsScreen: StackScreenFC<{}, PostsScreenParams> = ({ navigation }) => {
+const PostsScreen: ScreenFC<PostsScreenParams> = ({ navigation }) => {
   const getPostsWithParamsRequest = useGetPostsWithParamsRequest();
   const postsWithParams = useSelector(postsWithParamsSelector);
   const page = useSelector(pageSelector);
   const maxNumPages = useSelector(maxNumPagesSelector);
 
   const handleGetPostsWithParams = (page: number) => {
-    if (!!navigation.state.params?.requestParams) {
+    if (!!navigation.state.params.requestParams) {
       getPostsWithParamsRequest({
         endpoint: 'search',
         params: {
-          ...navigation.state.params?.requestParams,
+          ...navigation.state.params.requestParams,
           postType: 'post',
           page,
           postsPerPage: 20,
@@ -59,10 +59,14 @@ const PostsScreen: StackScreenFC<{}, PostsScreenParams> = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView>
-      <Container>
-        <HeaderSecondary title={navigation.state.params.name} />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderSecondary title={navigation.state.params.name} />
+        </Container>
+      }
+      safeAreaView
+    >
       <View flex tachyons="ph3">
         <NavigationSuspense fallback={<Magazine isLoading type="list2" firstType="standard1" />}>
           <AsyncComponent
@@ -89,7 +93,7 @@ const PostsScreen: StackScreenFC<{}, PostsScreenParams> = ({ navigation }) => {
           />
         </NavigationSuspense>
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 

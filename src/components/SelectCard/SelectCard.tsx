@@ -27,7 +27,7 @@ const SelectCard: FC<SelectCardProps> = ({ imageUri, imagePreview, isActive = fa
         <Image uri={imageUri} preview={imagePreview} percentRatio="56.25%" />
         <View justifyContent="center" alignItems="center" tachyons={['absolute', 'absoluteFill', 'z1']}>
           <View tachyons={['absolute', 'absoluteFill', 'z1']} style={styles.overlay} />
-          <Text type="h7" tachyons="tc" style={styles.text} color="light" numberOfLines={1}>
+          <Text type="h7" tachyons="tc" style={styles.text} numberOfLines={1}>
             {text}
           </Text>
           <View style={styles.check}>

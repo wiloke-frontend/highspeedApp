@@ -1,6 +1,6 @@
 import React, { memo, FC } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Text, OfflineNotice } from 'shared';
+import { Text } from 'shared';
 import { HeaderBase } from 'shared';
 import i18n from 'utils/functions/i18n';
 
@@ -26,7 +26,6 @@ const HeaderTertiary: FC<HeaderTertiaryProps> = ({ onCancel, onDone, centerText 
           </TouchableOpacity>
         }
       />
-      <OfflineNotice>{i18n.t('noInternet')}</OfflineNotice>
     </>
   );
 };

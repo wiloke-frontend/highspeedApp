@@ -33,7 +33,7 @@ function Post1({
         percentRatio="56.25%"
         {...(imageRounded ? { containerStyle: styles.imageRounded } : {})}
       />
-      <View backgroundColor="light" style={styles[type]}>
+      <View backgroundColor={type === 'default' ? 'transparent' : 'light'} style={styles[type]}>
         <Text type={size === 'small' ? 'h7' : 'h6'} tachyons="mb1" style={styles.title} numberOfLines={2}>
           {title}
         </Text>

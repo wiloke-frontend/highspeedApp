@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Clipboard, FlatList as RNFlatList } from 'react-native';
-import { StackScreenFC } from 'types/Navigation';
+import { ScreenFC } from 'navigation';
 import { useSelector } from 'react-redux';
 import { ActivityIndicator } from 'react-native-paper';
 import { View, Container, useMount, useTheme } from 'shared';
@@ -24,6 +24,7 @@ import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import FooterListComment from './FooterListComment';
 import ParentComment from './ParentComment';
 import timeAgo from 'utils/functions/timeAgo';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 export interface ReplyScreenParams {
   item: Comment;
@@ -32,7 +33,7 @@ export interface ReplyScreenParams {
   isFocus?: boolean;
 }
 
-const ReplyScreen: StackScreenFC<{}, ReplyScreenParams> = ({ navigation }) => {
+const ReplyScreen: ScreenFC<ReplyScreenParams> = ({ navigation }) => {
   const comment = navigation.state.params.item;
   const postID = navigation.state.params?.postID;
   const replyItemChild = navigation.state.params?.reply;
@@ -265,8 +266,11 @@ const ReplyScreen: StackScreenFC<{}, ReplyScreenParams> = ({ navigation }) => {
     );
   };
   return (
-    <View safeAreaView flex>
-      <HeaderComment title={i18n.t('replyCommentOf', { name: comment?.author.displayName || comment?.author.email })} />
+    <ScreenContainer
+      Header={<HeaderComment title={i18n.t('replyCommentOf', { name: comment?.author.displayName || comment?.author.email })} />}
+      safeAreaView
+      safeAreaViewBottom
+    >
       <View flex renderToHardwareTextureAndroid={true}>
         <AsyncComponent
           status={replyComments?.status}
@@ -281,9 +285,9 @@ const ReplyScreen: StackScreenFC<{}, ReplyScreenParams> = ({ navigation }) => {
         <Container>
           <KeyBoardComments usersTag={usersTag as UserComment[]} onComment={_handleNewReply} onEdit={onEdit} />
         </Container>
-        {isIOS && <KeyboardSpacer topSpacing={isIpad || isSmallDevice ? 0 : -33} />}
+        {isIOS && <KeyboardSpacer topSpacing={isIpad || isSmallDevice ? 0 : -30} />}
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 

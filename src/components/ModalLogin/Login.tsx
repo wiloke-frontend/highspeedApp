@@ -4,7 +4,6 @@ import Form from 'components/Form/Form';
 import { styles } from './styles';
 import i18n from 'utils/functions/i18n';
 import LoginWith from './LoginWith';
-import getContraintsLogin from './constraints';
 
 export interface LoginResult {
   username: string;
@@ -34,17 +33,14 @@ const Login: FC<LoginProps> = ({ onLogin, isLoading, onChangeForm, onForget }) =
               type: 'text',
               placeholder: i18n.t('username'),
               icon: 'user',
-              required: true,
             },
             {
               name: 'password',
               type: 'password',
               placeholder: i18n.t('password'),
               icon: 'lock',
-              required: true,
             },
           ]}
-          constraints={getContraintsLogin()}
           buttonText={i18n.t('login')}
           onSubmit={onLogin}
           buttonLoading={isLoading}

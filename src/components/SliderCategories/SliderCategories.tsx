@@ -3,7 +3,6 @@ import { View, FlatList, useTheme, tachyons } from 'shared';
 import { Category } from 'api/Categories';
 import { Link } from 'navigation';
 import CategoryCard from 'components/CategoryCard/CategoryCard';
-import { PostsScreenParams } from 'screens/PostsScreen/PostsScreen';
 import { SCREEN_WIDTH } from 'shared/utils/screen';
 
 export interface SliderCategoriesProps {
@@ -28,15 +27,12 @@ const SliderCategories: FC<SliderCategoriesProps> = ({ data, ListFooterComponent
         <View style={{ width: itemWidth }} tachyons={['mr3', 'pb3']}>
           <Link
             to="PostsScreen"
-            params={
-              {
-                requestParams: {
-                  postType: 'post',
-                  taxonomies: { category: [item.id] },
-                },
-                name: item.name,
-              } as PostsScreenParams
-            }
+            params={{
+              requestParams: {
+                taxonomies: { category: [item.id] },
+              },
+              name: item.name,
+            }}
           >
             <CategoryCard imageUri={item.featuredImage.thumbnail} imagePreview={item.featuredImage.preview} title={item.name} />
           </Link>

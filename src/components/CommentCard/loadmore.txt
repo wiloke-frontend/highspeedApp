@@ -5,7 +5,7 @@ import { DataDefaultType } from 'components/Categories/Categories';
 import Magazine from 'components/Magazine/Magazine';
 import WilTabs, { TabItem } from 'components/WilTabs/WilTabs';
 import { ds } from 'utils/constants/base';
-import { StackScreenFC } from 'types/Navigation';
+import { ScreenFC } from 'types/Navigation';
 import { CategoryPostsScreenProps } from 'containers/CategoryPostsScreenContainer';
 import { View, Text, useMount } from 'shared';
 import { Platform } from 'react-native';
@@ -47,7 +47,7 @@ const transitions = (
   </Transition.Sequence>
 );
 
-const CategoryPostsScreen: StackScreenFC<DataDefaultType, CategoryPostsScreenProps> = ({ navigation, categoryPost, getCategoryPost }) => {
+const CategoryPostsScreen: ScreenFC<DataDefaultType, CategoryPostsScreenProps> = ({ navigation, categoryPost, getCategoryPost }) => {
   const { key } = navigation.state.params;
   const firstLoadMore = useRef(true);
   const viewRef = useRef(null);

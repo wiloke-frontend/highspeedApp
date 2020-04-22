@@ -1,7 +1,7 @@
 import React, { FC, useState, useRef } from 'react';
 import { View, Keyboard, TextInput } from 'react-native';
 import styles from './styles';
-import { Button, Icons, useMount, Text, TextInputMentions, EntityMap } from 'shared';
+import { Button, Icons, useMount, Text, TextInputMentions, EntityMap, useTheme } from 'shared';
 import { getDraftJsResultFromTagHighlight } from 'utils/functions/supportDraftJs';
 import { UserComment, Description } from 'api/Comment';
 import { isEmpty } from 'ramda';
@@ -34,6 +34,7 @@ const KeyBoardComments: FC<KeyboardCommentProps> = ({ usersTag = [], onComment, 
   const resultDefault: Description = { blocks: [], entityMap: {} };
   const result = useRef(resultDefault);
   const isLoggedIn = useSelector(isLoggedInSelector);
+  const { colors } = useTheme();
 
   useMount(() => {
     onEdit(({ values, entityMap }) => {
@@ -53,7 +54,7 @@ const KeyBoardComments: FC<KeyboardCommentProps> = ({ usersTag = [], onComment, 
 
   return (
     <View>
-      <View style={styles.textInputView} renderToHardwareTextureAndroid>
+      <View style={[styles.textInputView, { backgroundColor: colors.light, borderTopColor: colors.gray1 }]} renderToHardwareTextureAndroid>
         <TextInputMentions
           users={usersTag}
           hideUserMentioned
@@ -74,8 +75,12 @@ const KeyBoardComments: FC<KeyboardCommentProps> = ({ usersTag = [], onComment, 
           }}
           value={comment}
           entityMap={entityMap}
-          inputContainerStyle={styles.input}
+          inputContainerStyle={[styles.input, { borderColor: colors.gray1 }]}
           containerStyle={styles.containerInput}
+          mentionStyle={{
+            backgroundColor: colors.gray3,
+            color: colors.primary,
+          }}
           onChange={({ value, entityMap }) => {
             const draftRes = getDraftJsResultFromTagHighlight({ value, entityMap });
             setComment(value);

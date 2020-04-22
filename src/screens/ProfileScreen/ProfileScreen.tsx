@@ -1,23 +1,25 @@
 import React, { useEffect } from 'react';
-import { TouchableOpacity, Alert, ScrollView } from 'react-native';
-import { View, Text, Container, Divider } from 'shared';
+import { TouchableOpacity, Alert, ScrollView, Switch } from 'react-native';
+import { View, Text, Container, Divider, useTheme } from 'shared';
 import { useSelector } from 'react-redux';
 import HeaderSecondary from 'components/HeaderSecondary/HeaderSecondary';
 import i18n from 'utils/functions/i18n';
-import { authSelector } from 'store/selectors';
+import { authSelector, nightModeSelector } from 'store/selectors';
 import { useLogOut } from 'store/storeAuth/actions/actionAuth';
-import { StackScreenFC } from 'types/Navigation';
 import List from 'components/List/List';
-import { Link } from 'navigation';
+import { Link, ScreenFC } from 'navigation';
 import InterestCategories from './InterestCategories';
-import { PostsScreenParams } from 'screens/PostsScreen/PostsScreen';
 import Avatar from 'components/Avatar/Avatar';
+import { useChangeNightMode } from './actions/actionNightMode';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
-const ProfileScreen: StackScreenFC = ({ navigation }) => {
+const ProfileScreen: ScreenFC = ({ navigation }) => {
+  const { colors } = useTheme();
   const auth = useSelector(authSelector);
+  const nightMode = useSelector(nightModeSelector);
+  const changeNightMode = useChangeNightMode();
   const logout = useLogOut();
-
-  const uri = auth.data?.avatar ?? 'https://thuatnguyencorp.com/uploads/product/thiet-ke-avatar-facebook-1.jpg';
+  const uri = auth.data?.avatar ?? '';
 
   useEffect(() => {
     if (!auth.isLoggedIn) {
@@ -42,10 +44,14 @@ const ProfileScreen: StackScreenFC = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView>
-      <Container>
-        <HeaderSecondary title={i18n.t('myProfile')} />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderSecondary title={i18n.t('myProfile')} />
+        </Container>
+      }
+      safeAreaView
+    >
       <ScrollView>
         <Container>
           <View alignItems="center" tachyons="pv4">
@@ -59,6 +65,18 @@ const ProfileScreen: StackScreenFC = ({ navigation }) => {
           <Divider />
           <InterestCategories />
           <Divider />
+          <List
+            iconName={nightMode ? 'moon' : 'sun'}
+            text={i18n.t('nightMode')}
+            Right={
+              <Switch
+                value={nightMode}
+                onValueChange={() => changeNightMode()}
+                trackColor={{ true: colors.primary, false: colors.gray2 }}
+              />
+            }
+          />
+          <Divider />
           <Link to="HistoryPostsScreen">
             <List iconName="clock" text={i18n.t('history')} />
             <Divider />
@@ -67,7 +85,7 @@ const ProfileScreen: StackScreenFC = ({ navigation }) => {
             <List iconName="lock" text={i18n.t('changePassword')} />
           </Link>
           <Divider />
-          <Link to="PostsScreen" params={{ name: i18n.t('favoritePosts'), requestParams: { is_my_favorites: 'yes' } } as PostsScreenParams}>
+          <Link to="PostsScreen" params={{ name: i18n.t('favoritePosts'), requestParams: { is_my_favorites: 'yes' } }}>
             <List iconName="heart" text={i18n.t('favoritePosts')} />
             <Divider />
           </Link>
@@ -77,7 +95,7 @@ const ProfileScreen: StackScreenFC = ({ navigation }) => {
           <Divider />
         </Container>
       </ScrollView>
-    </View>
+    </ScreenContainer>
   );
 };
 

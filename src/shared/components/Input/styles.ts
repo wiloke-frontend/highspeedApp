@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
+import isIOS from 'shared/utils/isIOS';
 
 const styles = StyleSheet.create({
   input: {
-    paddingVertical: 13,
+    paddingVertical: isIOS ? 13 : 7,
   },
   hasLeft: {
     paddingLeft: 0,

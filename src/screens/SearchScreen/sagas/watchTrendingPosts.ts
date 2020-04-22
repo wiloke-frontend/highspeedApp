@@ -13,7 +13,7 @@ function* handleTrendingRequest({ payload }: GetTrendingRequestAction) {
     const res: AxiosResponse<Posts> = yield call(fetchAPI.request, { url: payload });
     yield put(getTrending.success(res.data.data));
   } catch {
-    yield put(getTrending.failure('Loi cmnr'));
+    yield put(getTrending.failure('Error'));
   }
 }
 

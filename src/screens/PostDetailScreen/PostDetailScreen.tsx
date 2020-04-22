@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { View, Text, Container, Toast } from 'shared';
+import { View, Text, Container, Toast, useTheme } from 'shared';
 import DetailCategories from './DetailCategories';
-import { StackScreenFC } from 'types/Navigation';
 import DetailContent from './DetailContent';
 import { ScrollView } from 'react-native';
 import DetailHeader from './DetailHeader';
@@ -22,14 +21,18 @@ import { isLoggedInSelector } from 'store/selectors';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import DetailFeatured from './DetailFeatured';
 import DetailToastFavorite from './DetailToastFavorite';
-import { isEmpty } from 'ramda';
 import DetailTutorial from './DetailTutorial';
-import { NavigationSuspense } from 'navigation';
+import { NavigationSuspense, ScreenFC } from 'navigation';
 import { Post } from 'api/Post';
+import HtmlViewer from 'components/HtmlViewer/HtmlViewer';
+import getHtmlViewerTextStyles from 'utils/functions/getHtmlViewerTextStyles';
+import BarHeightSpacer from 'components/BarHeightSpacer/BarHeightSpacer';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
-export interface PostDetailScreenParams extends Pick<Post, 'id' | 'slug' | 'title' | 'dateFull' | 'author'> {}
+export interface PostDetailScreenParams extends Post {}
 
-const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigation }) => {
+const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
+  const { colors } = useTheme();
   const postDetails = useSelector(postDetailsSelector);
   const postDetailRelatedPosts = useSelector(postDetailRelatedPostsSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
@@ -126,15 +129,14 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
             if (item.key === tabs[indexFocused]?.key) {
               // lắng nghe navigate did focus thì thực hiện
               navigation.addListener('didFocus', () => {
-                // nếu postDetailRelated rỗng thì mới request
-                if (isEmpty(postDetailRelatedPostCurrent?.data)) {
-                  getRelatedPosts.request({ endpoint: tabs[indexFocused]?.key });
+                getRelatedPosts.request({ endpoint: tabs[indexFocused]?.key });
+                if (isLoggedIn) {
+                  getFavorite.request({
+                    endpoint: 'user/favorite',
+                    postEndpoint: tabs[indexFocused]?.key,
+                    postID: tabs[indexFocused]?.id,
+                  });
                 }
-                getFavorite.request({
-                  endpoint: 'user/favorite',
-                  postEndpoint: tabs[indexFocused]?.key,
-                  postID: tabs[indexFocused]?.id,
-                });
                 postView.request({
                   endpoint: 'views',
                   postEndpoint: tabs[indexFocused]?.key,
@@ -162,11 +164,19 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
                   {checkTabVisible && (
                     <>
                       <DetailCategories postCategories={postDetail?.data?.postCategories ?? []} />
-                      <Text type="h2">{postDetail?.data?.title ?? item?.title}</Text>
+                      {/<(\|)|>/g.test(postDetail?.data?.title ?? item?.title) ? (
+                        <HtmlViewer
+                          html={`<h2>${postDetail?.data?.title ?? item?.title}</h2>`}
+                          tagsStyles={getHtmlViewerTextStyles(14, colors.primary)}
+                          colorBase={colors.dark1}
+                        />
+                      ) : (
+                        <Text type="h2">{postDetail?.data?.title ?? item?.title}</Text>
+                      )}
                       <View tachyons={['pa3', 'pb1']} />
                       <AuthorInfoCard
                         authorName={(postDetail?.data?.author?.displayName ?? displayName) || ''}
-                        authorEmail={(postDetail?.data?.dateFull ?? dateFull) || ''}
+                        authorEmail={postDetail?.data?.dateFull ?? dateFull ?? ''}
                         authorAvatar={(postDetail?.data?.author?.avatar ?? avatar) || ''}
                         likeTotal={postDetail?.data?.favoriteCount}
                         viewTotal={postDetail?.data?.viewCount}
@@ -178,14 +188,18 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
                 </View>
               )}
             </Container>
+            <BarHeightSpacer />
           </ScrollView>
         </View>
       );
     };
   }, [
+    colors.dark1,
+    colors.primary,
     getFavorite,
     getRelatedPosts,
     handleContentMounted,
+    isLoggedIn,
     navigation,
     params.author,
     params.dateFull,
@@ -199,21 +213,25 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
   ]);
 
   return (
-    <View flex safeAreaView>
+    <ScreenContainer
+      Header={
+        <Container>
+          <DetailHeader
+            onAfterBack={handleHeaderBack}
+            onChangeTextSize={handleChangeTextSize}
+            onFavorite={handleFavorite}
+            isFavorite={isMyFavoriteCurrent}
+            isFavoriteLoading={isMyFavoriteLoading}
+            onNavigateToComment={handleNavigateToComment}
+            detailWebLink={postDetails[slugCurrent]?.data?.link ?? ''}
+          />
+        </Container>
+      }
+      safeAreaView
+    >
       <NavigationSuspense>
         <DetailTutorial />
       </NavigationSuspense>
-      <Container>
-        <DetailHeader
-          onAfterBack={handleHeaderBack}
-          onChangeTextSize={handleChangeTextSize}
-          onFavorite={handleFavorite}
-          isFavorite={isMyFavoriteCurrent}
-          isFavoriteLoading={isMyFavoriteLoading}
-          onNavigateToComment={handleNavigateToComment}
-          detailWebLink={postDetails[slugCurrent]?.data?.link ?? ''}
-        />
-      </Container>
       <WilTabs
         tabDisabled
         data={tabs}
@@ -223,11 +241,13 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
           postView.cancel();
           getRelatedPosts.cancel();
           getRelatedPosts.request({ endpoint: tabs[index]?.key });
-          getFavorite.request({
-            endpoint: 'user/favorite',
-            postEndpoint: tabs[index]?.key,
-            postID: tabs[index]?.id,
-          });
+          if (isLoggedIn) {
+            getFavorite.request({
+              endpoint: 'user/favorite',
+              postEndpoint: tabs[index]?.key,
+              postID: tabs[index]?.id,
+            });
+          }
           postView.request({
             endpoint: 'views',
             postEndpoint: tabs[index]?.key,
@@ -235,7 +255,7 @@ const PostDetailScreen: StackScreenFC<{}, PostDetailScreenParams> = ({ navigatio
           });
         }}
       />
-    </View>
+    </ScreenContainer>
   );
 };
 

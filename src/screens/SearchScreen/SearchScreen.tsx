@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { StackScreenFC } from 'types/Navigation';
 import { useMount, View, Container, tachyons } from 'shared';
 import Magazine from 'components/Magazine/Magazine';
 import Empty from 'components/Empty/Empty';
 import SectionTitle from 'components/SectionTitle/SectionTitle';
 import { ScrollView } from 'react-native';
 import BarHeightSpacer from 'components/BarHeightSpacer/BarHeightSpacer';
-import { NavigationSuspense } from 'navigation';
+import { NavigationSuspense, ScreenFC } from 'navigation';
 import HeaderSearch from 'components/HeaderSearch/HeaderSearch';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import { ScreenParams } from 'types/ScreenParams';
@@ -14,8 +13,9 @@ import { useSearchScreenMounted, useSearchChangeRequest } from './actions/action
 import { useSelector } from 'react-redux';
 import { trendingPostsSelector, searchResultSelector } from './selectors';
 import { isEmpty } from 'ramda';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
-const SearchScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
+const SearchScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   const searchScreenMounted = useSearchScreenMounted();
   const searchChangeRequest = useSearchChangeRequest();
   const trendingPosts = useSelector(trendingPostsSelector);
@@ -66,10 +66,14 @@ const SearchScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
   );
 
   return (
-    <View flex safeAreaView>
-      <Container>
-        <HeaderSearch onSearch={handleSearch} backButtonEnabled={!!navigation?.state?.params?.backButtonEnabled} />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderSearch onSearch={handleSearch} backButtonEnabled={!!navigation?.state?.params?.backButtonEnabled} />
+        </Container>
+      }
+      safeAreaView
+    >
       {!!value ? (
         <View flex tachyons={['pv2', 'ph3']}>
           <AsyncComponent
@@ -93,7 +97,7 @@ const SearchScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
       ) : (
         DefaultContent
       )}
-    </View>
+    </ScreenContainer>
   );
 };
 

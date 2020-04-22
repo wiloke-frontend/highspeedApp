@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     position: 'relative',
     zIndex: 9,
     fontSize: 15,
+    color: '#fff',
   },
   overlay: {
     zIndex: -1,

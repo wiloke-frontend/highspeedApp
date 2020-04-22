@@ -19,14 +19,7 @@ export interface CheckScreenType {
   [key: string]: any;
 }
 
-export type RenderTabItemType = ({
-  tabBarLabel,
-  iconName,
-}: {
-  tabBarLabel: string;
-  iconName: FeatherNameType | '';
-  iconColor: string;
-}) => RenderTabReturnType;
+export type RenderTabItemType = ({ tabBarLabel, iconName }: { tabBarLabel: string; iconName: FeatherNameType | '' }) => RenderTabReturnType;
 
 export default function handleTabNavigator(source: TabNavigatorItem[], checkScreen: CheckScreenType, renderTabItem: RenderTabItemType) {
   return source.reduce((acc: AccType, item: TabNavigatorItem) => {
@@ -38,7 +31,6 @@ export default function handleTabNavigator(source: TabNavigatorItem[], checkScre
       navigationOptions: renderTabItem({
         tabBarLabel: item.label,
         iconName: item.iconName,
-        iconColor: item.iconColor,
       }),
     };
     return {

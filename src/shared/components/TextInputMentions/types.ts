@@ -26,7 +26,6 @@ export interface OnChangeParams<UserT> {
 export interface TextInputMentionsProps<UserT> {
   users: UserT[];
   hideUserMentioned: boolean;
-  onChange: ({ value, entityMap }: OnChangeParams<UserT>) => void;
   readonly: boolean;
   withChar: string;
   value: string;
@@ -40,8 +39,10 @@ export interface TextInputMentionsProps<UserT> {
   inputRef: LegacyRef<TextInput>;
   placeholder: string;
   placeholderTextColor: string;
+  onChange: ({ value, entityMap }: OnChangeParams<UserT>) => void;
   renderUserItem: (user: UserT, index: number) => ReactNode;
   keyExtractor: (user: UserT, index: number) => string;
+  onPressMention: (user: UserT) => void;
 }
 
 export interface TextInputMentionsState<UserT> {

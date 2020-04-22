@@ -4,7 +4,6 @@ import * as R from 'ramda';
 import TextBox from 'components/TextBox/TextBox';
 import { Link } from 'navigation';
 import { Category } from 'api/Categories';
-import { PostsScreenParams } from 'screens/PostsScreen/PostsScreen';
 
 interface CategoriesProps {
   data: Category[];
@@ -16,12 +15,10 @@ const Categories: FC<CategoriesProps> = ({ data }) => {
       <View key={item.id} tachyons={['mr1', 'mb1']}>
         <Link
           to="PostsScreen"
-          params={
-            {
-              requestParams: { taxonomies: { category: [item.id] } },
-              name: item.name,
-            } as PostsScreenParams
-          }
+          params={{
+            requestParams: { taxonomies: { category: [item.id] } },
+            name: item.name,
+          }}
         >
           <TextBox>{item.name}</TextBox>
         </Link>

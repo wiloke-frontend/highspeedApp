@@ -16,7 +16,7 @@ function* handleAuthen({ payload }: ReturnType<typeof authentication.request>) {
     payload?.cb?.(auth, { ...payload.body });
   } catch (err) {
     console.log(err.response);
-    yield put(authentication.failure('Something went to error'));
+    yield put(authentication.failure(err.response.data.error.msg));
     const auth: Authentication = yield select((state: AppState) => state.auth);
     payload?.cb?.(auth, { ...payload.body });
   }

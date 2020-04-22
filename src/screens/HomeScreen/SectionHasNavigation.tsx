@@ -40,7 +40,7 @@ const SectionHasNavigation: FC<SectionHasNavigationProps> = ({ sectionSkeleton, 
   }, [homeSectionNavigations, sectionSkeleton.uid]);
 
   const handleTabChange = useCallback(
-    (key: string, sectionIndex: number) => () => {
+    (key: string, sectionIndex: number) => {
       if (!!key && key !== 'all') {
         getHomeNavigationPostsRequest({ endpoint: key, uid: sectionSkeleton.uid, params: homeSkeleton.data[sectionIndex].params });
       }
@@ -59,9 +59,7 @@ const SectionHasNavigation: FC<SectionHasNavigationProps> = ({ sectionSkeleton, 
         renderItem={({ key }) => {
           if (!homeSections?.data[sectionSkeleton.uid][key]?.data) {
             return (
-              <View onMount={handleTabChange(key, sectionIndex)}>
-                <SectionLoading />
-              </View>
+              <SectionLoading />
             );
           }
 
@@ -81,8 +79,8 @@ const SectionHasNavigation: FC<SectionHasNavigationProps> = ({ sectionSkeleton, 
             />
           );
         }}
-        // onSwipeEnd={this._handleTabChange(sectionSkeleton, index)}
-        // onTabPress={this._handleTabChange(sectionSkeleton, index)}
+        onSwipeEnd={item => handleTabChange(item.key, sectionIndex)}
+        onTabPress={item => handleTabChange(item.key, sectionIndex)}
         tabBarWrapStyle={[tachyons.mb2, tachyons.ml3, tachyons.mr3]}
         lazy
       />

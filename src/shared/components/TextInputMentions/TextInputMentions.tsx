@@ -16,6 +16,7 @@ export class TextInputMentions<UserT extends User> extends PureComponent<TextInp
     keyExtractor: (_, index) => String(index),
     hideUserMentioned: true,
     onChange: () => {},
+    onPressMention: () => {},
     readonly: false,
     withChar: '@',
     value: '',
@@ -272,6 +273,7 @@ export class TextInputMentions<UserT extends User> extends PureComponent<TextInp
       keyForMention,
       keyExtractor,
       renderUserItem,
+      onPressMention,
     } = this.props;
     const { value, entityMap, search } = this.state;
     return (
@@ -291,6 +293,7 @@ export class TextInputMentions<UserT extends User> extends PureComponent<TextInp
         <View style={[styles.inputContainer, inputContainerStyle]}>
           {this.renderInput()}
           <TextHighlight
+            onPressHighlightEnabled={readonly}
             value={value}
             entityMap={entityMap}
             mentionStyle={mentionStyle}
@@ -300,6 +303,7 @@ export class TextInputMentions<UserT extends User> extends PureComponent<TextInp
               readonly ? {} : styles.inputFakeImportant,
               readonly ? {} : { paddingVertical: getInputFakePaddingVerticalValue(value) },
             ]}
+            onPressHighlight={onPressMention}
           />
         </View>
       </View>

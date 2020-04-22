@@ -105,7 +105,7 @@ export default function WilTabs<TTabItem extends TabItem>({
           {...props}
           scrollEnabled
           indicatorStyle={styled.bgPrimary}
-          style={styled.bgLight}
+          style={styled.bgTransparent}
           renderLabel={renderLabel}
           tabStyle={[styles.tabBar, tabBarStyles]}
           onTabPress={handleTabPress}

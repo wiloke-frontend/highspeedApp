@@ -4,13 +4,13 @@ import { Search } from 'api/Search';
 import { SearchEndpoint } from 'api/Endpoint';
 
 export interface PostWithParams extends PaginationParams {
-  taxonomies: {
-    category: number[];
-    post_tag: number[];
+  taxonomies?: {
+    category?: number[];
+    post_tag?: number[];
   };
   postType: 'post';
-  orderby: string;
-  is_my_favorites: 'yes' | 'no';
+  orderby?: string;
+  is_my_favorites?: 'yes' | 'no';
 }
 
 export const getPostsWithParams = createAsyncAction(['@getPostsWithParamsRequest', '@getPostsWithParamsSuccess', '@getPostsWithParamsFailure'])<

@@ -1,7 +1,7 @@
-import React, { FC, CSSProperties } from 'react';
+import React, { FC } from 'react';
 import { NavigationSuspense, Link } from 'navigation';
 import HtmlViewer from 'components/HtmlViewer/HtmlViewer';
-import { Button, Text, View, useTheme } from 'shared';
+import { Button, View, useTheme } from 'shared';
 import DetailTags from './DetailTags';
 import Magazine from 'components/Magazine/Magazine';
 import SectionTitle from 'components/SectionTitle/SectionTitle';
@@ -9,7 +9,6 @@ import i18n from 'utils/functions/i18n';
 import Skeleton from 'components/Skeleton/Skeleton';
 import { useSelector } from 'react-redux';
 import { historyPostsSelector, postTextSizeSelector } from './selectors';
-import { CommentScreenParams } from 'screens/CommentScreen/CommentsScreen';
 import getHtmlViewerTextStyles from 'utils/functions/getHtmlViewerTextStyles';
 
 interface DetailContentProps {
@@ -22,7 +21,7 @@ const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPo
   const historyPosts = useSelector(historyPostsSelector);
   const postTextSize = useSelector(postTextSizeSelector);
 
-  const checkTagStyles = (): { [key: string]: CSSProperties } => {
+  const checkTagStyles = () => {
     switch (postTextSize) {
       case 'large':
         return getHtmlViewerTextStyles(20, colors.primary);
@@ -40,7 +39,7 @@ const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPo
   }
 
   if (postDetail?.status === 'failure') {
-    return <Text>{postDetail?.message}</Text>;
+    return null;
   }
 
   return (
@@ -49,12 +48,7 @@ const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPo
       {!!postDetail?.data?.postTags && <DetailTags postTags={postDetail?.data?.postTags} />}
       {!!postDetail?.data && (
         <>
-          <Link
-            to="Comments"
-            activeOpacity={0.7}
-            tachyons="mb3"
-            params={{ id: postDetail?.data?.id, title: postDetail?.data?.title } as CommentScreenParams}
-          >
+          <Link to="Comments" activeOpacity={0.7} tachyons="mb3" params={{ id: postDetail?.data?.id ?? -1, title: postDetail?.data?.title ?? '' }}>
             <Button disabled block borderRadius="round" backgroundColor="transparent" borderColor="primary" color="primary" tachyons="mt2">
               {`${i18n.t('seeResponse')} (${postDetail?.data?.commentCount})`}
             </Button>

@@ -17,6 +17,7 @@ export interface WithTextStylesProps {
   style?: StyleProp<TextStyle>;
   backgroundColor?: Color;
   color?: Color;
+  colorNative?: string;
   children?: ReactNode;
 }
 
@@ -31,10 +32,10 @@ const CONSTANT_H7 = 1;
 const CONSTANT_H8 = 0.8;
 const CONSTANT_SMALL = 0.8;
 
-function _getTextStyle(type: Photography, sizes: Sizes, colors: Colors, color?: Color): TextStyle {
+function _getTextStyle(type: Photography, sizes: Sizes, colors: Colors, colorNative: string, color?: Color): TextStyle {
   const { font } = sizes;
-  const headingColor = !!color ? colors[color] : colors.dark1;
-  const textColor = !!color ? colors[color] : colors.dark2;
+  const headingColor = !!colorNative ? colorNative : !!color ? colors[color] : colors.dark1;
+  const textColor = !!colorNative ? colorNative : !!color ? colors[color] : colors.dark2;
 
   switch (type) {
     case 'h1':
@@ -122,13 +123,13 @@ function _getTextStyle(type: Photography, sizes: Sizes, colors: Colors, color?: 
 
 export function withTextStyles<P extends object>(Component: ComponentType<P>, styleProp = 'style') {
   const WithTextStyles = forwardRef<Text, P & WithTextStylesProps>(
-    ({ tailwind = [], tachyons = [], type = 'p', size, color, backgroundColor = 'transparent', style = {}, ...rest }, ref) => {
+    ({ tailwind = [], tachyons = [], type = 'p', size, color, colorNative = '', backgroundColor = 'transparent', style = {}, ...rest }, ref) => {
       const { sizes, colors } = useTheme();
       const inlineStyle = [
         { backgroundColor: !!colors[backgroundColor] ? colors[backgroundColor] : backgroundColor },
         !!size ? { fontSize: size } : {},
       ];
-      const textStyle = _getTextStyle(type, sizes, colors, color);
+      const textStyle = _getTextStyle(type, sizes, colors, colorNative, color);
       const styles = [textStyle, inlineStyle, getTailwindStyle(tailwind), getTachyonsStyle(tachyons), style];
 
       return <Component ref={ref} {...(rest as P)} {...{ [styleProp]: styles }} />;

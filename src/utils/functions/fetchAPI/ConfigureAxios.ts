@@ -1,11 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosInstance, AxiosError, AxiosResponse } from 'axios';
 
-type ResponseData = any;
-
 interface Configure {
   configure: AxiosRequestConfig;
-  setAccessToken(): string;
-  setRefreshToken(): string;
+  setAccessToken: () => string;
+  setRefreshToken: () => string;
 }
 
 type Success<ResponseDataT> = (res: AxiosResponse<ResponseDataT>, originalRequest: AxiosRequestConfig) => void;
@@ -18,8 +16,8 @@ interface AccessTokenParams {
 
 interface Config<ResponseDataT, AxiosDataReturnT> {
   url: string;
-  setRefreshCondition(error: AxiosError): boolean;
-  axiosData(refreshToken: string, accessToken: string): AxiosDataReturnT;
+  setRefreshCondition: (error: AxiosError) => boolean;
+  axiosData: (refreshToken: string, accessToken: string) => AxiosDataReturnT;
   success: Success<ResponseDataT>;
   failure: Failure;
 }
@@ -80,7 +78,7 @@ export default class ConfigureAxios {
     }
   };
 
-  public refreshToken = <ResponseDataT extends ResponseData = any, AxiosDataReturnT = any>(config: Config<ResponseDataT, AxiosDataReturnT>) => {
+  public refreshToken = <ResponseDataT extends any = any, AxiosDataReturnT = any>(config: Config<ResponseDataT, AxiosDataReturnT>) => {
     const interceptor = this.axiosInstance.interceptors.response.use(undefined, (error: AxiosError) => {
       if (!config.setRefreshCondition(error)) {
         return Promise.reject(error);

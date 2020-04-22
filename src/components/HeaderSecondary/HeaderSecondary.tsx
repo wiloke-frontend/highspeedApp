@@ -1,9 +1,8 @@
 import React, { memo, FC } from 'react';
 import { Link } from 'navigation';
 import { sizeBase } from 'utils/constants/base';
-import { Icons, HeaderBase, View, Text, OfflineNotice } from 'shared';
+import { Icons, HeaderBase, View, Text } from 'shared';
 import BackButton from 'components/BackButton/BackButton';
-import i18n from 'utils/functions/i18n';
 
 export interface HeaderSecondaryProps {
   backText?: string;
@@ -24,7 +23,6 @@ const HeaderSecondary: FC<HeaderSecondaryProps> = ({ backText, title }) => {
           </Link>,
         ]}
       />
-      <OfflineNotice>{i18n.t('noInternet')}</OfflineNotice>
     </>
   );
 };

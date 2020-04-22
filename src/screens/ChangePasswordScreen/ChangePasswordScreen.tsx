@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { StackScreenFC } from 'types/Navigation';
+import { ScreenFC } from 'navigation';
 import { View, Text, Container, HeaderBase, FormCallbackParams, Toast, useTheme } from 'shared';
-import isIOS from 'shared/utils/isIOS';
 import i18n from 'utils/functions/i18n';
 import BackButton from 'components/BackButton/BackButton';
 import Form from 'components/Form/Form';
@@ -11,6 +10,7 @@ import { alertMessage } from 'components/ModalLogin/utils/alertMessage';
 import { useSelector } from 'react-redux';
 import { useChangePassword } from 'store/storeAuth/actions/actionAuth';
 import { authSelector } from 'store/selectors';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 export interface ChangePasswordResult {
   oldpassword: string;
@@ -18,7 +18,7 @@ export interface ChangePasswordResult {
   confirmpassword: string;
 }
 
-const ChangePasswordScreen: StackScreenFC = ({ navigation }) => {
+const ChangePasswordScreen: ScreenFC = ({ navigation }) => {
   const [error, setError] = useState('');
   const changePassword = useChangePassword();
   const auth = useSelector(authSelector);
@@ -63,8 +63,8 @@ const ChangePasswordScreen: StackScreenFC = ({ navigation }) => {
   };
 
   return (
-    <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
-      <View safeAreaView={isIOS} flex>
+    <ScreenContainer
+      Header={
         <Container>
           <HeaderBase
             Left={<BackButton tachyons={['pa1', 'nl2', 'mr2']} />}
@@ -76,6 +76,12 @@ const ChangePasswordScreen: StackScreenFC = ({ navigation }) => {
               </View>
             }
           />
+        </Container>
+      }
+      safeAreaView
+    >
+      <ScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled">
+        <Container>
           <View tachyons={['pa3']}>
             <Form
               fields={[
@@ -120,8 +126,8 @@ const ChangePasswordScreen: StackScreenFC = ({ navigation }) => {
             />
           </View>
         </Container>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </ScreenContainer>
   );
 };
 export default ChangePasswordScreen;

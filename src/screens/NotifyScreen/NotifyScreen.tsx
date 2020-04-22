@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, useMount, Text, Button, Container, withViewStyles } from 'shared';
-import { StackScreenFC } from 'types/Navigation';
+import { ScreenFC } from 'navigation';
 import HeaderDefault from 'components/HeaderDefault/HeaderDefault';
 import { useGetNotificationsRequest } from './actions/actionNotifications';
 import { useSelector } from 'react-redux';
@@ -16,11 +16,12 @@ import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import { ScreenParams } from 'types/ScreenParams';
 import Retry from 'components/Retry/Retry';
 import NotifyItem from './NotifyItem';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 const ActivityIndicator = withViewStyles(RNActivityIndicator);
 const Image = withViewStyles(RNImage);
 
-const NotifyScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
+const NotifyScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   const getNotificationsRequest = useGetNotificationsRequest();
   const notifications = useSelector(notificationsSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
@@ -58,10 +59,14 @@ const NotifyScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView>
-      <Container>
-        <HeaderDefault title={navigation.state?.params?.title} backButtonEnabled={navigation.state?.params?.backButtonEnabled} />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderDefault title={navigation.state?.params?.title} backButtonEnabled={navigation.state?.params?.backButtonEnabled} />
+        </Container>
+      }
+      safeAreaView
+    >
       {isLoggedIn ? (
         <View flex>
           <AsyncComponent
@@ -92,14 +97,14 @@ const NotifyScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
             </Text>
             <Image source={require('assets/vectors/notify.jpg')} tachyons={['w100', 'h50']} resizeMode="contain" />
             <Button borderRadius="round" size="medium" onPress={onOpenModalLogin}>
-              <Text type="h7" color="light" tachyons="ph4">
+              <Text type="h7" tachyons="ph4" style={{ color: '#fff' }}>
                 {i18n.t('login')}
               </Text>
             </Button>
           </View>
         </Container>
       )}
-    </View>
+    </ScreenContainer>
   );
 };
 

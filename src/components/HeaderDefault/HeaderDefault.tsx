@@ -1,23 +1,21 @@
 import React, { memo, FC } from 'react';
 import { useSelector } from 'react-redux';
 import { sizeBase } from 'utils/constants/base';
-import { Icons, HeaderBase, View, Text, OfflineNotice } from 'shared';
+import { Icons, HeaderBase, View, Text } from 'shared';
 import { Animated, TouchableOpacity } from 'react-native';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import Logo from 'components/Logo/Logo';
 import useHeaderAnimated from 'shared/hooks/useAnimation';
-import { Link } from 'navigation';
+import { Link, NavigationScreenProp } from 'navigation';
 import { tabNavigatorSelector, userAvatarSelector, isLoggedInSelector, userNameSelector } from 'store/selectors';
-import { NavigationRoute, withNavigation } from 'react-navigation';
-import { NavigationStackProp } from 'react-navigation-stack';
+import { withNavigation } from 'react-navigation';
 import BackButton from 'components/BackButton/BackButton';
 import Avatar from 'components/Avatar/Avatar';
-import i18n from 'utils/functions/i18n';
 
 export interface HeaderDefaultProps {
   title?: string;
   backButtonEnabled?: boolean;
-  navigation: NavigationStackProp<NavigationRoute, {}>;
+  navigation: NavigationScreenProp;
 }
 
 const HeaderDefault: FC<HeaderDefaultProps> = ({ title = '', backButtonEnabled = false, navigation }) => {
@@ -67,7 +65,6 @@ const HeaderDefault: FC<HeaderDefaultProps> = ({ title = '', backButtonEnabled =
           ),
         ]}
       />
-      <OfflineNotice>{i18n.t('noInternet')}</OfflineNotice>
     </>
   );
 };

@@ -1,18 +1,17 @@
 import React from 'react';
 import { View, useMount, Container, tachyons, FlatList } from 'shared';
 import HeaderDefault from 'components/HeaderDefault/HeaderDefault';
-import { StackScreenFC } from 'types/Navigation';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import CategoryCard from 'components/CategoryCard/CategoryCard';
-import { Link } from 'navigation';
+import { Link, ScreenFC } from 'navigation';
 import { Category } from 'api/Categories';
 import { useGetCategoriesRequest } from 'store/storeCategories/actions/actionCategories';
 import { useSelector } from 'react-redux';
 import { categoriesSelector } from 'store/selectors';
 import { ScreenParams } from 'types/ScreenParams';
-import { PostsScreenParams } from 'screens/PostsScreen/PostsScreen';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
-const CategoryScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
+const CategoryScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   const getCategoriesRequest = useGetCategoriesRequest();
   const categories = useSelector(categoriesSelector);
   const numColumns = 2;
@@ -24,7 +23,7 @@ const CategoryScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
   const renderCategoryItem = ({ item }: { item: Category }) => {
     return (
       <View tachyons="pb3">
-        <Link to="PostsScreen" params={{ requestParams: { taxonomies: { category: [item.id] } }, name: item.name } as PostsScreenParams}>
+        <Link to="PostsScreen" params={{ requestParams: { taxonomies: { category: [item.id] } }, name: item.name }}>
           <CategoryCard imageUri={item.featuredImage.thumbnail} imagePreview={item.featuredImage.preview} title={item.name} />
         </Link>
       </View>
@@ -32,10 +31,14 @@ const CategoryScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
   };
 
   return (
-    <View flex safeAreaView>
-      <Container>
-        <HeaderDefault title={navigation.state?.params?.title} backButtonEnabled={navigation.state?.params?.backButtonEnabled} />
-      </Container>
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderDefault title={navigation.state.params?.title} backButtonEnabled={navigation.state.params?.backButtonEnabled} />
+        </Container>
+      }
+      safeAreaView
+    >
       <AsyncComponent
         status={categories.status}
         Success={
@@ -50,7 +53,7 @@ const CategoryScreen: StackScreenFC<{}, ScreenParams> = ({ navigation }) => {
           />
         }
       />
-    </View>
+    </ScreenContainer>
   );
 };
 

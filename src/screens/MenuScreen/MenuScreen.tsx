@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, View, useMount } from 'shared';
-import { StackScreenFC } from 'types/Navigation';
+import { ScreenFC } from 'navigation';
 import HeaderDefault from 'components/HeaderDefault/HeaderDefault';
 import { useSelector } from 'react-redux';
 import { menuSelector } from './selectors';
@@ -8,8 +8,9 @@ import { FlatList } from 'react-native';
 import { useGetMenuRequest } from './actions/actionMenu';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import MenuListItem from './MenuListItem';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
-const MenuScreen: StackScreenFC = () => {
+const MenuScreen: ScreenFC = () => {
   const menu = useSelector(menuSelector);
   const getMenuRequest = useGetMenuRequest();
 
@@ -18,11 +19,15 @@ const MenuScreen: StackScreenFC = () => {
   });
 
   return (
-    <View flex safeAreaView>
-      <Container>
-        <HeaderDefault />
-      </Container>
-      <View flex tachyons="ph2">
+    <ScreenContainer
+      Header={
+        <Container>
+          <HeaderDefault />
+        </Container>
+      }
+      safeAreaView
+    >
+      <View flex>
         <AsyncComponent
           status={menu.status}
           Success={
@@ -36,7 +41,7 @@ const MenuScreen: StackScreenFC = () => {
           }
         />
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 

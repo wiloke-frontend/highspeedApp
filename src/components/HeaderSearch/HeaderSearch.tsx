@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { TextInputProps } from 'react-native';
 import BackButton from 'components/BackButton/BackButton';
-import { HeaderBase, Input, Icons, OfflineNotice } from 'shared';
+import { HeaderBase, Input, Icons } from 'shared';
 import { styles } from './styles';
 import i18n from 'utils/functions/i18n';
 
@@ -22,6 +22,7 @@ function HeaderSearch({ backButtonEnabled = false, onSearch = () => {} }: Header
         Right={
           <Input
             placeholder={i18n.t('search')}
+            placeholderTextColor="#999"
             borderColor="transparent"
             backgroundColor="gray2"
             clearButtonMode="while-editing"
@@ -32,7 +33,6 @@ function HeaderSearch({ backButtonEnabled = false, onSearch = () => {} }: Header
           />
         }
       />
-      <OfflineNotice>{i18n.t('noInternet')}</OfflineNotice>
     </>
   );
 }

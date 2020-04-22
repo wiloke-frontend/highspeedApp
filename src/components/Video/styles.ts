@@ -15,16 +15,18 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   overlay: {
-    zIndex: -1,
-    backgroundColor: '#000',
-    opacity: 0.3,
+    backgroundColor: 'rgba(0,0,0,0.2)',
   },
   iconWrap: {
     position: 'relative',
     zIndex: 9,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderWidth: 2,
+    borderColor: '#fff',
+  },
+  icon: {
+    marginLeft: 3,
   },
 });
 

@@ -10,7 +10,7 @@ export interface MeasureType {
   pageY: number;
 }
 
-interface RefObjectItemType {
+export interface RefObjectItemType {
   measure: (callback: MeasureOnSuccessCallback) => void;
 }
 
@@ -34,7 +34,6 @@ export function useMeasure(ref: MutableRefObject<RefObjectItemType | null>): Use
     _req = requestAnimationFrame(() => {
       !!ref.current &&
         ref.current.measure((x, y, width, height, pageX, pageY) => {
-          console.log(height);
           setMeasure({ x, y, width, height, pageX, pageY });
         });
     });

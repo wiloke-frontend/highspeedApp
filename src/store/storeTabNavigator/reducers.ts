@@ -13,7 +13,6 @@ const initialState: TabNavigatorState = {
       name: 'home',
       label: 'Home',
       iconName: '',
-      iconColor: '',
       enable: true,
       screen: 'HomeTabNavigator',
     },

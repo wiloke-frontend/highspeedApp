@@ -17,7 +17,7 @@ function SectionTitle2({ text, containerStyle = {}, backgroundColor = 'primary' 
     <View style={[styles.container, containerStyle]}>
       <View flexDirection="row">
         <View style={[styles.textWrapper, { backgroundColor: colors[backgroundColor] }]}>
-          <Text type="h6" color="light">
+          <Text type="h6" colorNative="#fff">
             {text}
           </Text>
         </View>

@@ -115,4 +115,5 @@ export const vi = {
   loginAgain: 'Bạn có muốn đăng nhập lại không?',
   matchPassword: 'Mật khẩu xác nhận không trùng khớp với mật khẩu mới',
   seeMoreUpdateDetails: 'Xem thêm chi tiết bản cập nhật',
+  nightMode: 'Chế độ tối',
 };

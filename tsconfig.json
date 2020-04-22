@@ -13,6 +13,8 @@
     "strict": true,
     "module": "esnext",
     "esModuleInterop": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": false,
     "baseUrl": ".",

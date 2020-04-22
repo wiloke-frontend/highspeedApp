@@ -6,11 +6,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    marginBottom: -5,
+    marginBottom: -1,
   },
   label: {
     paddingLeft: 3,
     paddingRight: 3,
+    fontSize: 10,
   },
 });
 

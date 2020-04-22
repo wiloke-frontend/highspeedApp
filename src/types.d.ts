@@ -21,4 +21,6 @@ declare global {
   }
 
   declare type Timeout = NodeJS.Timeout;
+
+  declare type IdentityFunction = <T>(fn: T) => T;
 }

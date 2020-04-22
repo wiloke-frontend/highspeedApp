@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
   },
   logo: {
     width: '80%',
-    height: 100,
+    height: 80,
   },
   wrapper: {
     position: 'relative',
@@ -31,5 +31,11 @@ export const styles = StyleSheet.create({
   },
   error: {
     marginBottom: 4,
+  },
+  colorLight: {
+    color: '#fff',
+  },
+  appleButton: {
+    backgroundColor: '#050708',
   },
 });

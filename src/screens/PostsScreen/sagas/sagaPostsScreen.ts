@@ -17,7 +17,7 @@ function* handlePostWithParams({ payload }: ReturnType<typeof getPostsWithParams
     } as AxiosRequestConfig);
     yield put(getPostsWithParams.success(res.data));
   } catch (err) {
-    console.log(err.request);
+    console.log(err.response);
     yield put(getPostsWithParams.failure('Error'));
   }
 }

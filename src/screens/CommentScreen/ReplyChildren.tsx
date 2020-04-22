@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Comment } from 'api/Comment';
 import R from 'ramda';
 import { FlatList } from 'react-native';
-import { Link } from 'navigation';
+import { Link, NavigationScreenProp } from 'navigation';
 import { Text } from 'shared';
 import i18n from 'utils/functions/i18n';
 import CommentCard from 'components/CommentCard/CommentCard';
-import { withNavigation, NavigationInjectedProps, NavigationParams, NavigationAction } from 'react-navigation';
+import { withNavigation } from 'react-navigation';
 import timeAgo from 'utils/functions/timeAgo';
 
 export interface ReplyChildrenProps {
@@ -15,9 +15,7 @@ export interface ReplyChildrenProps {
   isEdit: boolean;
   commentEditID?: number;
   onCancel: () => void;
-  navigation?: NavigationInjectedProps['navigation'] & {
-    push?: (routeNameOrOptions: string, params?: NavigationParams, action?: NavigationAction) => boolean;
-  };
+  navigation?: NavigationScreenProp;
 }
 
 function ReplyChildren({ parentComment, postID, isEdit, commentEditID, onCancel, navigation }: ReplyChildrenProps) {

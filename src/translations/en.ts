@@ -115,4 +115,5 @@ export const en = {
   loginAgain: 'Do you want to login again?',
   matchPassword: 'Your confirm password does not match new password!',
   seeMoreUpdateDetails: 'See more update details',
+  nightMode: 'Night mode',
 };

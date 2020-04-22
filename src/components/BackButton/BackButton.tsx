@@ -4,7 +4,7 @@ import { Link, LinkProps } from 'navigation';
 import { Icons, Color, Text, useTheme } from 'shared';
 import styles from './styles';
 
-interface BackButtonProps extends LinkProps {
+interface BackButtonProps extends LinkProps<any> {
   backText?: string;
   color?: Color;
   containerStyle?: StyleProp<ViewStyle>;

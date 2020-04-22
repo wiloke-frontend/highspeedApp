@@ -2,9 +2,8 @@ import React, { useState, useRef } from 'react';
 import { useMount, View, Container, useTheme } from 'shared';
 import { ActivityIndicator } from 'react-native-paper';
 import { isEmpty } from 'ramda';
-import { FlatList, Clipboard } from 'react-native';
+import { FlatList, Clipboard, StatusBar } from 'react-native';
 import { useActionSheet } from '@expo/react-native-action-sheet';
-import { StackScreenFC } from 'types/Navigation';
 import CommentCard from 'components/CommentCard/CommentCard';
 import { Comment, UserComment, Description } from 'api/Comment';
 import KeyBoardComments, { OnEditCallBack } from './KeyBoardComments';
@@ -15,7 +14,7 @@ import { useGetPostComment, useDeleteComment, useAddNewComment, useDeleteOffline
 import { useSelector } from 'react-redux';
 import { commentSelector, usersCommentSelector } from './selector';
 import { userIdSelector, isLoggedInSelector } from 'store/selectors';
-import { NavigationSuspense } from 'navigation';
+import { NavigationSuspense, ScreenFC } from 'navigation';
 import Empty from 'components/Empty/Empty';
 import KeyboardSpacer from 'components/KeyboardSpacer/KeyboardSpacer';
 import { getTagHighlightValuesFromDraftJs } from 'utils/functions/supportDraftJs';
@@ -26,13 +25,16 @@ import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import FooterListComment from './FooterListComment';
 import ReplyChildren from './ReplyChildren';
 import timeAgo from 'utils/functions/timeAgo';
+import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 export interface CommentScreenParams {
   id: number;
   title: string;
 }
 
-const CommentScreen: StackScreenFC<{}, CommentScreenParams> = ({ navigation }) => {
+StatusBar.setBarStyle('dark-content');
+
+const CommentScreen: ScreenFC<CommentScreenParams> = ({ navigation }) => {
   const { showActionSheetWithOptions } = useActionSheet();
   const getComments = useGetPostComment();
   const deleteComment = useDeleteComment();
@@ -289,11 +291,10 @@ const CommentScreen: StackScreenFC<{}, CommentScreenParams> = ({ navigation }) =
   );
 
   return (
-    <View flex safeAreaView>
-      <HeaderComment title={i18n.t('comments')} subTitle={titlePost} />
+    <ScreenContainer Header={<HeaderComment title={i18n.t('comments')} subTitle={titlePost} />} safeAreaView safeAreaViewBottom>
       {Body}
-      {isIOS && <KeyboardSpacer topSpacing={isIpad || isSmallDevice ? 0 : -33} />}
-    </View>
+      {isIOS && <KeyboardSpacer topSpacing={isIpad || isSmallDevice ? 0 : -30} />}
+    </ScreenContainer>
   );
 };
 

@@ -15,7 +15,7 @@ export interface FontSizeConfigProps {
 
 const FontSizeConfig: FC<FontSizeConfigProps> = ({ style = {}, onChange, fontSizeSelected }) => {
   const [visible, onVisible] = useToggle(false);
-  const { colors } = useTheme();
+  const { colors, styled } = useTheme();
   const [animate, onAnimated] = useAnimated({ toValue: 100 });
 
   const scale = animate.interpolate({
@@ -33,9 +33,10 @@ const FontSizeConfig: FC<FontSizeConfigProps> = ({ style = {}, onChange, fontSiz
     <View style={style}>
       <Modal visible={visible} animationType="fade" transparent onRequestClose={onVisible}>
         <View flex justifyContent="center" alignItems="center" style={styles.modalInner}>
-          <TouchableOpacity activeOpacity={1} style={styles.overlay} onPress={onVisible} />
+          <TouchableOpacity activeOpacity={1} style={[styles.overlay, styled.bgDark1]} onPress={onVisible} />
           <Animated.View style={[styles.content, { transform: [{ scale }] }]}>
-            <View flexDirection="row" style={styles.contentInner}>
+            <View style={[styles.border, styled.bgLight]} />
+            <View flexDirection="row" style={[styles.contentInner, styled.bgLight]}>
               {SIZES.map((item, index) => {
                 return (
                   <TouchableOpacity
