@@ -72,8 +72,7 @@ const ProfileScreen: ScreenFC = ({ navigation }) => {
               <Switch
                 value={nightMode}
                 onValueChange={() => changeNightMode()}
-                tintColor={colors.gray2}
-                trackColor={{ true: colors.primary, false: 'transparent' }}
+                trackColor={{ true: colors.primary, false: colors.gray2 }}
               />
             }
           />
