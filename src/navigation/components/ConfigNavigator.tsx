@@ -10,7 +10,6 @@ import tabNavigatorOptions from 'navigation/functions/tabNavigatorOptions';
 import { useSelector } from 'react-redux';
 import { tabNavigatorSelector } from 'store/selectors';
 import isAndroid from 'shared/utils/isAndroid';
-import { useTheme } from 'shared';
 import { NavigationScreenProp } from 'navigation/types/NavigationScreenProp';
 
 type RootStackNavigatorsKey = keyof typeof rootStackNavigators;
@@ -24,7 +23,6 @@ type HandleStackNavigatorsReturnType = {
 
 const ConfigNavigator = () => {
   const tabNavigator = useSelector(tabNavigatorSelector);
-  const { colors } = useTheme();
 
   // biến đổi rootStackNavigators và gán thêm gestureResponseDistance 500
   const handleStackNavigators = () => {
@@ -65,7 +63,7 @@ const ConfigNavigator = () => {
   };
 
   const rootTabNavigatorValue = () => {
-    return createBottomTabNavigator(createRootTabNavigatorRoutes(), tabNavigatorOptions(colors));
+    return createBottomTabNavigator(createRootTabNavigatorRoutes(), tabNavigatorOptions());
     // return createMaterialBottomTabNavigator(createRootTabNavigatorRoutes(), {
     //   activeColor: settings.colorPrimary,
     //   barStyle: { backgroundColor: colors.light },
