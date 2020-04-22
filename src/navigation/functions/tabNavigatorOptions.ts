@@ -2,7 +2,6 @@ import React from 'react';
 import { CreateNavigatorConfig, NavigationTabRouterConfig, NavigationRoute } from 'react-navigation';
 import { NavigationTabProp, NavigationBottomTabOptions, BottomTabBarOptions } from 'react-navigation-tabs/lib/typescript/src/types';
 import configureApp from 'utils/constants/configureApp';
-import { Colors } from 'shared';
 
 interface Config {
   lazy?: boolean;
@@ -17,16 +16,19 @@ type TabNavigatorOptions = CreateNavigatorConfig<
   NavigationTabProp<NavigationRoute, any>
 >;
 
-const tabNavigatorOptions = (colors: Colors): TabNavigatorOptions => ({
+const tabNavigatorOptions = (insetsBottom: number): TabNavigatorOptions => ({
   backBehavior: 'history',
   tabBarOptions: {
     showIcon: true,
     showLabel: false,
     activeTintColor: configureApp.settings.colorPrimary,
     inactiveTintColor: 'transparent',
+    safeAreaInset: {
+      bottom: 'never',
+    },
     style: {
-      backgroundColor: colors.light,
-      borderTopColor: colors.gray3,
+      height: 50 + insetsBottom,
+      borderTopWidth: 0,
     },
     labelStyle: {
       borderRadius: 100,

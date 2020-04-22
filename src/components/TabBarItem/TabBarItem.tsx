@@ -15,7 +15,7 @@ function TabBarItem({ iconName, labelName = '', focused }: TabBarItemProps) {
   const labelStyle = focused ? styled.colorPrimary : styled.colorDark3;
 
   return (
-    <View style={styles.container}>
+    <View safeAreaViewBottom tachyons="bt" style={[styles.container, styled.bgLight, { borderTopColor: colors.gray3 }]}>
       {!!iconName && <Icons.Feather name={iconName} size={22} style={styles.icon} colorNative={iconStyleColor} />}
       {!!labelName && (
         <Text numberOfLines={1} tachyons={['f7', 'mt1']} style={[labelStyle, styles.label]}>
