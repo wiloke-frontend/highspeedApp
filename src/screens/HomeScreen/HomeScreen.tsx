@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Container, useMount } from 'shared';
+import { View, Container, FlatList, useMount } from 'shared';
 import SectionLoading from 'screens/HomeScreen/SectionLoading';
 import Retry from 'components/Retry/Retry';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
@@ -8,11 +8,10 @@ import { homeSkeletonSelector, homeSectionsSelector } from './selectors';
 import { useHomeMounted } from './actions/actionHome';
 import { ScreenFC } from 'navigation';
 import Section from './Section';
-import { FlatList } from 'react-native';
 import HeaderDefault from 'components/HeaderDefault/HeaderDefault';
 import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
-const HomeScreen: ScreenFC = () => {
+const HomeScreen: ScreenFC = ({ navigation }) => {
   const homeMounted = useHomeMounted();
   const homeSkeleton = useSelector(homeSkeletonSelector);
   const homeSections = useSelector(homeSectionsSelector);
@@ -22,16 +21,9 @@ const HomeScreen: ScreenFC = () => {
   });
 
   // return (
-  //   <ScrollView
-  //     alwaysBounceHorizontal
-  //     alwaysBounceVertical
-  //     showsVerticalScrollIndicator={false}
-  //     showsHorizontalScrollIndicator={false}
-  //     minimumZoomScale={1}
-  //     maximumZoomScale={4}
-  //   >
+  //   <ZoomHandler>
   //     <Image uri={`https://images.pexels.com/photos/2437299/pexels-photo-2437299.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500`} />
-  //   </ScrollView>
+  //   </ZoomHandler>
   // );
 
   return (
@@ -49,6 +41,7 @@ const HomeScreen: ScreenFC = () => {
           Request={<SectionLoading />}
           Success={
             <FlatList
+              navigation={navigation}
               data={homeSkeleton?.data}
               keyExtractor={item => item.uid}
               extraData={homeSections.status === 'success'}

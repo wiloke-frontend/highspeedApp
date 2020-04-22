@@ -42,11 +42,11 @@ const NotifyItem: FC<NotifyItemProps> = ({ item, index }) => {
           title: titlePost,
         } as CommentScreenParams);
 
-  const handleDeleteNotify = (id: number) => {
-    deleteNotifyRequest({ endpoint: 'notifications', id });
+  const handleDeleteNotify = (id: number, seen: boolean) => {
+    deleteNotifyRequest({ endpoint: 'notifications', id, seen });
   };
 
-  const handleActionSheet = (id: number) => {
+  const handleActionSheet = (id: number, seen: boolean) => {
     showActionSheetWithOptions(
       {
         options: [i18n.t('delete'), i18n.t('cancel')],
@@ -56,7 +56,7 @@ const NotifyItem: FC<NotifyItemProps> = ({ item, index }) => {
       buttonIndex => {
         switch (buttonIndex) {
           case 0:
-            return handleDeleteNotify(id);
+            return handleDeleteNotify(id, seen);
           default:
             return false;
         }
@@ -90,7 +90,7 @@ const NotifyItem: FC<NotifyItemProps> = ({ item, index }) => {
             }
             createAt={timeAgo(item.timestamp, item.date)}
             iconName={item.type === 'comment' ? 'message-square' : 'edit-3'}
-            onOption={() => handleActionSheet(item.id)}
+            onOption={() => handleActionSheet(item.id, item.seen)}
           />
         </View>
         <Divider />

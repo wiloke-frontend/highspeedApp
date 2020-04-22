@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { tabNavigatorSelector } from 'store/selectors';
 import isAndroid from 'shared/utils/isAndroid';
 import { useTheme } from 'shared';
+import { NavigationScreenProp } from 'navigation/types/NavigationScreenProp';
 
 type RootStackNavigatorsKey = keyof typeof rootStackNavigators;
 
@@ -45,10 +46,20 @@ const ConfigNavigator = () => {
   };
 
   const createRootTabNavigatorRoutes = () => {
-    return handleTabNavigator(tabNavigator.data, rootTabNavigators, ({ tabBarLabel, iconName }) => ({
+    return handleTabNavigator(tabNavigator.data, rootTabNavigators, ({ tabBarLabel, iconName, screen }) => ({
       tabBarLabel,
       tabBarIcon: ({ focused }) => {
-        return <TabBarItem focused={focused} iconName={iconName} />;
+        return <TabBarItem focused={focused} iconName={iconName} screen={screen} />;
+      },
+      tabBarOnPress: (scene: { navigation: NavigationScreenProp; defaultHandler: () => {} }) => {
+        if (scene.navigation.isFocused()) {
+          const stackNavigation = scene.navigation.state.routes[0];
+          if (!!stackNavigation && !!stackNavigation.params && !!stackNavigation.params.onScrollToTop) {
+            stackNavigation.params.onScrollToTop();
+          }
+        } else {
+          scene.defaultHandler();
+        }
       },
     }));
   };

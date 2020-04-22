@@ -45,7 +45,7 @@ function* handleDeleteNotify({ payload }: ReturnType<typeof deleteNotify.request
       method: 'DELETE',
       url: `${payload.endpoint}/${payload.id}`,
     } as AxiosRequestConfig);
-    yield put(deleteNotify.success({ id: payload.id }));
+    yield put(deleteNotify.success({ id: payload.id, seen: payload.seen }));
   } catch (err) {
     console.log(err.response);
     yield put(deleteNotify.failure('Error'));

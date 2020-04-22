@@ -43,6 +43,7 @@ const CategoryScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
         status={categories.status}
         Success={
           <FlatList
+            navigation={navigation}
             data={categories.data.data}
             keyExtractor={item => String(item.id)}
             numColumns={numColumns}

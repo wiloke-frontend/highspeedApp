@@ -19,7 +19,7 @@ import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 const Image = withViewStyles(RNImage);
 
-const SelectCatScreen: ScreenFC = () => {
+const SelectCatScreen: ScreenFC = ({ navigation }) => {
   const getPostsWithCatSelected = useGetPostsWithCatSelected();
   const getCategoriesFollowed = useGetCategoriesFollowed();
   const selectCategory = useSelectCategory();
@@ -144,6 +144,7 @@ const SelectCatScreen: ScreenFC = () => {
               firstType="standard1"
               useFlatList
               flatListProps={{
+                navigation,
                 showsVerticalScrollIndicator: false,
                 onEndReached: handleLoadmore,
                 ListFooterComponent: renderListFooterComponent,

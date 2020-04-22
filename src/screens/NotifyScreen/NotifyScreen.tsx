@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, useMount, Text, Button, Container, withViewStyles } from 'shared';
+import { View, useMount, Text, Button, Container, FlatList, withViewStyles } from 'shared';
 import { ScreenFC } from 'navigation';
 import HeaderDefault from 'components/HeaderDefault/HeaderDefault';
 import { useGetNotificationsRequest } from './actions/actionNotifications';
 import { useSelector } from 'react-redux';
 import { notificationsSelector, pageSelector, maxNumPagesSelector } from './selectors';
-import { FlatList, ActivityIndicator as RNActivityIndicator, Image as RNImage } from 'react-native';
+import { ActivityIndicator as RNActivityIndicator, Image as RNImage } from 'react-native';
 import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import { Notify } from 'api/Notifications';
 import { isEmpty } from 'ramda';
@@ -75,6 +75,7 @@ const NotifyScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
             useOldData
             Success={
               <FlatList
+                navigation={navigation}
                 data={notifications.data.data ?? []}
                 keyExtractor={item => String(item.id)}
                 renderItem={renderNotify}

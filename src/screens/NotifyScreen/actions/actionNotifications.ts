@@ -15,8 +15,8 @@ export const postNotify = createAsyncAction(['@postNotifyRequest', '@postNotifyS
 >();
 
 export const deleteNotify = createAsyncAction(['@deleteNotifyRequest', '@deleteNotifySuccess', '@deleteNotifyFailure'])<
-  { endpoint: 'notifications'; id: number },
-  { id: number },
+  { endpoint: 'notifications'; id: number; seen: boolean },
+  { id: number; seen: boolean },
   string
 >();
 
