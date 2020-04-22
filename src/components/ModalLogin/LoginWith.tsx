@@ -105,7 +105,13 @@ const LoginWith = ({ appID = '2759040360883740' }: LoginWithProps) => {
         </View>
         <Text style={styles.colorLight}>Login with Facebook</Text>
       </Button>
-      <Button block tachyons={['wAuto', 'mt2', 'br2']} loading={auth.statusApple === 'loading'} backgroundColor="dark2" onPress={_handleLoginApple}>
+      <Button
+        block
+        tachyons={['wAuto', 'mt2', 'br2']}
+        loading={auth.statusApple === 'loading'}
+        style={styles.appleButton}
+        onPress={_handleLoginApple}
+      >
         <View tachyons="mr1">
           <Icons.FontAwesome5 name="apple" size={18} colorNative="#fff" />
         </View>

@@ -35,4 +35,7 @@ export const styles = StyleSheet.create({
   colorLight: {
     color: '#fff',
   },
+  appleButton: {
+    backgroundColor: '#050708',
+  },
 });
