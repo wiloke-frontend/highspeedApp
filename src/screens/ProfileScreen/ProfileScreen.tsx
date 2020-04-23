@@ -66,15 +66,9 @@ const ProfileScreen: ScreenFC = ({ navigation }) => {
           <InterestCategories />
           <Divider />
           <List
-            iconName={nightMode ? 'moon' : 'sun'}
+            iconName="moon"
             text={i18n.t('nightMode')}
-            Right={
-              <Switch
-                value={nightMode}
-                onValueChange={() => changeNightMode()}
-                trackColor={{ true: colors.primary, false: colors.gray2 }}
-              />
-            }
+            Right={<Switch value={nightMode} onValueChange={() => changeNightMode()} trackColor={{ true: colors.primary, false: colors.gray2 }} />}
           />
           <Divider />
           <Link to="HistoryPostsScreen">
