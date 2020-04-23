@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 3,
   },
+  debug: {
+    borderWidth: 1,
+    borderColor: '#01295c',
+  },
 });
 
 export default styles;

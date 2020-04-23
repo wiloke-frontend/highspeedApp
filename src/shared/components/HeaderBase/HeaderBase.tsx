@@ -1,5 +1,6 @@
 import React, { ReactNode, memo } from 'react';
-import { View, StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
+import { View } from 'shared/components/View/View';
 import { useTheme } from 'shared/components/ThemeContext/ThemeContext';
 import styles from './styles';
 
@@ -9,18 +10,16 @@ export interface HeaderBaseProps {
   Right?: ReactNode;
   containerStyle?: StyleProp<ViewStyle>;
   backgroundColor?: string;
-  debug?: boolean;
 }
 
-function HeaderBaseComponent({ Left, Center, Right, containerStyle = {}, backgroundColor = '', debug = false }: HeaderBaseProps) {
+function HeaderBaseComponent({ Left, Center, Right, containerStyle = {}, backgroundColor = '' }: HeaderBaseProps) {
   const { colors } = useTheme();
-  const debugStyle = debug ? styles.debug : {};
   const itemHasCenterStyle = Center ? styles.hasCenter : {};
   return (
-    <View style={[styles.container, { backgroundColor: backgroundColor || colors.light }, containerStyle, debugStyle]}>
-      <View style={[styles.item, styles.left, itemHasCenterStyle, debugStyle]}>{Left}</View>
-      {!!Center && <View style={[styles.item, styles.center, debugStyle]}>{Center}</View>}
-      <View style={[styles.item, styles.right, itemHasCenterStyle, debugStyle]}>{Right}</View>
+    <View style={[styles.container, { backgroundColor: backgroundColor || colors.light }, containerStyle]}>
+      <View style={[styles.item, styles.left, itemHasCenterStyle]}>{Left}</View>
+      {!!Center && <View style={[styles.item, styles.center]}>{Center}</View>}
+      <View style={[styles.item, styles.right, itemHasCenterStyle]}>{Right}</View>
     </View>
   );
 }

@@ -128,8 +128,11 @@ const SelectCatScreen: ScreenFC = ({ navigation }) => {
   };
 
   const renderContent = () => {
-    const isCatLoading = categoriesSelected.status === 'loading';
-    if (!isCatLoading && isEmpty(categoriesSelected.data)) {
+    const isLoading = categoriesSelected.status === 'loading';
+    if (isLoading) {
+      return <Magazine isLoading type="list2" firstType="standard1" />;
+    }
+    if (!isLoading && isEmpty(categoriesSelected.data)) {
       return ChooseCategoriesButton;
     }
     return (

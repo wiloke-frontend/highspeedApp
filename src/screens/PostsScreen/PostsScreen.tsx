@@ -83,7 +83,6 @@ const PostsScreen: ScreenFC<PostsScreenParams> = ({ navigation }) => {
                   showsVerticalScrollIndicator: false,
                   onEndReached: handleLoadmore,
                   ListFooterComponent: renderListFooterComponent,
-                  removeClippedSubviews: true,
                 }}
                 containerStyle={tachyons.mb0}
               />

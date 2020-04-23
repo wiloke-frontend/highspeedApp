@@ -42,9 +42,8 @@ const YoutubeList: FC<YoutubeListProps> = ({ sectionId }) => {
     <FlatList
       horizontal
       data={youtubeListDataNotLast}
-      keyExtractor={item => item.id}
+      keyExtractor={item => String(item.id)}
       renderItem={renderYoutubeItem(true)}
-      showsHorizontalScrollIndicator={false}
       ListFooterComponent={
         <View style={{ marginRight: footerMarginRight }}>
           {renderYoutubeItem(false)({ item: youtubeLastItem, index: youtubeListData.length - 1 })}

@@ -4,7 +4,7 @@ export {
   useTheme,
   withTheme,
   ThemeProviderProps,
-  ThemeOverridesType,
+  ThemeOverrides,
   Sizes,
   Styled,
   Theme,
