@@ -53,7 +53,14 @@ export default function App(props: AppProps) {
 
 async function loadResourcesAsync() {
   await Promise.all([
-    Asset.loadAsync([require('assets/login-cover.png'), require('assets/logo.png')]),
+    Asset.loadAsync([
+      require('assets/login-cover.png'),
+      require('assets/logo.png'),
+      require('assets/notification.png'),
+      require('assets/vectors/articles.jpg'),
+      require('assets/vectors/notify.jpg'),
+      require('assets/vectors/update.jpg'),
+    ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar
       ...Ionicons.font,
