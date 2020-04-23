@@ -3,8 +3,11 @@ import { getNotifications, postNotify, deleteNotify } from '../actions/actionNot
 import handleAsyncActionCustom from 'utils/functions/handleAsyncActionCustom';
 import { Notifications } from 'api/Notifications';
 import { getNotificationTotal } from 'store/storeNotificationTotal/actionNotificationTotal';
+import { logout } from 'store/storeAuth/actions/actionAuth';
 
-type NotificationsAction = ActionTypes<typeof getNotifications | typeof postNotify | typeof deleteNotify | typeof getNotificationTotal>;
+type NotificationsAction = ActionTypes<
+  typeof getNotifications | typeof postNotify | typeof deleteNotify | typeof getNotificationTotal | typeof logout
+>;
 
 type NotificationsState = ReducerState<Notifications> & {
   noSeenTotal: number;
@@ -40,4 +43,5 @@ export const notifications = createReducer<NotificationsState, NotificationsActi
     state.noSeenTotal = action.payload.seen && state.noSeenTotal > 0 ? state.noSeenTotal - 1 : state.noSeenTotal;
     return state;
   }),
+  handleAction('@logout', () => initialState),
 ]);
