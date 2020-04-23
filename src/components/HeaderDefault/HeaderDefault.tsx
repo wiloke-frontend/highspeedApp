@@ -53,8 +53,8 @@ const HeaderDefault: FC<HeaderDefaultProps> = ({ title = '', backButtonEnabled =
             </Link>
           </View>,
           isLoggedIn ? (
-            <Link key="item2" to="ProfileScreen" activeOpacity={0.8}>
-              <Avatar uri={avatar} size={25} name={name} />
+            <Link key="item2" to="ProfileScreen" activeOpacity={0.8} style={{ width: 32 }}>
+              <Avatar uri={avatar} size={30} name={name} />
             </Link>
           ) : (
             <TouchableOpacity key="item2" onPress={handleOpenModal}>
