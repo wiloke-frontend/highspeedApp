@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef } from 'react';
+import React, { ReactNode, useRef, useState } from 'react';
 import { FlatList as RNFlatList, FlatListProps as RNFlatListProps } from 'react-native';
 import { View } from 'shared/components/View/View';
 import { Container } from 'shared/components/Container/Container';
@@ -27,9 +27,13 @@ export function FlatList<ItemT>({
   horizontal,
   ListHeaderComponent,
   ListEmptyComponent,
+  refreshing,
+  onRefresh,
   ...rest
 }: FlatListProps<ItemT>) {
   const { sizes } = useTheme();
+  const [stateRefreshing, setStateRefreshing] = useState<RNFlatListProps<ItemT>['refreshing']>(false);
+  const isTopRef = useRef(false);
   const flatListRef = useRef<RNFlatList<ItemT> | null>(null);
   const ItemWrap = useContainer && numColumns === 1 ? Container : View;
   const ListComponentWrap = useContainer && isIOS ? Container : numColumns > 1 ? View : Container;
@@ -39,10 +43,22 @@ export function FlatList<ItemT>({
   const columnWrapperMaxWidth = sizes.container + (numColumns > 1 ? numGap : 0);
 
   useMount(() => {
+    setStateRefreshing(refreshing);
     !!navigation &&
       navigation.setParams({
         onScrollToTop: () => {
-          flatListRef.current && flatListRef.current.scrollToOffset({ offset: 0, animated: true });
+          if (isTopRef.current) {
+            setStateRefreshing(true);
+            const timeout = setTimeout(() => {
+              onRefresh?.();
+              setStateRefreshing(false);
+              clearTimeout(timeout);
+            }, 400);
+            isTopRef.current = false;
+          } else {
+            flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+            isTopRef.current = true;
+          }
         },
       });
   });
@@ -81,6 +97,8 @@ export function FlatList<ItemT>({
       }}
       numColumns={numColumns}
       horizontal={horizontal}
+      refreshing={stateRefreshing}
+      onRefresh={onRefresh}
       ListHeaderComponent={renderListComponent(ListHeaderComponent)}
       // ListFooterComponent={renderListComponent(ListFooterComponent)}
       ListEmptyComponent={renderListComponent(ListEmptyComponent)}

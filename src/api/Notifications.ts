@@ -20,5 +20,10 @@ export interface Notify {
 export interface Notifications {
   status: 'success' | 'error';
   data: Notify[];
-  pagination: Pagination<'notifications'>;
+  pagination?: Pagination<'notifications'>;
+}
+
+export interface NotificationTotal {
+  status: 'success' | 'error';
+  total: number;
 }

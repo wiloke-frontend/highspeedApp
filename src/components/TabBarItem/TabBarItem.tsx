@@ -27,10 +27,10 @@ function TabBarItem({ iconName, labelName = '', focused, screen }: TabBarItemPro
           {labelName}
         </Text>
       )}
-      {!!notifications.badge && screen === 'NotifyNavigator' && (
+      {!!notifications.noSeenTotal && screen === 'NotifyNavigator' && (
         <View style={styles.badge} backgroundColor="danger">
           <Text type="small" colorNative="#fff">
-            {notifications.badge}
+            {notifications.noSeenTotal}
           </Text>
         </View>
       )}

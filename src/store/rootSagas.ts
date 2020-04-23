@@ -10,6 +10,7 @@ import { watchMenu } from 'screens/MenuScreen/sagas/sagaMenu';
 import { sagaComments, sagaReply } from 'screens/CommentScreen/sagas';
 import sagaAuth from './storeAuth/sagas/sagaAuth';
 import sagaCategories from './storeCategories/sagas/sagaCategories';
+import watchGetNotificationTotal from './storeNotificationTotal/sagaNotificationTotal';
 
 const sagas = [
   ...sagaHomeScreen,
@@ -24,6 +25,7 @@ const sagas = [
   ...sagaCategories,
   watchTabNavigator,
   watchMenu,
+  watchGetNotificationTotal,
 ];
 
 // https://github.com/redux-saga/redux-saga/issues/760#issuecomment-273737022

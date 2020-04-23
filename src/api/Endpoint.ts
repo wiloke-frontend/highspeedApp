@@ -4,6 +4,7 @@ export type TermsEndpoint = 'terms';
 export type NavTabEndpoint = 'navigation';
 export type SearchEndpoint = 'search';
 export type NotificationsEndpoint = 'notifications';
+export type NotificationTotalEndpoint = 'notification-total?seen=no';
 export type CategoryEndpoint = 'category';
 export type TrendingEndpoint = 'articles?postType=post&numberOfPosts=6&orderby=popular_views';
 export type FollowsEndpoint = 'categories/following';

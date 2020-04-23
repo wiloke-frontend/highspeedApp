@@ -13,7 +13,7 @@ function* handleGetNotications({ payload }: ReturnType<typeof getNotifications.r
     } as AxiosRequestConfig);
     yield put(getNotifications.success(res.data));
   } catch (err) {
-    console.log(err);
+    console.log(err.response);
     yield put(getNotifications.failure('Error'));
   }
 }

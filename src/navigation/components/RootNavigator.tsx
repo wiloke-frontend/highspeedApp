@@ -4,7 +4,7 @@ import { ModalLogin, RegisterResult, onCloseModalLogin } from 'components/ModalL
 import { View, FormCallbackParams, useTheme, useMount, Toast, Text } from 'shared';
 import { useSelector } from 'react-redux';
 import { useAuthentication, Authentication, BodyRequest } from 'store/storeAuth/actions/actionAuth';
-import { authSelector } from 'store/selectors';
+import { authSelector, isLoggedInSelector } from 'store/selectors';
 import { useGetTabNavigatorRequest } from 'store/storeTabNavigator/actions';
 import { Alert } from 'react-native';
 import { LoginResult } from 'components/ModalLogin/Login';
@@ -14,6 +14,7 @@ import { useGetPostsWithCatSelected } from 'screens/SelectCatScreen/actions/acti
 import { useGetCategoriesFollowed } from 'store/storeCategories/actions/actionFollowCategory';
 import ModalAppUpdate from 'components/ModalAppUpdate/ModalAppUpdate';
 import configureApp from 'utils/constants/configureApp';
+import { useGetNotificationTotal } from 'store/storeNotificationTotal/actionNotificationTotal';
 
 export default function RootNavigator() {
   const getTabNavigator = useGetTabNavigatorRequest();
@@ -21,11 +22,16 @@ export default function RootNavigator() {
   const getNotificationsRequest = useGetNotificationsRequest();
   const getPostsWithCatSelected = useGetPostsWithCatSelected();
   const getCategoriesFollowed = useGetCategoriesFollowed();
+  const getNotificationTotal = useGetNotificationTotal();
   const auth = useSelector(authSelector);
+  const isLoggedIn = useSelector(isLoggedInSelector);
   const { styled } = useTheme();
 
   useMount(() => {
     getTabNavigator({ endpoint: 'tab-navigators' });
+    if (isLoggedIn) {
+      getNotificationTotal.request({ endpoint: 'notification-total?seen=no' });
+    }
   });
 
   const _handleRetry = (request: BodyRequest) => {
@@ -38,7 +44,7 @@ export default function RootNavigator() {
           user_email: request.user_email,
         },
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        cb: _callBackLogin,
+        cb: callBackLogin,
       });
     } else {
       authentication({
@@ -48,13 +54,13 @@ export default function RootNavigator() {
           user_password: request.user_password,
         },
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        cb: _callBackLogin,
+        cb: callBackLogin,
       });
     }
   };
 
-  const _callBackLogin = (authen: Authentication, request: BodyRequest) => {
-    if (authen.isLoggedIn) {
+  const callBackLogin = (authen: Authentication, request: BodyRequest) => {
+    if (isLoggedIn) {
       onCloseModalLogin();
       Toast.show({
         content: <Text color="light">{authen?.data.msg}</Text>,
@@ -80,7 +86,7 @@ export default function RootNavigator() {
         { cancelable: false },
       );
     }
-    if (authen.isLoggedIn) {
+    if (isLoggedIn) {
       getCategoriesFollowed.request({
         endpoint: 'categories/following',
         callback: categoriesSelectedIds => {
@@ -105,7 +111,7 @@ export default function RootNavigator() {
           user_login: payload.result.username,
           user_password: payload.result.password,
         },
-        cb: _callBackLogin,
+        cb: callBackLogin,
       });
     }
   };
@@ -119,7 +125,7 @@ export default function RootNavigator() {
           user_password: payload.result.password_register,
           user_email: payload.result.user_email,
         },
-        cb: _callBackLogin,
+        cb: callBackLogin,
       });
     }
   };

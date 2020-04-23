@@ -2,21 +2,29 @@ import { createReducer, ActionTypes, handleAction, handleActions } from 'utils/f
 import { getNotifications, postNotify, deleteNotify } from '../actions/actionNotifications';
 import handleAsyncActionCustom from 'utils/functions/handleAsyncActionCustom';
 import { Notifications } from 'api/Notifications';
+import { getNotificationTotal } from 'store/storeNotificationTotal/actionNotificationTotal';
 
-type NotificationsAction = ActionTypes<typeof getNotifications | typeof postNotify | typeof deleteNotify>;
+type NotificationsAction = ActionTypes<typeof getNotifications | typeof postNotify | typeof deleteNotify | typeof getNotificationTotal>;
 
-type NotificationsState = ReducerState<Partial<Notifications>> & {
-  badge: number;
+type NotificationsState = ReducerState<Notifications> & {
+  noSeenTotal: number;
 };
 
 const initialState: NotificationsState = {
-  data: {},
-  badge: 0,
+  data: {
+    status: 'success',
+    data: [],
+  },
+  noSeenTotal: 0,
   pageNext: 1,
 };
 
 export const notifications = createReducer<NotificationsState, NotificationsAction>(initialState, [
   ...handleAsyncActionCustom(['@getNotificationsRequest', '@getNotificationsSuccess', '@getNotificationsFailure']),
+  handleAction('@getNotificationTotalSuccess', (state, action) => {
+    state.noSeenTotal = action.payload.data.total;
+    return state;
+  }),
   handleAction('@postNotifySuccess', (state, action) => {
     state.data.data = !!state.data.data
       ? state.data.data.map(item => ({
@@ -24,12 +32,12 @@ export const notifications = createReducer<NotificationsState, NotificationsActi
           seen: item.id === action.payload.id ? true : item.seen,
         }))
       : [];
-    state.badge = state.badge > 0 ? state.badge - 1 : state.badge;
+    state.noSeenTotal = state.noSeenTotal > 0 ? state.noSeenTotal - 1 : state.noSeenTotal;
     return state;
   }),
   handleActions(['@deleteNotifyRequest', '@deleteNotifySuccess'], (state, action) => {
     state.data.data = !!state.data.data ? state.data.data.filter(item => item.id !== action.payload.id) : [];
-    state.badge = action.payload.seen && state.badge > 0 ? state.badge - 1 : state.badge;
+    state.noSeenTotal = action.payload.seen && state.noSeenTotal > 0 ? state.noSeenTotal - 1 : state.noSeenTotal;
     return state;
   }),
 ]);
