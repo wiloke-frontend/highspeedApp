@@ -71,6 +71,7 @@ export default function RootNavigator() {
         endpoint: 'notifications',
         params: { page: 1, postsPerPage: 20 },
       });
+      getNotificationTotal.request({ endpoint: 'notification-total?seen=no' });
     } else {
       Alert.alert(
         i18n.t('warning'),
