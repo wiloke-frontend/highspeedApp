@@ -29,6 +29,8 @@ export function FlatList<ItemT>({
   ListEmptyComponent,
   refreshing,
   onRefresh,
+  showsVerticalScrollIndicator = false,
+  showsHorizontalScrollIndicator = false,
   ...rest
 }: FlatListProps<ItemT>) {
   const { sizes } = useTheme();
@@ -99,6 +101,8 @@ export function FlatList<ItemT>({
       horizontal={horizontal}
       refreshing={stateRefreshing}
       onRefresh={onRefresh}
+      showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+      showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
       ListHeaderComponent={renderListComponent(ListHeaderComponent)}
       // ListFooterComponent={renderListComponent(ListFooterComponent)}
       ListEmptyComponent={renderListComponent(ListEmptyComponent)}

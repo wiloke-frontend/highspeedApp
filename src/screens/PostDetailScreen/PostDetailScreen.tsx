@@ -151,7 +151,7 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
             }
           }}
         >
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Container tachyons="ph3">
               <DetailFeatured
                 formatType={postDetail?.data?.postFormat?.type ?? 'standard'}
