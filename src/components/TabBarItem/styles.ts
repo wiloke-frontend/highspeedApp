@@ -2,8 +2,16 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  divider: {
+    position: 'absolute',
+    top: -1,
+    left: 0,
+    height: 2,
+    width: '100%',
   },
   icon: {
     marginBottom: -1,
@@ -15,7 +23,7 @@ const styles = StyleSheet.create({
   },
   badge: {
     position: 'absolute',
-    top: -10,
+    top: 3,
     left: 12,
     paddingVertical: 2,
     paddingHorizontal: 5,
