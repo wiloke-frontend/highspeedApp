@@ -17,7 +17,7 @@ type TabNavigatorOptions = CreateNavigatorConfig<
   NavigationTabProp<NavigationRoute, any>
 >;
 
-const tabNavigatorOptions = (): TabNavigatorOptions => ({
+const tabNavigatorOptions: TabNavigatorOptions = {
   backBehavior: 'history',
   tabBarComponent: BottomTabBar,
   tabBarOptions: {
@@ -40,6 +40,6 @@ const tabNavigatorOptions = (): TabNavigatorOptions => ({
       margin: 0,
     },
   },
-});
+};
 
 export default tabNavigatorOptions;

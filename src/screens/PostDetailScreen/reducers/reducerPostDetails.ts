@@ -12,7 +12,7 @@ interface PostDetailState {
 
 const initialState: PostDetailState = {};
 
-const postDetails = createReducer<PostDetailState, PostDetailAction>(initialState, [
+export const postDetails = createReducer<PostDetailState, PostDetailAction>(initialState, [
   handleAction('@getPostDetailRequest', (state, action) => ({
     ...state,
     [action.payload]: {
@@ -78,5 +78,3 @@ const postDetails = createReducer<PostDetailState, PostDetailAction>(initialStat
     },
   })),
 ]);
-
-export default postDetails;

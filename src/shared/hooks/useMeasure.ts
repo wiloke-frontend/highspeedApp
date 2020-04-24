@@ -1,7 +1,7 @@
 import { useState, MutableRefObject, useCallback, useEffect } from 'react';
 import { MeasureOnSuccessCallback } from 'react-native';
 
-export interface MeasureType {
+export interface Measure {
   x: number;
   y: number;
   width: number;
@@ -14,9 +14,9 @@ export interface RefObjectItemType {
   measure: (callback: MeasureOnSuccessCallback) => void;
 }
 
-type UseMeasureReturnType = [MeasureType, () => void];
+type UseMeasureReturnType = [Measure, () => void];
 
-const initialMeasure: MeasureType = {
+const initialMeasure: Measure = {
   x: 0,
   y: 0,
   width: 0,

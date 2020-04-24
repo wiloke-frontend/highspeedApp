@@ -1,6 +1,6 @@
 import fetchAPI from 'utils/functions/fetchAPI';
 import { AxiosResponse, AxiosRequestConfig } from 'axios';
-import { getNotificationTotal } from './actionNotificationTotal';
+import { getNotificationTotal } from '../actions/actionNotificationTotal';
 import { NotificationTotal } from 'api/Notifications';
 import { takeLatest, put, call } from 'redux-saga/effects';
 import { getActionType } from 'utils/functions/reduxActions';

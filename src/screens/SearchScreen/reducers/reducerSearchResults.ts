@@ -11,9 +11,7 @@ const initialState: SearchChangeState = {
   data: [],
 };
 
-const searchResult = createReducer<SearchChangeState, SearchChangeAction>(
+export const searchResult = createReducer<SearchChangeState, SearchChangeAction>(
   initialState,
   handleAsyncAction(['@searchChangeRequest', '@searchChangeSuccess', '@searchChangeFailure']),
 );
-
-export default searchResult;

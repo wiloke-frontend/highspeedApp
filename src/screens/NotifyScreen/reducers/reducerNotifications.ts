@@ -2,8 +2,8 @@ import { createReducer, ActionTypes, handleAction, handleActions } from 'utils/f
 import { getNotifications, postNotify, deleteNotify } from '../actions/actionNotifications';
 import handleAsyncActionCustom from 'utils/functions/handleAsyncActionCustom';
 import { Notifications } from 'api/Notifications';
-import { getNotificationTotal } from 'store/storeNotificationTotal/actionNotificationTotal';
-import { logout } from 'store/storeAuth/actions/actionAuth';
+import { getNotificationTotal } from 'screens/AppContainer/actions/actionNotificationTotal';
+import { logout } from 'screens/AuthContainer/actions/actionAuth';
 
 type NotificationsAction = ActionTypes<
   typeof getNotifications | typeof postNotify | typeof deleteNotify | typeof getNotificationTotal | typeof logout

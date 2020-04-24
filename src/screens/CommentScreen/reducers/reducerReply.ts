@@ -29,7 +29,7 @@ const initialState: ReplyCommentState = {
   messageEdit: '',
 };
 
-const replyComments = createReducer<ReplyCommentState, ReplyCommentAction>(initialState, [
+export const replyComments = createReducer<ReplyCommentState, ReplyCommentAction>(initialState, [
   handleAction('@getReplyRequest', (state, action) => {
     return {
       ...state,
@@ -117,5 +117,3 @@ const replyComments = createReducer<ReplyCommentState, ReplyCommentAction>(initi
     return { ...state, statusEdit: 'failure', messageEdit: action.payload };
   }),
 ]);
-
-export default replyComments;

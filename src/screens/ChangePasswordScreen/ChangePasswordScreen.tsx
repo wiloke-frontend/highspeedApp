@@ -8,8 +8,8 @@ import getConstraints from './constraint';
 import { Alert, Keyboard, ScrollView } from 'react-native';
 import { alertMessage } from 'components/ModalLogin/utils/alertMessage';
 import { useSelector } from 'react-redux';
-import { useChangePassword } from 'store/storeAuth/actions/actionAuth';
-import { authSelector } from 'store/selectors';
+import { useChangePassword } from 'screens/AuthContainer/actions/actionAuth';
+import { authSelector } from 'screens/AuthContainer/selectors';
 import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
 
 export interface ChangePasswordResult {

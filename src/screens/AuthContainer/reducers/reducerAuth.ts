@@ -1,5 +1,5 @@
 import { ActionTypes, createReducer, handleAction } from 'utils/functions/reduxActions';
-import { authentication, Authentication, logout, loginApple, loginFacebook, refreshToken, changePassword } from 'store/storeAuth/actions/actionAuth';
+import { authentication, Authentication, logout, loginApple, loginFacebook, refreshToken, changePassword } from '../actions/actionAuth';
 
 type AuthenticationAction = ActionTypes<
   typeof authentication | typeof logout | typeof loginApple | typeof loginFacebook | typeof refreshToken | typeof changePassword

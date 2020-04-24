@@ -13,7 +13,7 @@ import i18n from 'utils/functions/i18n';
 import { useGetPostComment, useDeleteComment, useAddNewComment, useDeleteOffline, useEditComment } from './actions/actionComments';
 import { useSelector } from 'react-redux';
 import { commentSelector, usersCommentSelector } from './selector';
-import { userIdSelector, isLoggedInSelector } from 'store/selectors';
+import { userIdSelector, isLoggedInSelector } from 'screens/AuthContainer/selectors';
 import { NavigationSuspense, ScreenFC } from 'navigation';
 import Empty from 'components/Empty/Empty';
 import KeyboardSpacer from 'components/KeyboardSpacer/KeyboardSpacer';

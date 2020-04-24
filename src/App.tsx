@@ -8,9 +8,9 @@ import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { store, persistor } from './store/configureStore';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { ThemeProvider } from './shared';
-import { RootNavigator } from './navigation';
+import AppContainer from './screens/AppContainer/AppContainer';
 import configureApp from 'utils/constants/configureApp';
-import { nightModeSelector } from 'store/selectors';
+import { nightModeSelector } from 'screens/ProfileScreen/selectors';
 import { lights, darks } from 'utils/constants/base';
 
 interface AppProps {
@@ -29,7 +29,7 @@ const AppContent = memo(() => {
       }}
     >
       <ActionSheetProvider>
-        <RootNavigator />
+        <AppContainer />
       </ActionSheetProvider>
     </ThemeProvider>
   );

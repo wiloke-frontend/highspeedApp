@@ -6,7 +6,7 @@ import { MenuItem } from 'api/Menu';
 import * as WebBrowser from 'expo-web-browser';
 import { NavigationInjectedProps, withNavigation } from 'react-navigation';
 import { useSelector } from 'react-redux';
-import { isLoggedInSelector } from 'store/selectors';
+import { isLoggedInSelector } from 'screens/AuthContainer/selectors';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import { NavigationScreenProp } from 'navigation';
 

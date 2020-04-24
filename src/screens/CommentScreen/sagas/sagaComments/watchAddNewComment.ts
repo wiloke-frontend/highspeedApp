@@ -1,6 +1,6 @@
 import { call, put, select, takeLeading } from 'redux-saga/effects';
 import { postNewComment, postNewCommentOffline, PostNewCommentSuccess, deleteCommentOffline } from '../../actions/actionComments';
-import { Authentication } from 'store/storeAuth/actions/actionAuth';
+import { Authentication } from 'screens/AuthContainer/actions/actionAuth';
 import { Comment } from 'api/Comment';
 import fetchAPI from 'utils/functions/fetchAPI';
 import { AxiosResponse } from 'axios';

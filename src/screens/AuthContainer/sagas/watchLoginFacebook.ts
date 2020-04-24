@@ -1,5 +1,4 @@
 import { call, takeLatest, put, select } from 'redux-saga/effects';
-
 import { loginFacebook, Authentication } from '../actions/actionAuth';
 import { AxiosResponse } from 'axios';
 import fetchAPI from 'utils/functions/fetchAPI';

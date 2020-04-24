@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Modal, TouchableOpacity, ViewStyle, StyleProp } from 'react-native';
-import { useSwitchAnimation, PlacementType } from 'shared/hooks/useSwitchAnimation';
+import { useSwitchAnimation, Placement } from 'shared/hooks/useSwitchAnimation';
 import { View } from 'shared/components/View/View';
 import { styles } from './styles';
 import { Appearance } from 'shared/types/types';
@@ -10,7 +10,7 @@ import { useTheme } from 'shared/components/ThemeContext/ThemeContext';
 
 export interface PopoverProps {
   appearance?: Appearance;
-  placement?: PlacementType;
+  placement?: Placement;
   children: ReactNode;
   Content: ReactNode;
   style?: StyleProp<ViewStyle>;

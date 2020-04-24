@@ -10,7 +10,7 @@ import AsyncComponent from 'components/AsyncComponent/AsyncComponent';
 import { Notify } from 'api/Notifications';
 import { isEmpty } from 'ramda';
 import Empty from 'components/Empty/Empty';
-import { isLoggedInSelector } from 'store/selectors';
+import { isLoggedInSelector } from 'screens/AuthContainer/selectors';
 import i18n from 'utils/functions/i18n';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import { ScreenParams } from 'types/ScreenParams';

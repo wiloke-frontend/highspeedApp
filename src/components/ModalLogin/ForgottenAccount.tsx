@@ -5,7 +5,7 @@ import i18n from 'utils/functions/i18n';
 import Form from 'components/Form/Form';
 import IconBox from 'components/IconBox/IconBox';
 import KeyboardSpacer from 'components/KeyboardSpacer/KeyboardSpacer';
-import { useForgetPassword } from 'store/storeAuth/actions/actionPasswod';
+import { useForgetPassword } from 'screens/AuthContainer/actions/actionPassword';
 import isIOS from 'shared/utils/isIOS';
 
 export interface ForgottenAccountProps {

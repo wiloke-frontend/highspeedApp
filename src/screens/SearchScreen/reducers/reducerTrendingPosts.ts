@@ -13,9 +13,7 @@ const initialState: TrendingPostsState = {
   message: '',
 };
 
-const trendingPosts = createReducer<TrendingPostsState, GetTrendingAction>(
+export const trendingPosts = createReducer<TrendingPostsState, GetTrendingAction>(
   initialState,
   handleAsyncAction(['@getTrendingRequest', '@getTrendingSuccess', '@getTrendingFailure']),
 );
-
-export default trendingPosts;

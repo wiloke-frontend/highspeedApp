@@ -7,7 +7,7 @@ import { UserComment, Description } from 'api/Comment';
 import { isEmpty } from 'ramda';
 import Avatar from 'components/Avatar/Avatar';
 import { useSelector } from 'react-redux';
-import { isLoggedInSelector } from 'store/selectors';
+import { isLoggedInSelector } from 'screens/AuthContainer/selectors';
 import i18n from 'utils/functions/i18n';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import isIOS from 'shared/utils/isIOS';

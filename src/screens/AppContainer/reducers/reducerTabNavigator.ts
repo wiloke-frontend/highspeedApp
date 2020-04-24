@@ -1,7 +1,7 @@
 import { createReducer, ActionTypes } from 'utils/functions/reduxActions';
-import { getTabNavigator } from './actions';
-import { TabNavigator } from 'api/TabNavigator';
 import { handleAsyncAction } from 'utils/functions/reduxActions/helpers';
+import { getTabNavigator } from '../actions/actionTabNavigator';
+import { TabNavigator } from 'api/TabNavigator';
 
 type TabNavigatorAction = ActionTypes<typeof getTabNavigator>;
 

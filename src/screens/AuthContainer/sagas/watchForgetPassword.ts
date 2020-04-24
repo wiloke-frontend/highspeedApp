@@ -2,7 +2,7 @@ import { call, select, takeLatest, put } from 'redux-saga/effects';
 import { AxiosResponse } from 'axios';
 import fetchAPI from 'utils/functions/fetchAPI';
 import { getActionType } from 'utils/functions/reduxActions';
-import { forgetPassword, PasswordSuccess } from '../actions/actionPasswod';
+import { forgetPassword, PasswordSuccess } from '../actions/actionPassword';
 
 function* handleForgetPassword({ payload }: ReturnType<typeof forgetPassword.request>) {
   try {

@@ -3,7 +3,7 @@ import { Comment } from 'api/Comment';
 import fetchAPI from 'utils/functions/fetchAPI';
 import { AxiosResponse } from 'axios';
 import { getActionType } from 'utils/functions/reduxActions';
-import { Authentication } from 'store/storeAuth/actions/actionAuth';
+import { Authentication } from 'screens/AuthContainer/actions/actionAuth';
 import { addNewReplyOffline, AddReplySuccess, deleteReplyOffline, addNewReply } from 'screens/CommentScreen/actions/actionReplyComents';
 import { getChildComment } from 'screens/CommentScreen/actions/actionComments';
 

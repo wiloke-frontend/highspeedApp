@@ -1,5 +1,5 @@
 import { ActionTypes, createReducer, handleAction } from 'utils/functions/reduxActions';
-import { forgetPassword } from '../actions/actionPasswod';
+import { forgetPassword } from '../actions/actionPassword';
 
 type ForgetPasswordAction = ActionTypes<typeof forgetPassword>;
 interface ForgetPassState {

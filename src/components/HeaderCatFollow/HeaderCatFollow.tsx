@@ -2,11 +2,11 @@ import React, { memo, FC } from 'react';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { sizeBase } from 'utils/constants/base';
 import { Icons, HeaderBase, View, Text } from 'shared';
-import { tabNavigatorSelector } from 'store/selectors';
 import { withNavigation } from 'react-navigation';
 import { useSelector } from 'react-redux';
 import { Link, NavigationScreenProp } from 'navigation';
 import BackButton from 'components/BackButton/BackButton';
+import { tabNavigatorSelector } from 'screens/AppContainer/selectors';
 
 export interface HeaderCatFollowProps {
   title?: string;

@@ -12,7 +12,7 @@ import i18n from 'utils/functions/i18n';
 import Retry from 'components/Retry/Retry';
 import CommentCard from 'components/CommentCard/CommentCard';
 import { useActionSheet } from '@expo/react-native-action-sheet';
-import { userIdSelector, isLoggedInSelector } from 'store/selectors';
+import { userIdSelector, isLoggedInSelector } from 'screens/AuthContainer/selectors';
 import { getTagHighlightValuesFromDraftJs } from 'utils/functions/supportDraftJs';
 import KeyBoardComments, { OnEditCallBack } from './KeyBoardComments';
 import { isEmpty } from 'ramda';

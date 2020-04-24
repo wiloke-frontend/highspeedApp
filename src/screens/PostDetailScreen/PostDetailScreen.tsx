@@ -17,7 +17,7 @@ import {
   useGetRelatedPosts,
   useGetFavorite,
 } from './actions/actionPostDetail';
-import { isLoggedInSelector } from 'store/selectors';
+import { isLoggedInSelector } from 'screens/AuthContainer/selectors';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import DetailFeatured from './DetailFeatured';
 import DetailToastFavorite from './DetailToastFavorite';

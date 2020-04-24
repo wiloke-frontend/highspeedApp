@@ -5,12 +5,11 @@ import sagaHomeScreen from 'screens/HomeScreen/sagas/sagaHomeScreen';
 import sagaSelectedCatScreen from 'screens/SelectCatScreen/sagas/sagaSelectedCatScreen';
 import sagaPostsScreen from 'screens/PostsScreen/sagas/sagaPostsScreen';
 import sagaNotifyScreen from 'screens/NotifyScreen/sagas/sagaNotifyScreen';
-import { watchTabNavigator } from './storeTabNavigator/sagas';
-import { watchMenu } from 'screens/MenuScreen/sagas/sagaMenu';
 import { sagaComments, sagaReply } from 'screens/CommentScreen/sagas';
-import sagaAuth from './storeAuth/sagas/sagaAuth';
+import sagaAuth from 'screens/AuthContainer/sagas/sagaAuth';
 import sagaCategories from './storeCategories/sagas/sagaCategories';
-import watchGetNotificationTotal from './storeNotificationTotal/sagaNotificationTotal';
+import sagaAppContainer from 'screens/AppContainer/sagas/sagaAppContainer';
+import sagaMenuScreen from 'screens/MenuScreen/sagas/sagaMenuScreen';
 
 const sagas = [
   ...sagaHomeScreen,
@@ -23,9 +22,8 @@ const sagas = [
   ...sagaAuth,
   ...sagaPostsScreen,
   ...sagaCategories,
-  watchTabNavigator,
-  watchMenu,
-  watchGetNotificationTotal,
+  ...sagaAppContainer,
+  ...sagaMenuScreen,
 ];
 
 // https://github.com/redux-saga/redux-saga/issues/760#issuecomment-273737022
