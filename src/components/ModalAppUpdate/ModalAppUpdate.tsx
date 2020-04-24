@@ -60,7 +60,7 @@ const ModalAppUpdate: FC<ModalAppUpdateProps> = ({ text, buttonUpdateText, moreT
           </Text>
           <Text tachyons="tc">{text}</Text>
         </View>
-        <Image source={require('assets/vectors/update.jpg')} tachyons={['w100', 'h50']} resizeMode="contain" />
+        <Image source={require('assets/vectors/update-light.jpg')} tachyons={['w100', 'h50']} resizeMode="contain" />
         <Button block size="medium" borderRadius="round" onPress={handleUpdate}>
           <View tachyons="mr2">
             <Icons.FontAwesome5 name={isIOS ? 'apple' : 'android'} size={18} color="light" />

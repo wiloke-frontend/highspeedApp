@@ -5,14 +5,14 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Facebook from 'expo-facebook';
 import Constants from 'expo-constants';
 import axios from 'axios';
-import { useFacebookLogin, useLoginApple, Authentication } from 'screens/AuthContainer/actions/actionAuth';
+import { useFacebookLogin, useLoginApple, Authentication } from 'containers/Auth/actions/actionAuth';
 import { useSelector } from 'react-redux';
-import { authSelector } from 'screens/AuthContainer/selectors';
+import { authSelector } from 'containers/Auth/selectors';
 import { onCloseModalLogin } from './ModalLogin';
 import { alertMessage } from './utils/alertMessage';
 import { isEmpty } from 'ramda';
-import { notificationsSelector } from 'screens/NotifyScreen/selectors';
-import { useGetNotificationsRequest } from 'screens/NotifyScreen/actions/actionNotifications';
+import { notificationsSelector } from 'containers/NotifyScreen/selectors';
+import { useGetNotificationsRequest } from 'containers/NotifyScreen/actions/actionNotifications';
 import { styles } from './styles';
 
 export interface LoginWithProps {

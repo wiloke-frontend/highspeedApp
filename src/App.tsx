@@ -1,39 +1,16 @@
-import React, { useState, memo } from 'react';
+import React, { useState } from 'react';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { store, persistor } from './store/configureStore';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import { ThemeProvider } from './shared';
-import AppContainer from './screens/AppContainer/AppContainer';
-import configureApp from 'utils/constants/configureApp';
-import { nightModeSelector } from 'screens/ProfileScreen/selectors';
-import { lights, darks } from 'utils/constants/base';
+import AppContent from './containers/AppContent/AppContent';
 
 interface AppProps {
   skipLoadingScreen: boolean;
 }
-
-const AppContent = memo(() => {
-  const nightMode = useSelector(nightModeSelector);
-  return (
-    <ThemeProvider
-      themeOverrides={{
-        colors: {
-          primary: configureApp.settings.colorPrimary,
-          ...(nightMode ? darks : lights),
-        },
-      }}
-    >
-      <ActionSheetProvider>
-        <AppContainer />
-      </ActionSheetProvider>
-    </ThemeProvider>
-  );
-});
 
 export default function App(props: AppProps) {
   const { skipLoadingScreen } = props;
@@ -57,9 +34,9 @@ async function loadResourcesAsync() {
       require('assets/login-cover.png'),
       require('assets/logo.png'),
       require('assets/notification.png'),
-      require('assets/vectors/articles.jpg'),
-      require('assets/vectors/notify.jpg'),
-      require('assets/vectors/update.jpg'),
+      require('assets/vectors/articles-light.jpg'),
+      require('assets/vectors/notify-light.jpg'),
+      require('assets/vectors/update-light.jpg'),
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar

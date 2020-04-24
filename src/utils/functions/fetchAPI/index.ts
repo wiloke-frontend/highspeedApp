@@ -3,7 +3,7 @@ import { CANCEL } from 'redux-saga';
 import configureApp from 'utils/constants/configureApp';
 import { store } from 'store/configureStore';
 import ConfigureAxios from './ConfigureAxios';
-import { refreshToken as updateToken, logout } from 'screens/AuthContainer/actions/actionAuth';
+import { refreshToken as updateToken, logout } from 'containers/Auth/actions/actionAuth';
 import { alertMessageWithOption } from 'components/ModalLogin/utils/alertMessage';
 import i18n from '../i18n';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';

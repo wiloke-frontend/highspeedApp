@@ -4,7 +4,7 @@ import styles from './styles';
 import { useTheme, View, Text, Icons } from 'shared';
 import { TabNavigatorItem } from 'api/TabNavigator';
 import { useSelector } from 'react-redux';
-import { notificationsSelector } from 'screens/NotifyScreen/selectors';
+import { notificationsSelector } from 'containers/NotifyScreen/selectors';
 import configureApp from 'utils/constants/configureApp';
 
 interface TabBarItemProps {

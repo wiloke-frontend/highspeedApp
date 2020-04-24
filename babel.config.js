@@ -11,7 +11,6 @@ module.exports = function(api) {
             '@types': './src/@types',
             components: './src/components',
             containers: './src/containers',
-            screens: './src/screens',
             templates: './src/templates',
             navigation: './src/navigation',
             translations: './src/translations',

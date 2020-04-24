@@ -3,7 +3,7 @@ import { View, OfflineNotice, ViewProps } from 'shared';
 import { StatusBar } from 'react-native';
 import i18n from 'utils/functions/i18n';
 import { useSelector } from 'react-redux';
-import { nightModeSelector } from 'screens/ProfileScreen/selectors';
+import { nightModeSelector } from 'containers/ProfileScreen/selectors';
 
 export interface ScreenContainerProps extends Pick<ViewProps, 'safeAreaView' | 'safeAreaViewBottom' | 'onMount'> {
   children: ReactNode;

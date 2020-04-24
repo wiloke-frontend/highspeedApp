@@ -1,16 +1,16 @@
-import HomeScreen from 'screens/HomeScreen/HomeScreen';
-import PostDetailScreen from 'screens/PostDetailScreen/PostDetailScreen';
-import SearchScreen from 'screens/SearchScreen/SearchScreen';
-import SelectCatScreen from 'screens/SelectCatScreen/SelectCatScreen';
-import PostsScreen from 'screens/PostsScreen/PostsScreen';
-import NotifyScreen from 'screens/NotifyScreen/NotifyScreen';
-import CategoryScreen from 'screens/CategoryScreen/CategoryScreen';
-import ProfileScreen from 'screens/ProfileScreen/ProfileScreen';
-import MenuScreen from 'screens/MenuScreen/MenuScreen';
-import HistoryPostsScreen from 'screens/HistoryPostsScreen/HistoryPostsScreen';
-import CommentScreen from 'screens/CommentScreen/CommentsScreen';
-import ReplyScreen from 'screens/CommentScreen/ReplyScreen';
-import ChangePasswordScreen from 'screens/ChangePasswordScreen/ChangePasswordScreen';
+import HomeScreen from 'containers/HomeScreen/HomeScreen';
+import PostDetailScreen from 'containers/PostDetailScreen/PostDetailScreen';
+import SearchScreen from 'containers/SearchScreen/SearchScreen';
+import SelectCatScreen from 'containers/SelectCatScreen/SelectCatScreen';
+import PostsScreen from 'containers/PostsScreen/PostsScreen';
+import NotifyScreen from 'containers/NotifyScreen/NotifyScreen';
+import CategoryScreen from 'containers/CategoryScreen/CategoryScreen';
+import ProfileScreen from 'containers/ProfileScreen/ProfileScreen';
+import MenuScreen from 'containers/MenuScreen/MenuScreen';
+import HistoryPostsScreen from 'containers/HistoryPostsScreen/HistoryPostsScreen';
+import CommentScreen from 'containers/CommentScreen/CommentsScreen';
+import ReplyScreen from 'containers/CommentScreen/ReplyScreen';
+import ChangePasswordScreen from 'containers/ChangePasswordScreen/ChangePasswordScreen';
 
 // RootTab
 export const rootTabNavigators = {

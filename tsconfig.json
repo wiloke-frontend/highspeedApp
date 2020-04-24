@@ -23,8 +23,6 @@
       "components/*": ["src/components/*"],
       "containers/*": ["src/containers/*"],
       "containers": ["src/containers"],
-      "screens/*": ["src/screens/*"],
-      "screens": ["src/screens"],
       "templates/*": ["src/templates/*"],
       "templates": ["src/templates"],
       "navigation/*": ["src/navigation/*"],

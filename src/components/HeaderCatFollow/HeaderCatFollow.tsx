@@ -6,7 +6,7 @@ import { withNavigation } from 'react-navigation';
 import { useSelector } from 'react-redux';
 import { Link, NavigationScreenProp } from 'navigation';
 import BackButton from 'components/BackButton/BackButton';
-import { tabNavigatorSelector } from 'screens/AppContainer/selectors';
+import { tabNavigatorSelector } from 'containers/AppContent/selectors';
 
 export interface HeaderCatFollowProps {
   title?: string;

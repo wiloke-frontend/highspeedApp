@@ -1,22 +1,22 @@
 import { categories } from 'store/storeCategories/reducers/reducerCategories';
 import { categoriesSelected } from './storeCategories/reducers/reducerCatSelected';
-import reducerAppContainer from 'screens/AppContainer/reducers/reducers';
-import reducerAuthContainer from 'screens/AuthContainer/reducers/reducers';
-import reducerCommentScreen from 'screens/CommentScreen/reducers/reducers';
-import reducerHomeScreen from 'screens/HomeScreen/reducers/reducers';
-import reducerMenuScreen from 'screens/MenuScreen/reducers/reducers';
-import reducerNotifyScreen from 'screens/NotifyScreen/reducers/reducers';
-import reducerPostDetailScreen from 'screens/PostDetailScreen/reducers/reducers';
-import reducerPostsScreen from 'screens/PostsScreen/reducers/reducers';
-import reducerProfileScreen from 'screens/ProfileScreen/reducers/reducers';
-import reducerSearchScreen from 'screens/SearchScreen/reducers/reducers';
-import reducerSelectCatScreen from 'screens/SelectCatScreen/reducers/reducers';
+import reducerAppContent from 'containers/AppContent/reducers/reducers';
+import reducerAuth from 'containers/Auth/reducers/reducers';
+import reducerCommentScreen from 'containers/CommentScreen/reducers/reducers';
+import reducerHomeScreen from 'containers/HomeScreen/reducers/reducers';
+import reducerMenuScreen from 'containers/MenuScreen/reducers/reducers';
+import reducerNotifyScreen from 'containers/NotifyScreen/reducers/reducers';
+import reducerPostDetailScreen from 'containers/PostDetailScreen/reducers/reducers';
+import reducerPostsScreen from 'containers/PostsScreen/reducers/reducers';
+import reducerProfileScreen from 'containers/ProfileScreen/reducers/reducers';
+import reducerSearchScreen from 'containers/SearchScreen/reducers/reducers';
+import reducerSelectCatScreen from 'containers/SelectCatScreen/reducers/reducers';
 
 const reducers = {
   categories,
   categoriesSelected,
-  ...reducerAppContainer,
-  ...reducerAuthContainer,
+  ...reducerAppContent,
+  ...reducerAuth,
   ...reducerCommentScreen,
   ...reducerHomeScreen,
   ...reducerMenuScreen,

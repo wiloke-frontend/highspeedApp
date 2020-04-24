@@ -1,15 +1,15 @@
 import { all, delay, call, spawn } from 'redux-saga/effects';
-import sagaPostDetailScreen from 'screens/PostDetailScreen/sagas/sagaPostDetailScreen';
-import sagaSearchScreen from 'screens/SearchScreen/sagas/sagaSearchScreen';
-import sagaHomeScreen from 'screens/HomeScreen/sagas/sagaHomeScreen';
-import sagaSelectedCatScreen from 'screens/SelectCatScreen/sagas/sagaSelectedCatScreen';
-import sagaPostsScreen from 'screens/PostsScreen/sagas/sagaPostsScreen';
-import sagaNotifyScreen from 'screens/NotifyScreen/sagas/sagaNotifyScreen';
-import { sagaComments, sagaReply } from 'screens/CommentScreen/sagas';
-import sagaAuth from 'screens/AuthContainer/sagas/sagaAuth';
+import sagaPostDetailScreen from 'containers/PostDetailScreen/sagas/sagaPostDetailScreen';
+import sagaSearchScreen from 'containers/SearchScreen/sagas/sagaSearchScreen';
+import sagaHomeScreen from 'containers/HomeScreen/sagas/sagaHomeScreen';
+import sagaSelectedCatScreen from 'containers/SelectCatScreen/sagas/sagaSelectedCatScreen';
+import sagaPostsScreen from 'containers/PostsScreen/sagas/sagaPostsScreen';
+import sagaNotifyScreen from 'containers/NotifyScreen/sagas/sagaNotifyScreen';
+import { sagaComments, sagaReply } from 'containers/CommentScreen/sagas';
+import sagaAuth from 'containers/Auth/sagas/sagaAuth';
 import sagaCategories from './storeCategories/sagas/sagaCategories';
-import sagaAppContainer from 'screens/AppContainer/sagas/sagaAppContainer';
-import sagaMenuScreen from 'screens/MenuScreen/sagas/sagaMenuScreen';
+import sagaAppContent from 'containers/AppContent/sagas/sagaAppContent';
+import sagaMenuScreen from 'containers/MenuScreen/sagas/sagaMenuScreen';
 
 const sagas = [
   ...sagaHomeScreen,
@@ -22,7 +22,7 @@ const sagas = [
   ...sagaAuth,
   ...sagaPostsScreen,
   ...sagaCategories,
-  ...sagaAppContainer,
+  ...sagaAppContent,
   ...sagaMenuScreen,
 ];
 
