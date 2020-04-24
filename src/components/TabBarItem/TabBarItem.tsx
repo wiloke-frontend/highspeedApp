@@ -6,6 +6,7 @@ import { TabNavigatorItem } from 'api/TabNavigator';
 import { useSelector } from 'react-redux';
 import { notificationsSelector } from 'containers/NotifyScreen/selectors';
 import configureApp from 'utils/constants/configureApp';
+import { tabNavigatorSelector } from 'containers/AppContent/selectors';
 
 interface TabBarItemProps {
   iconName: FeatherNameType | '';
@@ -16,13 +17,16 @@ interface TabBarItemProps {
 
 function TabBarItem({ iconName, labelName = '', focused, screen }: TabBarItemProps) {
   const notifications = useSelector(notificationsSelector);
+  const tabNavigator = useSelector(tabNavigatorSelector);
   const { colors, styled } = useTheme();
   const iconStyleColor = focused ? colors.primary : colors.dark2;
   const labelStyle = focused ? styled.colorPrimary : styled.colorDark3;
 
   return (
     <>
-      {configureApp.settings.bottomTabBarTopBorder && <View style={[styles.divider, focused ? styled.bgPrimary : {}]} />}
+      {configureApp.settings.bottomTabBarTopBorder && tabNavigator.data.length > 1 && (
+        <View style={[styles.divider, focused ? styled.bgPrimary : {}]} />
+      )}
       <View style={styles.container}>
         {!!iconName && <Icons.Feather name={iconName} size={22} style={styles.icon} colorNative={iconStyleColor} />}
         {!!labelName && (
