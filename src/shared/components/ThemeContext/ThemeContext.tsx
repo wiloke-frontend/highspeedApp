@@ -12,14 +12,15 @@ export type Sizes = typeof defaultSizes;
 
 export type Styled = ReturnType<typeof getDefaultStyles>;
 
-export interface ThemeOverridesType {
+export interface ThemeOverrides {
   colors?: Partial<Colors>;
   styled?: Partial<Styled>;
   sizes?: Partial<Sizes>;
+  debug?: boolean;
 }
 
 export interface ThemeProviderProps {
-  themeOverrides?: ThemeOverridesType;
+  themeOverrides?: ThemeOverrides;
   children: ReactNode;
 }
 
@@ -27,6 +28,7 @@ export const defaultTheme = {
   colors: defaultColors,
   sizes: defaultSizes,
   styled: getDefaultStyles(defaultColors),
+  debug: false,
 };
 
 export type Theme = typeof defaultTheme;
@@ -37,6 +39,7 @@ export function ThemeProvider({ themeOverrides = defaultTheme, children }: Theme
   const colors = { ...defaultColors, ...themeOverrides.colors };
   const sizes = { ...defaultSizes, ...themeOverrides.sizes };
   const styled = { ...getDefaultStyles(colors), ...themeOverrides.styled };
+  const debug = themeOverrides.debug || false;
 
   return (
     <SafeAreaProvider>
@@ -46,6 +49,7 @@ export function ThemeProvider({ themeOverrides = defaultTheme, children }: Theme
           colors,
           sizes,
           styled,
+          debug,
         }}
       >
         {children}

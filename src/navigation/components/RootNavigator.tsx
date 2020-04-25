@@ -1,138 +1,84 @@
-import React from 'react';
-import ConfigNavigator from './ConfigNavigator';
-import { ModalLogin, RegisterResult, onCloseModalLogin } from 'components/ModalLogin/ModalLogin';
-import { View, FormCallbackParams, useTheme, useMount, Toast, Text } from 'shared';
-import { useSelector } from 'react-redux';
-import { useAuthentication, Authentication, BodyRequest } from 'store/storeAuth/actions/actionAuth';
-import { authSelector } from 'store/selectors';
-import { useGetTabNavigatorRequest } from 'store/storeTabNavigator/actions';
-import { Alert } from 'react-native';
-import { LoginResult } from 'components/ModalLogin/Login';
-import { useGetNotificationsRequest } from 'screens/NotifyScreen/actions/actionNotifications';
-import i18n from 'utils/functions/i18n';
-import { useGetPostsWithCatSelected } from 'screens/SelectCatScreen/actions/actionGetPostsWithCatSelected';
-import { useGetCategoriesFollowed } from 'store/storeCategories/actions/actionFollowCategory';
-import ModalAppUpdate from 'components/ModalAppUpdate/ModalAppUpdate';
-import configureApp from 'utils/constants/configureApp';
+import React, { memo, FC } from 'react';
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator, NavigationStackOptions } from 'react-navigation-stack';
+import getSlideFromRightTransition from 'react-navigation-slide-from-right-transition';
+import handleTabNavigator from 'navigation/functions/handleTabNavigator';
+import { rootTabNavigators, rootStackNavigators } from 'navigation/configure';
+import TabBarItem from 'components/TabBarItem/TabBarItem';
+import tabNavigatorOptions from 'navigation/functions/tabNavigatorOptions';
+import isAndroid from 'shared/utils/isAndroid';
+import { NavigationScreenProp } from 'navigation/types/NavigationScreenProp';
+import { TabNavigatorItem } from 'api/TabNavigator';
 
-export default function RootNavigator() {
-  const getTabNavigator = useGetTabNavigatorRequest();
-  const authentication = useAuthentication();
-  const getNotificationsRequest = useGetNotificationsRequest();
-  const getPostsWithCatSelected = useGetPostsWithCatSelected();
-  const getCategoriesFollowed = useGetCategoriesFollowed();
-  const auth = useSelector(authSelector);
-  const { styled } = useTheme();
+type RootStackNavigatorsKey = keyof typeof rootStackNavigators;
 
-  useMount(() => {
-    getTabNavigator({ endpoint: 'tab-navigators' });
-  });
-
-  const _handleRetry = (request: BodyRequest) => {
-    if (!!request.user_email) {
-      authentication({
-        endpoint: 'signup',
-        body: {
-          user_login: request.user_login,
-          user_password: request.user_password,
-          user_email: request.user_email,
-        },
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        cb: _callBackLogin,
-      });
-    } else {
-      authentication({
-        endpoint: 'signin',
-        body: {
-          user_login: request.user_login,
-          user_password: request.user_password,
-        },
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        cb: _callBackLogin,
-      });
-    }
+type HandleStackNavigatorsReturnType = {
+  [K in RootStackNavigatorsKey]: {
+    screen: ValueOf<typeof rootStackNavigators>;
+    navigationOptions: NavigationStackOptions;
   };
+};
 
-  const _callBackLogin = (authen: Authentication, request: BodyRequest) => {
-    if (authen.isLoggedIn) {
-      onCloseModalLogin();
-      Toast.show({
-        content: <Text color="light">{authen?.data.msg}</Text>,
-        style: [styled.bgSuccess],
-        animationType: 'slide-up',
-      });
-      getNotificationsRequest({
-        endpoint: 'notifications',
-        params: { page: 1, postsPerPage: 20 },
-      });
-    } else {
-      Alert.alert(
-        i18n.t('warning'),
-        authen.message,
-        [
-          {
-            text: i18n.t('ok'),
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          { text: i18n.t('retry'), onPress: () => _handleRetry(request) },
-        ],
-        { cancelable: false },
-      );
-    }
-    if (authen.isLoggedIn) {
-      getCategoriesFollowed.request({
-        endpoint: 'categories/following',
-        callback: categoriesSelectedIds => {
-          getPostsWithCatSelected.request({
-            endpoint: 'search',
-            params: {
-              taxonomies: { category: categoriesSelectedIds },
-              page: 1,
-              postsPerPage: 20,
-            },
-          });
-        },
-      });
-    }
-  };
-
-  const _handleLogin = (payload: FormCallbackParams<LoginResult>) => {
-    if (payload.valid) {
-      authentication({
-        endpoint: 'signin',
-        body: {
-          user_login: payload.result.username,
-          user_password: payload.result.password,
-        },
-        cb: _callBackLogin,
-      });
-    }
-  };
-
-  const _handleRegister = (payload: FormCallbackParams<RegisterResult>) => {
-    if (payload.valid) {
-      authentication({
-        endpoint: 'signup',
-        body: {
-          user_login: payload.result.user_register,
-          user_password: payload.result.password_register,
-          user_email: payload.result.user_email,
-        },
-        cb: _callBackLogin,
-      });
-    }
-  };
-
-  return (
-    <View flex>
-      <ModalLogin onLogin={_handleLogin} onRegister={_handleRegister} isLoading={auth?.status === 'loading'} message={auth?.message} />
-      <ModalAppUpdate
-        text={configureApp.settings.applicationUpdateMessage}
-        buttonUpdateText={i18n.t('updateNow')}
-        moreText={i18n.t('seeMoreUpdateDetails')}
-      />
-      <ConfigNavigator />
-    </View>
-  );
+export interface RootNavigatorProps {
+  tabNavigatorData: TabNavigatorItem[];
 }
+
+const RootNavigator: FC<RootNavigatorProps> = ({ tabNavigatorData }) => {
+  // biến đổi rootStackNavigators và gán thêm gestureResponseDistance 500
+  const handleStackNavigators = () => {
+    return Object.entries(rootStackNavigators).reduce<HandleStackNavigatorsReturnType>((acc, [key, value]) => {
+      return {
+        ...acc,
+        [key]: {
+          screen: value,
+          navigationOptions: () => ({
+            gesturesEnabled: true,
+            gestureResponseDistance: {
+              horizontal: key.includes('NotGetureDistance') ? 0 : 500,
+            },
+          }),
+        },
+      };
+      // @ts-ignore
+    }, {});
+  };
+
+  const createRootTabNavigatorRoutes = () => {
+    return handleTabNavigator(tabNavigatorData, rootTabNavigators, ({ tabBarLabel, iconName, screen }) => ({
+      tabBarLabel,
+      tabBarIcon: ({ focused }) => {
+        return <TabBarItem focused={focused} iconName={iconName} screen={screen} />;
+      },
+      tabBarOnPress: (scene: { navigation: NavigationScreenProp; defaultHandler: () => {} }) => {
+        if (scene.navigation.isFocused()) {
+          const stackNavigation = scene.navigation.state.routes[0];
+          if (!!stackNavigation && !!stackNavigation.params && !!stackNavigation.params.onScrollToTop) {
+            stackNavigation.params.onScrollToTop();
+          }
+        } else {
+          scene.defaultHandler();
+        }
+      },
+    }));
+  };
+
+  const rootTabNavigatorValue = () => {
+    return createBottomTabNavigator(createRootTabNavigatorRoutes(), tabNavigatorOptions);
+  };
+
+  const RootStack = createStackNavigator(
+    {
+      RootTabNavigator: rootTabNavigatorValue(),
+      ...handleStackNavigators(),
+    },
+    {
+      headerMode: 'none',
+      ...(isAndroid ? { transitionConfig: getSlideFromRightTransition } : {}),
+    },
+  );
+  const CreateRootStack = createAppContainer(RootStack);
+  return <CreateRootStack />;
+};
+
+export default memo(RootNavigator);

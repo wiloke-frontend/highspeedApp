@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 import { ViewStyle } from 'react-native';
-import { useMeasure, MeasureType } from 'shared/hooks/useMeasure';
+import { useMeasure, Measure } from 'shared/hooks/useMeasure';
 import { useToggle } from 'shared/hooks/useToggle';
 import sleep from 'shared/utils/sleep';
 
-export type PlacementType =
+export type Placement =
   | 'topLeft'
   | 'top'
   | 'topRight'
@@ -19,15 +19,11 @@ export type PlacementType =
   | 'leftBottom';
 
 interface UseToggleAnimation {
-  placement: PlacementType;
+  placement: Placement;
   duration?: number;
 }
 
-function getInlineStyle(
-  placement: PlacementType,
-  buttonMeasure: MeasureType,
-  contentMeasure: MeasureType,
-): Pick<ViewStyle, 'top' | 'left'> {
+function getInlineStyle(placement: Placement, buttonMeasure: Measure, contentMeasure: Measure): Pick<ViewStyle, 'top' | 'left'> {
   const top = buttonMeasure.pageY - contentMeasure.height;
   const bottom = buttonMeasure.pageY + buttonMeasure.height;
   const leftInner = buttonMeasure.pageX;

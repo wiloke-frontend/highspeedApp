@@ -1,4 +1,4 @@
-import React, { ReactNode, RefObject } from 'react';
+import React, { ReactNode, useRef, useState } from 'react';
 import { FlatList as RNFlatList, FlatListProps as RNFlatListProps } from 'react-native';
 import { View } from 'shared/components/View/View';
 import { Container } from 'shared/components/Container/Container';
@@ -6,11 +6,13 @@ import { tachyonsStyles as tachyons } from 'shared/themes/tachyons';
 import { useTheme } from 'shared/components/ThemeContext/ThemeContext';
 import isIOS from 'shared/utils/isIOS';
 import { range } from 'ramda';
+import { useMount } from 'shared/hooks/useMount';
+import { NavigationStackProp } from 'react-navigation-stack';
 
 export interface FlatListProps<ItemT> extends RNFlatListProps<ItemT> {
   useContainer?: boolean;
   numGap?: number;
-  innerRef?: RefObject<RNFlatList<ItemT>>;
+  navigation?: NavigationStackProp;
 }
 
 export function FlatList<ItemT>({
@@ -19,21 +21,49 @@ export function FlatList<ItemT>({
   numColumns = 1,
   numGap = 16,
   data,
-  innerRef,
+  navigation,
   contentContainerStyle,
   columnWrapperStyle,
   horizontal,
   ListHeaderComponent,
   ListEmptyComponent,
+  refreshing,
+  onRefresh,
+  showsVerticalScrollIndicator = false,
+  showsHorizontalScrollIndicator = false,
   ...rest
 }: FlatListProps<ItemT>) {
   const { sizes } = useTheme();
+  const [stateRefreshing, setStateRefreshing] = useState<RNFlatListProps<ItemT>['refreshing']>(false);
+  const isTopRef = useRef(false);
+  const flatListRef = useRef<RNFlatList<ItemT> | null>(null);
   const ItemWrap = useContainer && numColumns === 1 ? Container : View;
   const ListComponentWrap = useContainer && isIOS ? Container : numColumns > 1 ? View : Container;
   const itemWrapStyle = numColumns > 1 ? { width: `${100 / numColumns}%` } : {};
   const listComponentWrapStyle = isIOS ? {} : numColumns > 1 ? { maxWidth: sizes.container } : {};
   const gapItemStyle = numColumns > 1 ? { paddingHorizontal: numGap / 2 } : {};
   const columnWrapperMaxWidth = sizes.container + (numColumns > 1 ? numGap : 0);
+
+  useMount(() => {
+    setStateRefreshing(refreshing);
+    !!navigation &&
+      navigation.setParams({
+        onScrollToTop: () => {
+          if (isTopRef.current) {
+            setStateRefreshing(true);
+            const timeout = setTimeout(() => {
+              onRefresh?.();
+              setStateRefreshing(false);
+              clearTimeout(timeout);
+            }, 400);
+            isTopRef.current = false;
+          } else {
+            flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+            isTopRef.current = true;
+          }
+        },
+      });
+  });
 
   const renderListComponent = (Component: ReactNode) => {
     return (
@@ -64,9 +94,15 @@ export function FlatList<ItemT>({
     <RNFlatList
       {...rest}
       data={data}
-      ref={innerRef}
+      ref={c => {
+        flatListRef.current = c;
+      }}
       numColumns={numColumns}
       horizontal={horizontal}
+      refreshing={stateRefreshing}
+      onRefresh={onRefresh}
+      showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+      showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
       ListHeaderComponent={renderListComponent(ListHeaderComponent)}
       // ListFooterComponent={renderListComponent(ListFooterComponent)}
       ListEmptyComponent={renderListComponent(ListEmptyComponent)}

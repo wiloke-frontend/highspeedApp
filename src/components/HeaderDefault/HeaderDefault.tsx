@@ -7,7 +7,8 @@ import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import Logo from 'components/Logo/Logo';
 import useHeaderAnimated from 'shared/hooks/useAnimation';
 import { Link, NavigationScreenProp } from 'navigation';
-import { tabNavigatorSelector, userAvatarSelector, isLoggedInSelector, userNameSelector } from 'store/selectors';
+import { userAvatarSelector, isLoggedInSelector, userNameSelector } from 'containers/Auth/selectors';
+import { tabNavigatorSelector, tabNavigatorHasSearchSelector } from 'containers/AppContent/selectors';
 import { withNavigation } from 'react-navigation';
 import BackButton from 'components/BackButton/BackButton';
 import Avatar from 'components/Avatar/Avatar';
@@ -24,6 +25,7 @@ const HeaderDefault: FC<HeaderDefaultProps> = ({ title = '', backButtonEnabled =
   const name = useSelector(userNameSelector);
   const { opacityText } = useHeaderAnimated();
   const tabNavigator = useSelector(tabNavigatorSelector);
+  const tabNavigatorHasSearch = useSelector(tabNavigatorHasSearchSelector);
   const parentRouteName = !!navigation ? navigation.dangerouslyGetParent()?.state.routeName ?? '' : '';
   const _title = !!title ? title : !!navigation ? tabNavigator.data.find(item => item.name === parentRouteName)?.label : '';
 
@@ -48,13 +50,15 @@ const HeaderDefault: FC<HeaderDefaultProps> = ({ title = '', backButtonEnabled =
         ]}
         Right={[
           <View key="item1" tachyons="mr2">
-            <Link to="SearchScreen" params={{ backButtonEnabled: true }} activeOpacity={0.7} tachyons="pa1">
-              <Icons.Feather name="search" size={sizeBase * 1.5} color="dark2" />
-            </Link>
+            {!tabNavigatorHasSearch && (
+              <Link to="SearchScreen" params={{ backButtonEnabled: true }} activeOpacity={0.7} tachyons="pa1">
+                <Icons.Feather name="search" size={sizeBase * 1.5} color="dark2" />
+              </Link>
+            )}
           </View>,
           isLoggedIn ? (
-            <Link key="item2" to="ProfileScreen" activeOpacity={0.8}>
-              <Avatar uri={avatar} size={25} name={name} />
+            <Link key="item2" to="ProfileScreen" activeOpacity={0.8} style={{ width: 32 }}>
+              <Avatar uri={avatar} size={30} name={name} />
             </Link>
           ) : (
             <TouchableOpacity key="item2" onPress={handleOpenModal}>

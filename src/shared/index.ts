@@ -4,7 +4,7 @@ export {
   useTheme,
   withTheme,
   ThemeProviderProps,
-  ThemeOverridesType,
+  ThemeOverrides,
   Sizes,
   Styled,
   Theme,
@@ -39,10 +39,11 @@ export { FlatList, FlatListProps } from 'shared/components/FlatList/FlatList';
 export { OfflineNotice } from 'shared/components/OfflineNotice/OfflineNotice';
 export { TextInputMentions } from 'shared/components/TextInputMentions/TextInputMentions';
 export { TextInputMentionsProps, Range, EntityMap, User, OnChangeParams } from 'shared/components/TextInputMentions/types';
+export { ZoomHandler } from 'shared/components/ZoomHandler/ZoomHandler';
 export { useToggle } from 'shared/hooks/useToggle';
-export { useFlyAnimation, FlyAnimationType } from 'shared/hooks/useFlyAnimation';
-export { useMeasure, MeasureType } from 'shared/hooks/useMeasure';
-export { useSwitchAnimation, PlacementType } from 'shared/hooks/useSwitchAnimation';
+export { useFlyAnimation, FlyAnimation } from 'shared/hooks/useFlyAnimation';
+export { useMeasure, Measure } from 'shared/hooks/useMeasure';
+export { useSwitchAnimation, Placement } from 'shared/hooks/useSwitchAnimation';
 export { useMount } from 'shared/hooks/useMount';
 export { useSelectList, UseSelectListCallbackParams, OnResultSelectList } from 'shared/hooks/useSelectList';
 export { useAnimated } from 'shared/hooks/useAnimated';

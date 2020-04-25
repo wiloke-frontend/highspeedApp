@@ -6,6 +6,7 @@ import getFlexStyle from 'shared/utils/getFlexStyle';
 import { useMount } from 'shared/hooks/useMount';
 import styles from './styles';
 import { withViewStyles, WithViewStylesProps } from 'shared/hocs/withViewStyles';
+import { useTheme } from '../ThemeContext/ThemeContext';
 
 export interface ViewProps extends RNViewProps, WithViewStylesProps {
   children?: ReactNode;
@@ -18,7 +19,8 @@ export interface ViewProps extends RNViewProps, WithViewStylesProps {
 }
 const ViewWithStyles = withViewStyles<RNView, ViewProps>(RNView);
 const ViewComponent = forwardRef<RNView, ViewProps>(
-  ({ children, flex = false, safeAreaView = false, safeAreaViewBottom = false, shadow = false, style = {}, onMount, ...ortherProps }, ref) => {
+  ({ children, flex = false, safeAreaView = false, safeAreaViewBottom = false, shadow = false, style = {}, onMount, ...rest }, ref) => {
+    const { debug } = useTheme();
     const insets = useSafeArea();
     const flexStyle = getFlexStyle(flex);
     const shadowStyle = shadow ? styles.shadow : {};
@@ -26,7 +28,7 @@ const ViewComponent = forwardRef<RNView, ViewProps>(
       onMount?.();
     });
     return (
-      <ViewWithStyles ref={ref} style={[shadowStyle, flexStyle, style]} {...ortherProps}>
+      <ViewWithStyles ref={ref} style={[shadowStyle, flexStyle, style, debug ? styles.debug : styles.empty]} {...rest}>
         {safeAreaView && <RNView style={{ height: insets.top }} />}
         {children}
         {safeAreaViewBottom && <RNView style={{ height: insets.bottom }} />}

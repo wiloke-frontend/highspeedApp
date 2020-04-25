@@ -3,13 +3,13 @@ import { Animated } from 'react-native';
 
 type RangeType = number[];
 
-interface CoordinatesItemType {
+interface Coordinates {
   x: number;
   y: number;
 }
 
-export interface FlyAnimationType {
-  coordinates: CoordinatesItemType[];
+export interface FlyAnimation {
+  coordinates: Coordinates[];
   duration: number;
 }
 
@@ -21,7 +21,7 @@ function getInputRange(outputRange: RangeType) {
   });
 }
 
-export function useFlyAnimation({ coordinates, duration }: FlyAnimationType) {
+export function useFlyAnimation({ coordinates, duration }: FlyAnimation) {
   const anim = useRef(new Animated.Value(0));
   const outputRangeX = [...new Set(coordinates.map(item => item.x))];
   const outputRangeY = [...new Set(coordinates.map(item => item.y))];

@@ -5,7 +5,7 @@ export interface TabNavigatorItem {
   label: string;
   iconName: FeatherNameType | '';
   enable: boolean;
-  screen: 'HomeTabNavigator' | 'MyPostsNavigator' | 'NotifyNavigator' | 'CategoryNavigator' | 'SeachNavigator' | 'MenuNavigator';
+  screen: 'HomeTabNavigator' | 'MyPostsNavigator' | 'NotifyNavigator' | 'CategoryNavigator' | 'SearchNavigator' | 'MenuNavigator';
 }
 
 export interface TabNavigator {

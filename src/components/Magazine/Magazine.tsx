@@ -143,7 +143,6 @@ const Magazine: FC<MagazineProps> = ({
             renderItem={renderPostItemFlatList}
             numColumns={numColumns}
             numGap={30}
-            removeClippedSubviews={true}
             useContainer
           />
         ) : (

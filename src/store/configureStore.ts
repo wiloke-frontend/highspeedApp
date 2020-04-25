@@ -2,17 +2,27 @@ import { Middleware, createStore, applyMiddleware, combineReducers, compose } fr
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { AsyncStorage } from 'react-native';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistStore, persistReducer, PersistConfig } from 'redux-persist';
 import { syncTranslationWithStore, i18nReducer } from 'react-redux-i18n';
 import rootSaga from 'store/rootSagas';
 import rootReducers from 'store/rootReducers';
 import { translations } from 'translations';
 import { locale } from 'utils/functions/getCurrentLocale';
 
-const persistConfig = {
+const persistConfig: PersistConfig<(keyof Reducers)[]> & { whitelist: (keyof Reducers)[] } = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['nightMode', 'categoriesSelected', 'auth', 'postDetailTutorial', 'postTextSize'] as (keyof Reducers)[],
+  whitelist: [
+    // 'homeSkeleton',
+    // 'homeSections',
+    // 'homeSectionNavigations',
+    // 'homeSectionYoutubeList',
+    'nightMode',
+    'categoriesSelected',
+    'auth',
+    'postDetailTutorial',
+    'postTextSize',
+  ],
 };
 
 const _combineReducers = combineReducers({

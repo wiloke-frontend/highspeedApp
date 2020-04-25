@@ -4,6 +4,8 @@ import VersionCheck from 'react-native-version-check';
 import { useMount, Button, View, Text, withViewStyles, Icons } from 'shared';
 import Constants from 'expo-constants';
 import isIOS from 'shared/utils/isIOS';
+import { nightModeSelector } from 'containers/ProfileScreen/selectors';
+import { useSelector } from 'react-redux';
 
 export interface ModalAppUpdateProps {
   text: string;
@@ -18,6 +20,7 @@ const ModalAppUpdate: FC<ModalAppUpdateProps> = ({ text, buttonUpdateText, moreT
   const [storeUrl, setStoreUrl] = useState('');
   const [currentVersion, setCurrentVersion] = useState('');
   const appName = Constants.manifest.name;
+  const nightMode = useSelector(nightModeSelector);
 
   const handleNeedUpdate = async () => {
     try {
@@ -53,19 +56,23 @@ const ModalAppUpdate: FC<ModalAppUpdateProps> = ({ text, buttonUpdateText, moreT
 
   return (
     <Modal visible={!!storeUrl}>
-      <View tachyons={['flex', 'justifyCenter', 'pa3']}>
+      <View tachyons={['flex', 'justifyCenter', 'pa3']} backgroundColor="light">
         <View tachyons={['itemsCenter']}>
           <Text type="h3" tachyons="mb3" color="primary">
             {appName} {currentVersion}
           </Text>
           <Text tachyons="tc">{text}</Text>
         </View>
-        <Image source={require('assets/vectors/update.jpg')} tachyons={['w100', 'h50']} resizeMode="contain" />
+        <Image
+          source={nightMode ? require('assets/vectors/update-dark.jpg') : require('assets/vectors/update-light.jpg')}
+          tachyons={['w100', 'h50']}
+          resizeMode="contain"
+        />
         <Button block size="medium" borderRadius="round" onPress={handleUpdate}>
           <View tachyons="mr2">
-            <Icons.FontAwesome5 name={isIOS ? 'apple' : 'android'} size={18} color="light" />
+            <Icons.FontAwesome5 name={isIOS ? 'apple' : 'android'} size={18} colorNative="#fff" />
           </View>
-          <Text color="light">{buttonUpdateText}</Text>
+          <Text colorNative="#fff">{buttonUpdateText}</Text>
         </Button>
         <TouchableOpacity activeOpacity={0.8} onPress={handleUpdate} tachyons="pa3">
           <Text color="dark2" tachyons="tc">

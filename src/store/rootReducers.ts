@@ -1,61 +1,31 @@
-import postDetails from 'screens/PostDetailScreen/reducers/reducerPostDetails';
-import trendingPosts from 'screens/SearchScreen/reducers/reducerTrendingPosts';
-import searchResult from 'screens/SearchScreen/reducers/reducerSearchResults';
-import { homeSectionYoutubeList } from 'screens/HomeScreen/reducers/reducerYoutubeList';
-import { homeSkeleton } from 'screens/HomeScreen/reducers/reducerHomeSkeleton';
-import { homeSections } from 'screens/HomeScreen/reducers/reducerHomeSections';
-import { homeSectionNavigations } from 'screens/HomeScreen/reducers/reducerHomeSectionNavigations';
-import { postDetailRelatedPosts } from 'screens/PostDetailScreen/reducers/reducerPostDetailRelated';
 import { categories } from 'store/storeCategories/reducers/reducerCategories';
-import { postsWithCatSelected } from 'screens/SelectCatScreen/reducers/reducerPostsWithCatSelected';
-import { postTextSize } from 'screens/PostDetailScreen/reducers/reducerPostTextSize';
-import { auth } from './storeAuth/reducers/reducerAuth';
-import { postComments } from 'screens/CommentScreen/reducers/reducerPostComments';
-import { postsWithParams } from 'screens/PostsScreen/reducers/reducerPosts';
 import { categoriesSelected } from './storeCategories/reducers/reducerCatSelected';
-import { notifications } from 'screens/NotifyScreen/reducers/reducerNotifications';
-import { tabNavigator } from './storeTabNavigator/reducers';
-import { menu } from 'screens/MenuScreen/reducers/reducerMenu';
-import replyComments from 'screens/CommentScreen/reducers/reducerReply';
-import { forgetPass } from './storeAuth/reducers/reducerPassword';
-import { postDetailTutorial } from 'screens/PostDetailScreen/reducers/reducerPostDetailTutorial';
-import { nightMode } from 'screens/ProfileScreen/reducers/reducerNightMode';
+import reducerAppContent from 'containers/AppContent/reducers/reducers';
+import reducerAuth from 'containers/Auth/reducers/reducers';
+import reducerCommentScreen from 'containers/CommentScreen/reducers/reducers';
+import reducerHomeScreen from 'containers/HomeScreen/reducers/reducers';
+import reducerMenuScreen from 'containers/MenuScreen/reducers/reducers';
+import reducerNotifyScreen from 'containers/NotifyScreen/reducers/reducers';
+import reducerPostDetailScreen from 'containers/PostDetailScreen/reducers/reducers';
+import reducerPostsScreen from 'containers/PostsScreen/reducers/reducers';
+import reducerProfileScreen from 'containers/ProfileScreen/reducers/reducers';
+import reducerSearchScreen from 'containers/SearchScreen/reducers/reducers';
+import reducerSelectCatScreen from 'containers/SelectCatScreen/reducers/reducers';
 
 const reducers = {
-  // general
   categories,
   categoriesSelected,
-  postsWithCatSelected,
-  tabNavigator,
-
-  // home
-  homeSkeleton,
-  homeSections,
-  homeSectionNavigations,
-  homeSectionYoutubeList,
-
-  // post
-  postDetails,
-  postDetailRelatedPosts,
-  postTextSize,
-  postDetailTutorial,
-
-  postsWithParams,
-
-  trendingPosts,
-  searchResult,
-  auth,
-  postComments,
-
-  // notifications
-  notifications,
-
-  // menu
-  menu,
-
-  replyComments,
-  forgetPass,
-  nightMode,
+  ...reducerAppContent,
+  ...reducerAuth,
+  ...reducerCommentScreen,
+  ...reducerHomeScreen,
+  ...reducerMenuScreen,
+  ...reducerNotifyScreen,
+  ...reducerPostDetailScreen,
+  ...reducerPostsScreen,
+  ...reducerProfileScreen,
+  ...reducerSearchScreen,
+  ...reducerSelectCatScreen,
 };
 
 export default reducers;

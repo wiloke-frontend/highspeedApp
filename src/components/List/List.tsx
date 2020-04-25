@@ -15,7 +15,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const List: FC<ListProps> = ({ text, iconName, Right = <Icons.Feather name="chevron-right" size={20} color="dark3" /> }) => {
+const List: FC<ListProps> = ({
+  text,
+  iconName,
+  Right = <Icons.Feather name="chevron-right" size={20} color="dark3" style={{ marginRight: -4 }} />,
+}) => {
   return (
     <View flexDirection="row" alignItems="center" justifyContent="space-between" tachyons="pa3">
       <View flexDirection="row" alignItems="center">
