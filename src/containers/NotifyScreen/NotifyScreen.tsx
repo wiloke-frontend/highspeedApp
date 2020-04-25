@@ -17,6 +17,7 @@ import { ScreenParams } from 'types/ScreenParams';
 import Retry from 'components/Retry/Retry';
 import NotifyItem from './NotifyItem';
 import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
+import { nightModeSelector } from 'containers/ProfileScreen/selectors';
 
 const ActivityIndicator = withViewStyles(RNActivityIndicator);
 const Image = withViewStyles(RNImage);
@@ -27,6 +28,7 @@ const NotifyScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   const isLoggedIn = useSelector(isLoggedInSelector);
   const page = useSelector(pageSelector);
   const maxNumPages = useSelector(maxNumPagesSelector);
+  const nightMode = useSelector(nightModeSelector);
 
   const handleGetNotifications = (page: number) => {
     if (isLoggedIn) {
@@ -96,7 +98,7 @@ const NotifyScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
             <Text type="h5" tachyons={['mb2', 'tc']} color="dark2">
               {i18n.t('youNeedToLoginToShowNotifications')}
             </Text>
-            <Image source={require('assets/vectors/notify-light.jpg')} tachyons={['w100', 'h50']} resizeMode="contain" />
+            <Image source={nightMode ? require('assets/vectors/notify-dark.jpg') :  require('assets/vectors/notify-light.jpg')} tachyons={['w100', 'h50']} resizeMode="contain" />
             <Button borderRadius="round" size="medium" onPress={onOpenModalLogin}>
               <Text type="h7" tachyons="ph4" style={{ color: '#fff' }}>
                 {i18n.t('login')}

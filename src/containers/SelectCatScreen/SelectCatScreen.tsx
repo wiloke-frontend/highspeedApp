@@ -2,7 +2,6 @@ import React from 'react';
 import { Image as RNImage } from 'react-native';
 import { useSelector } from 'react-redux';
 import { View, Text, Container, useToggle, Button, useSelectList, useMount, tachyons, withViewStyles } from 'shared';
-import HeaderCatFollow from 'components/HeaderCatFollow/HeaderCatFollow';
 import i18n from 'utils/functions/i18n';
 import { ScreenFC } from 'navigation';
 import { isEmpty } from 'ramda';
@@ -17,6 +16,8 @@ import ModalSelectCat from './ModalSelectCat';
 import Retry from 'components/Retry/Retry';
 import { useFollowCategoryRequest, useGetCategoriesFollowed } from 'store/storeCategories/actions/actionFollowCategory';
 import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
+import SelectCatHeader from './SelectCatHeader';
+import { nightModeSelector } from 'containers/ProfileScreen/selectors';
 
 const Image = withViewStyles(RNImage);
 
@@ -31,6 +32,7 @@ const SelectCatScreen: ScreenFC = ({ navigation }) => {
   const page = useSelector(pageSelector);
   const maxNumPages = useSelector(maxNumPagesSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
+  const nightMode = useSelector(nightModeSelector);
 
   const [isVisible, onVisibleToggle] = useToggle(false);
   const { outputResult, isSelected, onSelect, onPrevious } = useSelectList({
@@ -101,7 +103,11 @@ const SelectCatScreen: ScreenFC = ({ navigation }) => {
       <Text type="h5" tachyons={['mb2', 'tc']} color="dark2">
         {i18n.t('chooseWhichCategoriesYouWantToFollow')}
       </Text>
-      <Image source={require('assets/vectors/articles-light.jpg')} tachyons={['w100', 'h50']} resizeMode="contain" />
+      <Image
+        source={nightMode ? require('assets/vectors/articles-dark.jpg') : require('assets/vectors/articles-light.jpg')}
+        tachyons={['w100', 'h50']}
+        resizeMode="contain"
+      />
       <Button borderRadius="round" size="medium" onPress={onVisibleToggle}>
         <Text type="h7" tachyons="ph4" style={{ color: '#fff' }}>
           {i18n.t('chooseText', { text: i18n.t('categories') })}
@@ -168,7 +174,7 @@ const SelectCatScreen: ScreenFC = ({ navigation }) => {
     <ScreenContainer
       Header={
         <Container>
-          <HeaderCatFollow onEditing={onVisibleToggle} />
+          <SelectCatHeader onEditing={onVisibleToggle} />
         </Container>
       }
       safeAreaView

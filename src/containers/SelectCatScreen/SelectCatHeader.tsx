@@ -6,17 +6,18 @@ import { withNavigation } from 'react-navigation';
 import { useSelector } from 'react-redux';
 import { Link, NavigationScreenProp } from 'navigation';
 import BackButton from 'components/BackButton/BackButton';
-import { tabNavigatorSelector } from 'containers/AppContent/selectors';
+import { tabNavigatorSelector, tabNavigatorHasSearchSelector } from 'containers/AppContent/selectors';
 
-export interface HeaderCatFollowProps {
+export interface SelectCatHeaderProps {
   title?: string;
   backButtonEnabled?: boolean;
   navigation: NavigationScreenProp;
   onEditing?: TouchableOpacityProps['onPress'];
 }
 
-const HeaderCatFollow: FC<HeaderCatFollowProps> = ({ title = '', backButtonEnabled = false, onEditing, navigation }) => {
+const SelectCatHeader: FC<SelectCatHeaderProps> = ({ title = '', backButtonEnabled = false, onEditing, navigation }) => {
   const tabNavigator = useSelector(tabNavigatorSelector);
+  const tabNavigatorHasSearch = useSelector(tabNavigatorHasSearchSelector);
   const parentRouteName = !!navigation ? navigation.dangerouslyGetParent()?.state.routeName : '';
   const _title = !!title ? title : !!navigation ? tabNavigator.data.find(item => item.name === parentRouteName)?.label : '';
 
@@ -31,9 +32,11 @@ const HeaderCatFollow: FC<HeaderCatFollowProps> = ({ title = '', backButtonEnabl
         ]}
         Right={[
           <View key="item1" tachyons="mr2">
-            <Link to="SearchScreen" params={{ backButtonEnabled: true }} activeOpacity={0.7} tachyons="pa1">
-              <Icons.Feather name="search" size={sizeBase * 1.5} color="dark2" />
-            </Link>
+            {!tabNavigatorHasSearch && (
+              <Link to="SearchScreen" params={{ backButtonEnabled: true }} activeOpacity={0.7} tachyons="pa1">
+                <Icons.Feather name="search" size={sizeBase * 1.5} color="dark2" />
+              </Link>
+            )}
           </View>,
           <TouchableOpacity key="item2" activeOpacity={0.7} onPress={onEditing}>
             <View justifyContent="center" alignItems="center" tachyons={['w2', 'h2']}>
@@ -46,4 +49,4 @@ const HeaderCatFollow: FC<HeaderCatFollowProps> = ({ title = '', backButtonEnabl
   );
 };
 
-export default memo(withNavigation(HeaderCatFollow));
+export default memo(withNavigation(SelectCatHeader));

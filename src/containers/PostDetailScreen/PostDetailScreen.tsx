@@ -21,13 +21,14 @@ import { isLoggedInSelector } from 'containers/Auth/selectors';
 import { onOpenModalLogin } from 'components/ModalLogin/ModalLogin';
 import DetailFeatured from './DetailFeatured';
 import DetailToastFavorite from './DetailToastFavorite';
-import DetailTutorial from './DetailTutorial';
-import { NavigationSuspense, ScreenFC } from 'navigation';
+import { ScreenFC } from 'navigation';
 import { Post } from 'api/Post';
 import HtmlViewer from 'components/HtmlViewer/HtmlViewer';
 import getHtmlViewerTextStyles from 'utils/functions/getHtmlViewerTextStyles';
 import BarHeightSpacer from 'components/BarHeightSpacer/BarHeightSpacer';
 import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
+
+// import DetailTutorial from './DetailTutorial';
 
 export interface PostDetailScreenParams extends Post {}
 
@@ -229,9 +230,9 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
       }
       safeAreaView
     >
-      <NavigationSuspense>
+      {/* <NavigationSuspense>
         <DetailTutorial />
-      </NavigationSuspense>
+      </NavigationSuspense> */}
       <WilTabs
         tabDisabled
         data={tabs}

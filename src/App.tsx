@@ -31,8 +31,8 @@ export default function App(props: AppProps) {
 async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
-      require('assets/login-cover.png'),
       require('assets/logo.png'),
+      require('assets/login-cover.png'),
       require('assets/notification.png'),
       require('assets/vectors/articles-light.jpg'),
       require('assets/vectors/notify-light.jpg'),
