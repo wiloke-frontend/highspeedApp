@@ -1,5 +1,5 @@
 import React, { ReactNode, useRef, useState } from 'react';
-import { FlatList as RNFlatList, FlatListProps as RNFlatListProps } from 'react-native';
+import { FlatList as RNFlatList, FlatListProps as RNFlatListProps, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { View } from 'shared/components/View/View';
 import { Container } from 'shared/components/Container/Container';
 import { tachyonsStyles as tachyons } from 'shared/themes/tachyons';
@@ -29,6 +29,7 @@ export function FlatList<ItemT>({
   ListEmptyComponent,
   refreshing,
   onRefresh,
+  onScroll,
   showsVerticalScrollIndicator = false,
   showsHorizontalScrollIndicator = false,
   ...rest
@@ -37,6 +38,7 @@ export function FlatList<ItemT>({
   const [stateRefreshing, setStateRefreshing] = useState<RNFlatListProps<ItemT>['refreshing']>(false);
   const isTopRef = useRef(false);
   const flatListRef = useRef<RNFlatList<ItemT> | null>(null);
+  const contentOffsetYRef = useRef(0);
   const ItemWrap = useContainer && numColumns === 1 ? Container : View;
   const ListComponentWrap = useContainer && isIOS ? Container : numColumns > 1 ? View : Container;
   const itemWrapStyle = numColumns > 1 ? { width: `${100 / numColumns}%` } : {};
@@ -49,7 +51,7 @@ export function FlatList<ItemT>({
     !!navigation &&
       navigation.setParams({
         onScrollToTop: () => {
-          if (isTopRef.current) {
+          if (isTopRef.current && contentOffsetYRef.current === 0) {
             setStateRefreshing(true);
             const timeout = setTimeout(() => {
               onRefresh?.();
@@ -90,6 +92,11 @@ export function FlatList<ItemT>({
     );
   };
 
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    onScroll?.(event);
+    contentOffsetYRef.current = event.nativeEvent.contentOffset.y;
+  };
+
   return (
     <RNFlatList
       {...rest}
@@ -101,6 +108,7 @@ export function FlatList<ItemT>({
       horizontal={horizontal}
       refreshing={stateRefreshing}
       onRefresh={onRefresh}
+      onScroll={handleScroll}
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}
       showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
       ListHeaderComponent={renderListComponent(ListHeaderComponent)}
