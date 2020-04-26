@@ -70,7 +70,9 @@ const NotifyItem: FC<NotifyItemProps> = ({ item, index }) => {
         to={linkTo}
         params={linkParams}
         onBeforeNavigate={() => {
-          postNotifyRequest({ endpoint: 'notifications', id: item.id });
+          if (!item.seen) {
+            postNotifyRequest({ endpoint: 'notifications', id: item.id });
+          }
         }}
       >
         {index === 0 && <Divider />}

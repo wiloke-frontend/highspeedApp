@@ -40,7 +40,10 @@ export const notifications = createReducer<NotificationsState, NotificationsActi
   }),
   handleActions(['@deleteNotifyRequest', '@deleteNotifySuccess'], (state, action) => {
     state.data.data = !!state.data.data ? state.data.data.filter(item => item.id !== action.payload.id) : [];
-    state.noSeenTotal = action.payload.seen && state.noSeenTotal > 0 ? state.noSeenTotal - 1 : state.noSeenTotal;
+    return state;
+  }),
+  handleAction('@deleteNotifySuccess', (state, action) => {
+    state.noSeenTotal = !action.payload.seen && state.noSeenTotal > 0 ? state.noSeenTotal - 1 : state.noSeenTotal;
     return state;
   }),
   handleAction('@logout', () => initialState),
