@@ -14,10 +14,14 @@ import { isEmpty } from 'ramda';
 import { notificationsSelector } from 'containers/NotifyScreen/selectors';
 import { useGetNotificationsRequest } from 'containers/NotifyScreen/actions/actionNotifications';
 import { styles } from './styles';
+import { Platform } from 'react-native';
+import isIOS from 'shared/utils/isIOS';
 
 export interface LoginWithProps {
   appID?: string;
 }
+
+const majorVersionIOS: number = typeof Platform.Version === 'string' ? parseInt(Platform.Version, 10) : Platform.Version;
 
 const LoginWith = ({ appID = '2759040360883740' }: LoginWithProps) => {
   const loginFacebook = useFacebookLogin();
@@ -105,18 +109,20 @@ const LoginWith = ({ appID = '2759040360883740' }: LoginWithProps) => {
         </View>
         <Text style={styles.colorLight}>Login with Facebook</Text>
       </Button>
-      <Button
-        block
-        tachyons={['wAuto', 'mt2', 'br2']}
-        loading={auth.statusApple === 'loading'}
-        style={styles.appleButton}
-        onPress={_handleLoginApple}
-      >
-        <View tachyons="mr1">
-          <Icons.FontAwesome5 name="apple" size={18} colorNative="#fff" />
-        </View>
-        <Text style={styles.colorLight}>Login with Apple</Text>
-      </Button>
+      {isIOS && majorVersionIOS > 13 && (
+        <Button
+          block
+          tachyons={['wAuto', 'mt2', 'br2']}
+          loading={auth.statusApple === 'loading'}
+          style={styles.appleButton}
+          onPress={_handleLoginApple}
+        >
+          <View tachyons="mr1">
+            <Icons.FontAwesome5 name="apple" size={18} colorNative="#fff" />
+          </View>
+          <Text style={styles.colorLight}>Login with Apple</Text>
+        </Button>
+      )}
     </View>
   );
 };
