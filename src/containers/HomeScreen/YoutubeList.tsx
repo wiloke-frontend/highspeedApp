@@ -49,7 +49,7 @@ const YoutubeList: FC<YoutubeListProps> = ({ sectionId }) => {
           {renderYoutubeItem(false)({ item: youtubeLastItem, index: youtubeListData.length - 1 })}
         </View>
       }
-      contentContainerStyle={[tachyons.pv3, { marginLeft: containerMarginLeft }]}
+      contentContainerStyle={[tachyons.pb4, { marginLeft: containerMarginLeft }]}
     />
   );
 };

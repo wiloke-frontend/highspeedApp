@@ -91,7 +91,7 @@ const Section: FC<SectionProps> = ({ sectionSkeleton, sectionIndex }) => {
       Request={<SectionLoading />}
       Success={
         <NavigationSuspense fallback={<SectionLoading />}>
-          <View tachyons="mb3">
+          <View tachyons="mb2">
             {!!sectionSkeleton.general?.heading && (
               <Container tachyons="ph3">
                 <SwitchTitle variant={sectionSkeleton.general.headingStyle} title={sectionSkeleton.general.heading} />
