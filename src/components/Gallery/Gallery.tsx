@@ -78,19 +78,19 @@ const Gallery: FC<GalleryProps> = ({ data, onClose, ...rest }) => {
       }}
       onRequestClose={handleClose}
     >
-      <View flex safeAreaView backgroundColor="dark1">
+      <View flex safeAreaView style={styles.container}>
         <StatusBar barStyle="light-content" />
         <View flex tachyons={['relative']}>
           <View tachyons={['absolute', 'top0', 'left0', 'right0', 'z1']}>
             <HeaderBase
               Left={
-                <Text color="gray1">
+                <Text colorNative="#eee">
                   {indexActive + 1} / {data.length}
                 </Text>
               }
               Right={
                 <TouchableOpacity activeOpacity={0.7} tachyons="pa1" onPress={handleClose}>
-                  <Icons.Feather name="x" size={25} color="gray1" />
+                  <Icons.Feather name="x" size={25} colorNative="#eee" />
                 </TouchableOpacity>
               }
               backgroundColor="transparent"
