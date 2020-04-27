@@ -14,13 +14,9 @@
       "backgroundColor": "#ff3e3c"
     },
     "updates": {
-      "fallbackToCacheTimeout": 50000
+      "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true,
-      "usesAppleSignIn": true
-    },
     "facebookDisplayName": "Highspeed Blog",
     "facebookScheme": "fb2759040360883740",
     "facebookAppId": "2759040360883740",
@@ -29,6 +25,15 @@
       "barStyle": "dark-content",
       "backgroundColor": "#ffffff"
     },
-    "android": {}
+    "ios": {
+      "bundleIdentifier": "com.yourcompany.yourappname",
+      "buildNumber": "1.0.0",
+      "supportsTablet": true,
+      "usesAppleSignIn": true
+    },
+    "android": {
+      "package": "com.yourcompany.yourappname",
+      "versionCode": 1
+    }
   }
 }
