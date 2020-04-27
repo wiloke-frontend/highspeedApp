@@ -103,7 +103,7 @@ const KeyBoardAccessory: FC<AccessoryViewProps> = ({
         LayoutAnimation.configureNext(accessoryAnimation(keyboardEvent.duration, keyboardEvent.easing, animationConfig));
       }
       setIsVisible(true);
-      setKeyboardHeight(keyboardHeight);
+      setKeyboardHeight(keyboardHeight || 0);
     };
     if (Platform.OS === 'ios' || typeof onKeyboardShowDelay !== 'number') {
       keyboardAnimate();
@@ -114,7 +114,7 @@ const KeyBoardAccessory: FC<AccessoryViewProps> = ({
     }
 
     setIsVisible(true);
-    setKeyboardHeight(keyboardHeight);
+    setKeyboardHeight(keyboardHeight || 0);
     setAccessoryHeight(visibleAccessoryHeight);
   };
 
