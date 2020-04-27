@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Modal, TouchableOpacity, Image, StatusBar, FlatList } from 'react-native';
+import { Modal, TouchableOpacity, Image, FlatList } from 'react-native';
 import { View, FormCallbackPropsType, useMount, useUnmount } from 'shared';
 import Emitter from 'shared/utils/emitter';
 import IconBox from 'components/IconBox/IconBox';
@@ -8,6 +8,7 @@ import Register from './Register';
 import { styles } from './styles';
 import { TabItem } from 'components/WilTabs/WilTabs';
 import ForgottenAccount from './ForgottenAccount';
+import StatusBar from 'components/StatusBar/StatusBar';
 
 export interface RegisterResult {
   user_email: string;
@@ -80,7 +81,7 @@ export function ModalLogin({ onLogin, onRegister, isLoading }: ModalLoginProps) 
 
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={handleClose}>
-      <StatusBar barStyle="light-content" />
+      <StatusBar />
       <View style={styles.wrapper}>
         <Image source={require('assets/login-cover.png')} resizeMode="cover" style={styles.imageBg} />
         <View safeAreaView safeAreaViewBottom flex style={styles.wrapper}>

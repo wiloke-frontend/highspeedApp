@@ -1,14 +1,7 @@
 import React, { FC, useState, memo } from 'react';
 import { Image, FlatList, ImageProps, View, withViewStyles, HeaderBase, Text, Icons } from 'shared';
-import {
-  Modal,
-  ModalProps,
-  TouchableOpacity as RNTouchableOpacity,
-  ActivityIndicator,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
-  StatusBar,
-} from 'react-native';
+import { Modal, ModalProps, TouchableOpacity as RNTouchableOpacity, ActivityIndicator, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import StatusBar from 'components/StatusBar/StatusBar';
 import { tachyonsStyles } from 'shared/themes/tachyons';
 import { styles } from './styles';
 

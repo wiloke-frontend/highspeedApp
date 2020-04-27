@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useMount, View, Container, useTheme } from 'shared';
 import { ActivityIndicator } from 'react-native-paper';
 import { isEmpty } from 'ramda';
-import { FlatList, Clipboard, StatusBar } from 'react-native';
+import { FlatList, Clipboard } from 'react-native';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import CommentCard from 'components/CommentCard/CommentCard';
 import { Comment, UserComment, Description } from 'api/Comment';
@@ -31,8 +31,6 @@ export interface CommentScreenParams {
   id: number;
   title: string;
 }
-
-StatusBar.setBarStyle('dark-content');
 
 const CommentScreen: ScreenFC<CommentScreenParams> = ({ navigation }) => {
   const { showActionSheetWithOptions } = useActionSheet();

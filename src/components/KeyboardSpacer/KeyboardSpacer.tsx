@@ -3,6 +3,8 @@ import { Keyboard, LayoutAnimation, Platform, KeyboardEvent, LayoutAnimationConf
 import { View, useUnmount, useMount } from 'shared';
 import styles from './styles';
 import { SCREEN_HEIGHT } from 'shared/utils/screen';
+import { nightModeSelector } from 'containers/ProfileScreen/selectors';
+import { useSelector } from 'react-redux';
 
 export interface KeyboardSpacerProps {
   topSpacing?: number;
@@ -33,9 +35,10 @@ const resetListener = ANDROID ? 'keyboardDidHide' : 'keyboardWillHide';
 function KeyboardSpacer({ topSpacing = 0, onToggle }: KeyboardSpacerProps) {
   const [keyboardSpace, setKeyboardSpace] = useState(0);
   const [_, setKeyboardOpened] = useState(false);
+  const nightMode = useSelector(nightModeSelector);
 
   const _updateKeyboardSpace = (event: KeyboardEvent) => {
-    StatusBar.setBarStyle('dark-content');
+    StatusBar.setBarStyle(nightMode ? 'light-content' : 'dark-content');
     if (!event.endCoordinates) {
       return;
     }
