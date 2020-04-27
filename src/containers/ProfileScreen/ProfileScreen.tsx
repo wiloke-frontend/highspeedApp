@@ -13,6 +13,7 @@ import InterestCategories from './InterestCategories';
 import Avatar from 'components/Avatar/Avatar';
 import { useChangeNightMode } from './actions/actionNightMode';
 import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
+import isAndroid from 'shared/utils/isAndroid';
 
 const ProfileScreen: ScreenFC = ({ navigation }) => {
   const { colors } = useTheme();
@@ -69,7 +70,14 @@ const ProfileScreen: ScreenFC = ({ navigation }) => {
           <List
             iconName="moon"
             text={i18n.t('nightMode')}
-            Right={<Switch value={nightMode} onValueChange={() => changeNightMode()} trackColor={{ true: colors.primary, false: colors.gray2 }} />}
+            Right={
+              <Switch
+                value={nightMode}
+                onValueChange={() => changeNightMode()}
+                trackColor={{ true: isAndroid ? colors.gray1 : colors.primary, false: colors.gray2 }}
+                {...(isAndroid ? { thumbColor: nightMode ? colors.primary : colors.gray1 } : {})}
+              />
+            }
           />
           <Divider />
           <Link to="HistoryPostsScreen">

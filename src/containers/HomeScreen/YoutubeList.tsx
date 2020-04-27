@@ -27,7 +27,12 @@ const YoutubeList: FC<YoutubeListProps> = ({ sectionId }) => {
   const itemWidth = sizeContainer / 2.5;
 
   const renderYoutubeItem = (hasTachyons: boolean) => ({ item }: { item: YoutubeListVideoItem; index: number }) => {
-    const uri = `https://www.youtube.com/watch?v=${item?.contentDetails?.videoId || item.id}`;
+    const id = item?.contentDetails?.videoId || item?.id || '';
+    const uri = `https://www.youtube.com/watch?v=${id}`;
+
+    if (!id) {
+      return null;
+    }
 
     return (
       <View {...(hasTachyons ? { tachyons: 'mr3' } : {})} style={{ width: itemWidth }}>
