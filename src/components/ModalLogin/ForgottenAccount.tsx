@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, StatusBar, TouchableOpacity, Keyboard } from 'react-native';
+import { Modal, TouchableOpacity, Keyboard } from 'react-native';
 import { View, Text, FormCallbackParams } from 'shared';
 import i18n from 'utils/functions/i18n';
 import Form from 'components/Form/Form';
@@ -7,6 +7,7 @@ import IconBox from 'components/IconBox/IconBox';
 import KeyboardSpacer from 'components/KeyboardSpacer/KeyboardSpacer';
 import { useForgetPassword } from 'containers/Auth/actions/actionPassword';
 import isIOS from 'shared/utils/isIOS';
+import StatusBar from 'components/StatusBar/StatusBar';
 
 export interface ForgottenAccountProps {
   visible: boolean;
@@ -53,7 +54,7 @@ export default function ForgottenAccount({ visible, onClose }: ForgottenAccountP
 
   return (
     <Modal visible={isVisible} presentationStyle="fullScreen" animationType="slide" onRequestClose={handleClose}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar />
       <View flex backgroundColor="light">
         <View alignItems="flex-end" safeAreaView tachyons={['pa3']}>
           <TouchableOpacity activeOpacity={0.7} onPress={handleClose}>
