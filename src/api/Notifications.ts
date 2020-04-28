@@ -13,6 +13,7 @@ export interface Notify {
   authorName: string;
   authorAvatar: string;
   seen: boolean;
+  isExist: boolean;
   endpoint: string;
   parentComment?: Comment;
 }
