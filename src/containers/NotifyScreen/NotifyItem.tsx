@@ -64,6 +64,10 @@ const NotifyItem: FC<NotifyItemProps> = ({ item, index }) => {
     );
   };
 
+  if (!item.isExist) {
+    return null;
+  }
+
   return (
     <Container>
       <Link
