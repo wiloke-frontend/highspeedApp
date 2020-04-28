@@ -26,7 +26,9 @@ import FooterListComment from './FooterListComment';
 import ReplyChildren from './ReplyChildren';
 import timeAgo from 'utils/functions/timeAgo';
 import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
+import { SCREEN_HEIGHT } from 'shared/utils/screen';
 
+console.log({ SCREEN_HEIGHT });
 export interface CommentScreenParams {
   id: number;
   title: string;
