@@ -32,6 +32,7 @@ const LoginWith = ({ appID = '2759040360883740' }: LoginWithProps) => {
   const { styled } = useTheme();
 
   const callbackLogin = (authen: Authentication) => {
+    console.log({ authen });
     if (authen.isLoggedIn) {
       onCloseModalLogin();
       Toast.show({
@@ -60,6 +61,7 @@ const LoginWith = ({ appID = '2759040360883740' }: LoginWithProps) => {
       if (res.type === 'success') {
         const { data } = await axios.get(`https://graph.facebook.com/me?access_token=${res.token}&fields=id,name,email`);
         console.log({ data });
+        console.log(res.token);
         loginFacebook({
           endpoint: 'facebook/app-signin',
           body: {
@@ -109,7 +111,7 @@ const LoginWith = ({ appID = '2759040360883740' }: LoginWithProps) => {
         </View>
         <Text style={styles.colorLight}>Login with Facebook</Text>
       </Button>
-      {isIOS && majorVersionIOS > 13 && (
+      {isIOS && majorVersionIOS >= 13 && (
         <Button
           block
           tachyons={['wAuto', 'mt2', 'br2']}
