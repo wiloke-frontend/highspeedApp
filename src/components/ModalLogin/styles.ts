@@ -34,8 +34,11 @@ export const styles = StyleSheet.create({
   },
   colorLight: {
     color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 15,
   },
   appleButton: {
     backgroundColor: '#050708',
+    paddingHorizontal: 0,
   },
 });
