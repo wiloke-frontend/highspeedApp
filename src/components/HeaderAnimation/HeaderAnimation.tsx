@@ -46,7 +46,6 @@ function wait(timeout: number) {
 let _clampedScrollValue = 0;
 let _offsetValue = 0;
 let _scrollValue = 0;
-// eslint-disable-next-line @typescript-eslint/init-declarations
 let _scrollEndTimer: Timeout;
 
 function HeaderAnimation<ItemT>({

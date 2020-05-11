@@ -26,9 +26,7 @@ const defaultAnimation: LayoutAnimationConfig = {
   },
 };
 
-// eslint-disable-next-line @typescript-eslint/init-declarations
 let keyboardDidShowListener: EmitterSubscription;
-// eslint-disable-next-line @typescript-eslint/init-declarations
 let keyboardDidHideListener: EmitterSubscription;
 
 const updateListener = ANDROID ? 'keyboardDidShow' : 'keyboardWillShow';
