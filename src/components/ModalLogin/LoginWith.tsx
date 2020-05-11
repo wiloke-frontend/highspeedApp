@@ -107,22 +107,23 @@ const LoginWith = ({ appID = '2759040360883740' }: LoginWithProps) => {
         loading={auth.statusFacebook === 'loading'}
       >
         <View tachyons="mr1">
-          <Icons.Feather name="facebook" size={18} colorNative="#fff" />
+          <Icons.Feather name="facebook" size={15} colorNative="#fff" />
         </View>
-        <Text style={styles.colorLight}>Login with Facebook</Text>
+        <Text style={styles.colorLight}>Continue with Facebook</Text>
       </Button>
       {isIOS && majorVersionIOS >= 13 && (
         <Button
           block
-          tachyons={['wAuto', 'mt2', 'br2']}
+          tachyons={['w100', 'mt2', 'br2']}
           loading={auth.statusApple === 'loading'}
-          style={styles.appleButton}
-          onPress={_handleLoginApple}
+          style={[styles.appleButton, { paddingVertical: auth.statusApple === 'loading' ? 13 : 0 }]}
         >
-          <View tachyons="mr1">
-            <Icons.FontAwesome5 name="apple" size={18} colorNative="#fff" />
-          </View>
-          <Text style={styles.colorLight}>Login with Apple</Text>
+          <AppleAuthentication.AppleAuthenticationButton
+            buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+            buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+            style={{ width: '100%', height: 45 }}
+            onPress={_handleLoginApple}
+          />
         </Button>
       )}
     </View>
