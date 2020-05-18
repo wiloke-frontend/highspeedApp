@@ -116,4 +116,6 @@ export const en = {
   matchPassword: 'Your confirm password does not match new password!',
   seeMoreUpdateDetails: 'See more update details',
   nightMode: 'Night mode',
+  before: 'Before',
+  after: 'After',
 };
