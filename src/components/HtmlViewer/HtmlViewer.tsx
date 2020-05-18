@@ -10,6 +10,7 @@ import CodeHighLight from 'components/CodeHighLight/CodeHighLight';
 import CompareImage from 'components/CompareImage/CompareImage';
 import { isEmpty } from 'ramda';
 import { SCREEN_WIDTH } from 'shared/utils/screen';
+import i18n from 'utils/functions/i18n';
 
 interface HtmlViewerProps {
   html: string;
@@ -94,7 +95,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
   };
 
   _renderCodeHighLight = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
-    if (attr.class !== 'react-code-highlight') {
+    if (!attr.class.includes('react-code-highlight')) {
       return null;
     }
     const language = attr['data-language'];
@@ -115,9 +116,8 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     // const { containerMaxWidth } = this.props;
     const beforeImageUri = attr['data-image-before'];
     const afterImageUri = attr['data-image-after'] || beforeImageUri;
-    const beforeText = attr['data-before-caption'] || 'Before';
-    const afterText = attr['data-after-caption'] || 'After';
-
+    const beforeText = attr['data-before-caption'] || i18n.t('before');
+    const afterText = attr['data-after-caption'] || i18n.t('after');
     return (
       <CompareImage
         key={passProps.key}

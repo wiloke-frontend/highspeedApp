@@ -116,4 +116,6 @@ export const vi = {
   matchPassword: 'Mật khẩu xác nhận không trùng khớp với mật khẩu mới',
   seeMoreUpdateDetails: 'Xem thêm chi tiết bản cập nhật',
   nightMode: 'Chế độ tối',
+  before: 'Trước',
+  after: 'Sau',
 };
