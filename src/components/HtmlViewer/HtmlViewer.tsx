@@ -11,6 +11,7 @@ import CompareImage from 'components/CompareImage/CompareImage';
 import { isEmpty } from 'ramda';
 import { SCREEN_WIDTH } from 'shared/utils/screen';
 import i18n from 'utils/functions/i18n';
+import YtbAndVimeoVideo from 'components/YtbAndVimeoVideo/YtbAndVimeoVideo';
 
 interface HtmlViewerProps {
   html: string;
@@ -109,25 +110,29 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     );
   };
 
-  _renderCompareImage = (attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
-    if (!attr.class?.includes('react-compare-image')) {
-      return children;
+  _renderDiv = (attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
+    if (attr.class?.includes('react-compare-image')) {
+      // const { containerMaxWidth } = this.props;
+      const beforeImageUri = attr['data-image-before'];
+      const afterImageUri = attr['data-image-after'] || beforeImageUri;
+      const beforeText = attr['data-before-caption'] || i18n.t('before');
+      const afterText = attr['data-after-caption'] || i18n.t('after');
+      return (
+        <CompareImage
+          key={passProps.key}
+          beforeImageUri={beforeImageUri}
+          afterImageUri={afterImageUri}
+          beforeText={beforeText}
+          afterText={afterText}
+          // containerStyle={{ marginLeft: -CONTAINER_PADDING, width: containerMaxWidth }}
+        />
+      );
     }
-    // const { containerMaxWidth } = this.props;
-    const beforeImageUri = attr['data-image-before'];
-    const afterImageUri = attr['data-image-after'] || beforeImageUri;
-    const beforeText = attr['data-before-caption'] || i18n.t('before');
-    const afterText = attr['data-after-caption'] || i18n.t('after');
-    return (
-      <CompareImage
-        key={passProps.key}
-        beforeImageUri={beforeImageUri}
-        afterImageUri={afterImageUri}
-        beforeText={beforeText}
-        afterText={afterText}
-        // containerStyle={{ marginLeft: -CONTAINER_PADDING, width: containerMaxWidth }}
-      />
-    );
+    if (attr.class?.includes('react-video-popup')) {
+      const videoSrc = attr['data-src'];
+      return <YtbAndVimeoVideo uri={videoSrc} />;
+    }
+    return children;
   };
 
   _renderIframe = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
@@ -193,7 +198,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
           figure: this._renderFigure,
           figcaption: this._renderFigcaption,
           code: this._renderCodeHighLight,
-          div: this._renderCompareImage,
+          div: this._renderDiv,
           iframe: this._renderIframe,
           // li: this._renderGallaryGrid,
         }}
