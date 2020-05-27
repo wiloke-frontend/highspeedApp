@@ -130,7 +130,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     }
     if (attr.class?.includes('react-video-popup')) {
       const videoSrc = attr['data-src'];
-      return <YtbAndVimeoVideo uri={videoSrc} />;
+      return <YtbAndVimeoVideo key={passProps.key} uri={videoSrc} />;
     }
     return children;
   };
