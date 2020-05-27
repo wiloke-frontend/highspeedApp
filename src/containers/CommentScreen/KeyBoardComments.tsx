@@ -81,6 +81,7 @@ const KeyBoardComments: FC<KeyboardCommentProps> = ({ usersTag = [], onComment, 
             backgroundColor: colors.gray3,
             color: colors.primary,
           }}
+          userContainerStyle={comment.includes('@') ? styles.mentionView : {}}
           onChange={({ value, entityMap }) => {
             const draftRes = getDraftJsResultFromTagHighlight({ value, entityMap });
             setComment(value);
@@ -121,5 +122,4 @@ const KeyBoardComments: FC<KeyboardCommentProps> = ({ usersTag = [], onComment, 
     </View>
   );
 };
-
 export default KeyBoardComments;

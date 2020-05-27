@@ -1,6 +1,5 @@
 import React from 'react';
-import { View } from 'shared';
-import { StyleProp, ViewStyle, TouchableOpacity } from 'react-native';
+import { StyleProp, ViewStyle, TouchableOpacity, ScrollView } from 'react-native';
 import { User, TextInputMentionsProps } from './types';
 import { isEmpty, includes } from 'ramda';
 import { toAlphabetLowerCase } from './utils';
@@ -32,7 +31,7 @@ function ListUser<UserT extends User>({
   };
 
   return (
-    <View style={containerStyle}>
+    <ScrollView style={containerStyle} keyboardShouldPersistTaps="handled">
       {!isEmpty(users) &&
         !readonly &&
         users.map((user: UserT, index: number) => {
@@ -58,7 +57,7 @@ function ListUser<UserT extends User>({
             </TouchableOpacity>
           );
         })}
-    </View>
+    </ScrollView>
   );
 }
 
