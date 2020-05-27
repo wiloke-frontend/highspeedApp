@@ -13,7 +13,7 @@ import { SCREEN_WIDTH } from 'shared/utils/screen';
 import i18n from 'utils/functions/i18n';
 import YtbAndVimeoVideo from 'components/YtbAndVimeoVideo/YtbAndVimeoVideo';
 
-interface HtmlViewerProps {
+export interface HtmlViewerProps {
   html: string;
   htmlWrapCssString?: string;
   containerMaxWidth?: number;
@@ -24,12 +24,13 @@ interface HtmlViewerProps {
   };
   theme?: Theme;
   colorBase?: string;
+  imageLoading?: boolean;
 }
 const IOS = Platform.OS === 'ios';
 
 type DefaultProps = Pick<
   HtmlViewerProps,
-  'containerMaxWidth' | 'containerStyle' | 'htmlWrapCssString' | 'justifyTextEnabled' | 'tagsStyles' | 'colorBase'
+  'containerMaxWidth' | 'containerStyle' | 'htmlWrapCssString' | 'justifyTextEnabled' | 'tagsStyles' | 'colorBase' | 'imageLoading'
 >;
 
 const CONTAINER_PADDING = 10;
@@ -45,6 +46,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     justifyTextEnabled: false,
     tagsStyles: {},
     colorBase: '',
+    imageLoading: false,
   };
 
   _handleLinkPress = (_event: React.MouseEvent, href: string) => {
@@ -72,11 +74,8 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
   };
 
   _renderImage = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
-    // const { containerMaxWidth } = this.props;
-    // const attrWidth = Number(attr.width);
-    // const containerWidth = containerMaxWidth;
-    // const width = attrWidth < containerWidth ? attrWidth : containerWidth;
-    return <Image key={passProps.key} uri={attr.src} containerStyle={styles.image} />;
+    const { imageLoading } = this.props;
+    return <Image key={passProps.key} uri={attr.src} containerStyle={styles.image} loading={imageLoading} />;
   };
 
   _renderFigure = (_attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
