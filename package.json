@@ -70,7 +70,7 @@
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
     "react-native-syntax-highlighter": "^2.1.0",
-    "react-native-version-check-expo": "^3.4.0",
+    "react-native-version-check-expo": "^3.4.1",
     "react-native-web": "^0.11.7",
     "react-native-webview": "8.1.1",
     "react-navigation": "^4.0.10",

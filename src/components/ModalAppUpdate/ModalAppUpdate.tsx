@@ -1,6 +1,6 @@
 import React, { FC, memo, useState } from 'react';
 import { Modal, Linking, Image as RNImage, TouchableOpacity as RNTouchableOpacity } from 'react-native';
-import VersionCheck from 'react-native-version-check';
+import VersionCheck from 'react-native-version-check-expo';
 import { useMount, Button, View, Text, withViewStyles, Icons } from 'shared';
 import Constants from 'expo-constants';
 import isIOS from 'shared/utils/isIOS';
