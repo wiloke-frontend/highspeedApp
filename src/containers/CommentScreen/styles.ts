@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   containerInput: {
     borderRadius: 10,
     flex: 1,
+    position: 'relative',
   },
   textInputView: {
     padding: 7,
@@ -11,6 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     borderTopWidth: 1,
+    position: 'relative',
   },
   textInputButton: {
     flexShrink: 1,
@@ -39,6 +41,22 @@ const styles = StyleSheet.create({
   },
   inputAndroid: {
     padding: 7,
+  },
+  mentionView: {
+    borderColor: '#f0f0f3',
+    borderWidth: 1,
+    width: 350,
+    maxHeight: 150,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    elevation: 24,
+    zIndex: 999,
   },
 });
 export default styles;

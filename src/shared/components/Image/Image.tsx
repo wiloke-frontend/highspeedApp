@@ -9,6 +9,7 @@ import { tachyonsStyles } from 'shared/themes/tachyons';
 import { useMount } from 'shared/hooks/useMount';
 import { useUnmount } from 'shared/hooks/useUnmount';
 import { useTheme } from 'shared/components/ThemeContext/ThemeContext';
+import { Icons } from '../Icons/Icons';
 
 export interface ImageProps extends Omit<ImageRNProps, 'source' | 'defaultSource' | 'borderRadius' | 'style' | 'width' | 'height'> {
   uri?: string;
@@ -19,6 +20,7 @@ export interface ImageProps extends Omit<ImageRNProps, 'source' | 'defaultSource
   tachyons?: Tachyons;
   height?: number | string;
   width?: number | string;
+  loading?: boolean;
 }
 
 const DEFAULT_IMAGE =
@@ -35,6 +37,7 @@ const ImageComponent: FC<ImageProps> = ({
   resizeMode = 'cover',
   width,
   height,
+  loading = false,
   ...rest
 }) => {
   const [percentRatioState, setPercentRatioState] = useState(percentRatio || '75%');
@@ -89,8 +92,8 @@ const ImageComponent: FC<ImageProps> = ({
         !!height ? { height } : {},
       ]}
     >
-      {!checkHeight && <View style={{ paddingTop: percentRatioState }} />}
-      {!!preview && !isUriLoaded && (
+      {!checkHeight && <View style={{ paddingTop: percentRatioState }} tachyons={['flex', 'itemsCenter', 'justifyCenter']} />}
+      {!loading && !!preview && !isUriLoaded && (
         <RNImage
           source={{ uri: preview }}
           resizeMode={resizeMode}
@@ -99,7 +102,7 @@ const ImageComponent: FC<ImageProps> = ({
           blurRadius={1}
         />
       )}
-      {isPreviewLoaded && !!uri && (
+      {!loading && isPreviewLoaded && !!uri && (
         <RNImage
           {...rest}
           resizeMode={resizeMode}
@@ -107,6 +110,11 @@ const ImageComponent: FC<ImageProps> = ({
           style={[tachyonsStyles.absolute, tachyonsStyles.absoluteFill, tachyonsStyles.z2]}
           onLoadEnd={handleLoadEnd}
         />
+      )}
+      {loading && (
+        <View tachyons={['absolute', 'absoluteFill', 'itemsCenter', 'justifyCenter']}>
+          <Icons.Feather name="image" size={50} color="gray1" />
+        </View>
       )}
     </View>
   );

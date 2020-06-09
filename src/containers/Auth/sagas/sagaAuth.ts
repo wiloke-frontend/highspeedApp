@@ -3,8 +3,9 @@ import watchForgetPassword from './watchForgetPassword';
 import watchChangePassword from './watchChangePassword';
 import watchLoginFacebook from './watchLoginFacebook';
 import watchLoginApple from './watchLoginApple';
+import watchLogout from './watchLogout';
 
-const sagaAuth = [watchAuth, watchForgetPassword, watchLoginApple, watchChangePassword, watchLoginFacebook];
+const sagaAuth = [watchAuth, watchForgetPassword, watchLoginApple, watchChangePassword, watchLoginFacebook, watchLogout];
 
 export default sagaAuth;
 // function* handleGetProfile({ payload }: ReturnType<typeof getProfile.request>) {

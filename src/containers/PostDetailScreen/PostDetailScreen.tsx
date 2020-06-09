@@ -117,6 +117,7 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
       // mounted tab current và 1 tab trước + sau
       const checkMounted =
         item.key === tabs[indexFocused]?.key || item.key === tabs[indexFocused - 1]?.key || item.key === tabs[indexFocused + 1]?.key;
+      const imageMounted = item.key === tabs[indexFocused]?.key;
       const previewFeaturedImage = params.slug === item.key ? params.previewFeaturedImage : '';
       const featuredImage = params.slug === item.key ? params.featuredImage?.large : '';
       const displayName = params.slug === item.key ? params.author?.displayName : '';
@@ -183,7 +184,7 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
                         viewTotal={postDetail?.data?.viewCount}
                         tachyons="mb3"
                       />
-                      <DetailContent postDetail={postDetail} postDetailRelatedPost={postDetailRelatedPostCurrent} />
+                      <DetailContent postDetail={postDetail} postDetailRelatedPost={postDetailRelatedPostCurrent} imageMounted={imageMounted} />
                     </>
                   )}
                 </View>

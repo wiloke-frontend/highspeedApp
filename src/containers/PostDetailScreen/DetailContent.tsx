@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { NavigationSuspense, Link } from 'navigation';
 import HtmlViewer from 'components/HtmlViewer/HtmlViewer';
+import HtmlViewerImageLoading from 'components/HtmlViewer/HtmlViewerImageLoading';
 import { Button, View, useTheme } from 'shared';
 import DetailTags from './DetailTags';
 import Magazine from 'components/Magazine/Magazine';
@@ -14,9 +15,10 @@ import getHtmlViewerTextStyles from 'utils/functions/getHtmlViewerTextStyles';
 interface DetailContentProps {
   postDetail: ValueOf<AppState['postDetails']>;
   postDetailRelatedPost: ValueOf<AppState['postDetailRelatedPosts']>;
+  imageMounted: boolean;
 }
 
-const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPost }) => {
+const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPost, imageMounted }) => {
   const { colors } = useTheme();
   const historyPosts = useSelector(historyPostsSelector);
   const postTextSize = useSelector(postTextSizeSelector);
@@ -44,7 +46,11 @@ const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPo
 
   return (
     <NavigationSuspense fallback={<Skeleton content />}>
-      <HtmlViewer html={postDetail?.data?.description ?? ''} tagsStyles={checkTagStyles()} />
+      {imageMounted ? (
+        <HtmlViewer html={postDetail?.data?.description ?? ''} tagsStyles={checkTagStyles()} />
+      ) : (
+        <HtmlViewerImageLoading html={postDetail?.data?.description ?? ''} tagsStyles={checkTagStyles()} />
+      )}
       {!!postDetail?.data?.postTags && <DetailTags postTags={postDetail?.data?.postTags} />}
       {!!postDetail?.data && (
         <>

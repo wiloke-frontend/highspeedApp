@@ -8165,19 +8165,19 @@ react-native-tab-view@^2.11.0:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.13.0.tgz#23037aa43b0f8f682ddc20415a4baaaf6f82ae8f"
   integrity sha512-AeYbp/u91+D/C9+PmVEPBmFb3ixv8IkLMC3Sc5MajJ/fg0Zl3Of+BcEknBvTnKoe7Fj2y8+Qf9zorBbh5xzh4A==
 
-react-native-version-check-expo@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-version-check-expo/-/react-native-version-check-expo-3.4.0.tgz#15c7f010c6fb9eb51fd01d19a4982c2b38ae5037"
-  integrity sha512-Zj4FE97wQiK5kw62um6Bhacsv1f3Ycspk0Z+MiOWKf9GNviQr+RDEpz0GaUeKELcxfEi+jPo3EoxQ4kTjNodYw==
+react-native-version-check-expo@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-version-check-expo/-/react-native-version-check-expo-3.4.1.tgz#d222d8b7e561a119da57f5edb4ccce46e1662e10"
+  integrity sha512-IOHrk3Vr9rvAfgHjhbCuSfNRNL4/+QApN+qCAYo27dn0MeMMpJpY59so45z2qsW5S2FjXQ21q3N8Tu7Xw/bhqw==
   dependencies:
     expo-constants "5.0.1"
     expo-localization "5.0.1"
-    react-native-version-check "^3.4.0"
+    react-native-version-check "^3.4.1"
 
-react-native-version-check@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-version-check/-/react-native-version-check-3.4.0.tgz#b94f228f98df432787070754d98e7192a772cda1"
-  integrity sha512-hzTOQKMlCyguKe3+ZKk/x9pyk/9kwcH/ToW73yRxxzViSRWfgg+2vqQrEDtLj9e8XIKUcoHiJQJv2j8eND4x2g==
+react-native-version-check@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-version-check/-/react-native-version-check-3.4.1.tgz#6629da999104b281a5f0358c1b69a8ea7ae81ea9"
+  integrity sha512-9VNeeSBFyzI8kD3PoYub7rHssc8eCi8k8cUbEQ3pdo+PCmj+b8LsMvf6EoNmBusGOEh++fCVOyqvY8Qljti1mA==
   dependencies:
     lodash.isfunction "^3.0.9"
     lodash.isnil "^4.0.0"
