@@ -60,15 +60,7 @@
         "com.sec.android.provider.badge.permission.READ",
         "com.sec.android.provider.badge.permission.WRITE",
         "com.sonyericsson.home.permission.BROADCAST_BADGE"
-      ],
-      "splash": {
-        "resizeMode": "native",
-        "mdpi": "./assets/splash-mdpi.png",
-        "hdpi": "./assets/splash-hdpi.png",
-        "xhdpi": "./assets/splash-xhdpi.png",
-        "xxhdpi": "./assets/splash-xxhdpi.png",
-        "xxxhdpi": "./assets/splash-xxxhdpi.png"
-      }
+      ]
     }
   }
 }

@@ -12,6 +12,7 @@ import { isEmpty } from 'ramda';
 import { SCREEN_WIDTH } from 'shared/utils/screen';
 import i18n from 'utils/functions/i18n';
 import YtbAndVimeoVideo from 'components/YtbAndVimeoVideo/YtbAndVimeoVideo';
+// import CarouselImage from 'components/CarouselImage/CarouselImage';
 
 export interface HtmlViewerProps {
   html: string;
@@ -95,7 +96,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
   };
 
   _renderCodeHighLight = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
-    if (!attr.class.includes('react-code-highlight')) {
+    if (!attr.class?.includes('react-code-highlight')) {
       return null;
     }
     const language = attr['data-language'];
@@ -131,6 +132,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
       const videoSrc = attr['data-src'];
       return <YtbAndVimeoVideo key={passProps.key} uri={videoSrc} />;
     }
+
     return children;
   };
 
