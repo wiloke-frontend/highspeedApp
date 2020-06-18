@@ -77,6 +77,7 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "init-declarations": "off",
+    "@typescript-eslint/no-invalid-this": ["off"],
     "@typescript-eslint/init-declarations": "off",
     "@typescript-eslint/method-signature-style": "off",
     "@typescript-eslint/prefer-ts-expect-error": "off",

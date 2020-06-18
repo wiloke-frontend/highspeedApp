@@ -13,14 +13,14 @@ const TouchableOpacity = withViewStyles(RNTouchableOpacity);
 
 const DetailFeaturedGrid: FC<DetailFeaturedGridProps> = ({ data }) => {
   const [isGalleryVisible, setGalleryVisible] = useState(false);
-
+  console.log({ data });
   if (isEmpty(data)) {
     return null;
   }
-  const item1 = data[0].imageSize?.medium;
-  const item2 = data[1].imageSize?.thumbnail;
-  const item3 = data[2].imageSize?.thumbnail;
-  const item4 = data[3].imageSize?.thumbnail;
+  const item1 = data[0]?.imageSize?.medium;
+  const item2 = data[1]?.imageSize?.thumbnail;
+  const item3 = data[2]?.imageSize?.thumbnail;
+  const item4 = data[3]?.imageSize?.thumbnail;
   const item5 = data[4]?.imageSize?.thumbnail;
 
   const handleGalleryVisible = () => {
