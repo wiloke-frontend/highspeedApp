@@ -1,4 +1,4 @@
-import React, { PureComponent, CSSProperties } from 'react';
+import React, { PureComponent, CSSProperties, Fragment } from 'react';
 import { StyleProp, ViewStyle, Platform, TextStyle } from 'react-native';
 import HTML, { AttrType, PassPropsType, ChildrenType } from 'react-native-render-html';
 import { encode, decode } from 'he';
@@ -12,7 +12,9 @@ import { isEmpty } from 'ramda';
 import { SCREEN_WIDTH } from 'shared/utils/screen';
 import i18n from 'utils/functions/i18n';
 import YtbAndVimeoVideo from 'components/YtbAndVimeoVideo/YtbAndVimeoVideo';
-// import CarouselImage from 'components/CarouselImage/CarouselImage';
+import isClassHtml from 'utils/functions/checkClass';
+import MenuRestaurant from 'components/Restaurant/MenuRestaurant';
+import { RestaurantItemProps } from 'components/Restaurant/RestaurantItem';
 
 export interface HtmlViewerProps {
   html: string;
@@ -27,6 +29,7 @@ export interface HtmlViewerProps {
   colorBase?: string;
   imageLoading?: boolean;
 }
+
 const IOS = Platform.OS === 'ios';
 
 type DefaultProps = Pick<
@@ -96,7 +99,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
   };
 
   _renderCodeHighLight = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
-    if (!attr.class?.includes('react-code-highlight')) {
+    if (!isClassHtml(attr, 'react-code-highlight')) {
       return null;
     }
     const language = attr['data-language'];
@@ -110,8 +113,22 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     );
   };
 
+  _renderRestaurant = (attr: AttrType, passProps: PassPropsType) => {
+    const dataItems = JSON.parse(attr['data-items']);
+    const dataHeading: string = attr['data-heading'];
+    const dataSubHeading: string = attr['data-sub-heading'];
+    const menus: RestaurantItemProps[] = Object.keys(dataItems).map(key => {
+      return dataItems[key];
+    });
+    return (
+      <Fragment key={passProps.key}>
+        <MenuRestaurant heading={dataHeading} subHeading={dataSubHeading} menus={menus} />
+      </Fragment>
+    );
+  };
+
   _renderDiv = (attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
-    if (attr.class?.includes('react-compare-image')) {
+    if (isClassHtml(attr, 'react-compare-image')) {
       // const { containerMaxWidth } = this.props;
       const beforeImageUri = attr['data-image-before'];
       const afterImageUri = attr['data-image-after'] || beforeImageUri;
@@ -128,9 +145,13 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
         />
       );
     }
-    if (attr.class?.includes('react-video-popup')) {
+    if (isClassHtml(attr, 'react-video-popup')) {
       const videoSrc = attr['data-src'];
       return <YtbAndVimeoVideo key={passProps.key} uri={videoSrc} />;
+    }
+
+    if (isClassHtml(attr, 'wil-restaurant-block')) {
+      return this._renderRestaurant(attr, passProps);
     }
 
     return children;
@@ -198,8 +219,8 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
           img: this._renderImage,
           figure: this._renderFigure,
           figcaption: this._renderFigcaption,
-          code: this._renderCodeHighLight,
           div: this._renderDiv,
+          code: this._renderCodeHighLight,
           iframe: this._renderIframe,
           // li: this._renderGallaryGrid,
         }}
