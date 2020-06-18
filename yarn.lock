@@ -8257,7 +8257,7 @@ react-navigation-slide-from-right-transition@^1.0.4:
   resolved "https://registry.yarnpkg.com/react-navigation-slide-from-right-transition/-/react-navigation-slide-from-right-transition-1.0.4.tgz#e189b1e6e7d107cf32f6d5c07271a415646abc68"
   integrity sha512-sPE1VXrO6U4dEc5s0PXKi0QLz8doHoTGQK8Lyhsl5ToiiKsSK/WP1vxJbhCl39Xn9L/aOVBJ5G0iHmoq95GNhw==
 
-react-navigation-stack@^1.10.3:
+react-navigation-stack@1.10.3:
   version "1.10.3"
   resolved "https://registry.yarnpkg.com/react-navigation-stack/-/react-navigation-stack-1.10.3.tgz#e714e442b20427f0d2d3c18fce1f9e8cfe69be0b"
   integrity sha512-1gksFi/g/Lg9sBhgLlD0OiEB5xnatHb4C0eNMA5tli9cTVlhq375XNPIqOiTyftibBmjdApAsZFj5srUCoOu/w==
@@ -8274,7 +8274,7 @@ react-navigation-tabs@^2.6.0:
     react-native-safe-area-view "^0.14.6"
     react-native-tab-view "^2.11.0"
 
-react-navigation@^4.0.10:
+react-navigation@4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-4.1.1.tgz#670a1712e945e454fe9cafa424e685c2f1f30832"
   integrity sha512-HEzPOsndrKnxTf0+gsi1N/0GKbwu8KSTOveL7ptJLG7XNXHBXVvp4lbaS3PVPe2IaiXbXCC+y3VJ8dH50wHR4g==
