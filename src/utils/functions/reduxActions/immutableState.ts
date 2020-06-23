@@ -14,7 +14,7 @@ export function immutableState<T extends any>(state: T) {
     return [...state];
   }
   if (!!state && typeof state === 'object') {
-    return { ...state };
+    return Object.assign({}, state);
   }
   return state;
 }

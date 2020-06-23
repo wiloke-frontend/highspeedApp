@@ -11,6 +11,7 @@ import Skeleton from 'components/Skeleton/Skeleton';
 import { useSelector } from 'react-redux';
 import { historyPostsSelector, postTextSizeSelector } from './selectors';
 import getHtmlViewerTextStyles from 'utils/functions/getHtmlViewerTextStyles';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 interface DetailContentProps {
   postDetail: ValueOf<AppState['postDetails']>;
@@ -22,6 +23,7 @@ const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPo
   const { colors } = useTheme();
   const historyPosts = useSelector(historyPostsSelector);
   const postTextSize = useSelector(postTextSizeSelector);
+  const netInfoState = useNetInfo();
 
   const checkTagStyles = () => {
     switch (postTextSize) {
@@ -40,7 +42,7 @@ const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPo
     return <Skeleton content />;
   }
 
-  if (postDetail?.status === 'failure') {
+  if (postDetail?.status === 'failure' && netInfoState.isConnected) {
     return null;
   }
 
@@ -69,7 +71,7 @@ const DetailContent: FC<DetailContentProps> = ({ postDetail, postDetailRelatedPo
               </View>
             </View>
           )}
-          <SectionTitle text="Viewed posts" color="primary" />
+          <SectionTitle text={i18n.t('viewedPosts')} color="primary" />
           <View tachyons="nt2">
             <Magazine data={historyPosts} type="list2" firstType="list2" />
           </View>

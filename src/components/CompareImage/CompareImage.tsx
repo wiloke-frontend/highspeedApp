@@ -17,7 +17,7 @@ const CompareImage: FC<CompareImageProps> = ({ beforeText = 'Before', afterText 
   return (
     <View style={containerStyle}>
       <View style={styles.imageWrap}>
-        <Text style={styles.text}>{beforeText}</Text>
+        <Text style={[styles.text, styled.bgDark1, styled.colorGray2]}>{beforeText}</Text>
         <Image uri={beforeImageUri} />
       </View>
       <View style={styles.imageWrap}>

@@ -14,5 +14,8 @@ export const watchTabNavigator = watchAsyncAction({
   success: (res: AxiosResponse<TabNavigator>) => {
     return res.data.data;
   },
-  failure: () => 'Error',
+  failure: err => {
+    console.log(111, err);
+    return 'Error';
+  },
 });

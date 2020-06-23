@@ -1,6 +1,7 @@
 import React, { ReactNode, FC } from 'react';
 import { ActivityIndicator, StyleProp, ViewStyle } from 'react-native';
 import { View, tailwind } from 'shared';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 export interface AsyncComponentProps {
   status?: ReducerStatus;
@@ -23,6 +24,7 @@ const AsyncComponent: FC<AsyncComponentProps> = ({
   Empty = null,
   style = {},
 }) => {
+  const netInfoState = useNetInfo();
   let Content = null;
   if (useOldData) {
     if (status === 'loading' && isDataEmpty) {
@@ -38,7 +40,7 @@ const AsyncComponent: FC<AsyncComponentProps> = ({
     if (status === 'loading') {
       Content = Request;
     } else if (status === 'failure') {
-      Content = Failure;
+      Content = netInfoState.isConnected ? Failure : Success;
     } else if (status === 'success' && isDataEmpty) {
       Content = Empty;
     } else if (status === 'success' && !isDataEmpty) {

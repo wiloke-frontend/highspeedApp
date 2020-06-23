@@ -8,6 +8,7 @@ import { isEmpty } from 'ramda';
 import Empty from 'components/Empty/Empty';
 import { NavigationSuspense, ScreenFC } from 'navigation';
 import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
+import i18n from 'utils/functions/i18n';
 
 const HistoryPostsScreen: ScreenFC = () => {
   const historyPosts = useSelector(historyPostsSelector);
@@ -16,7 +17,7 @@ const HistoryPostsScreen: ScreenFC = () => {
     <ScreenContainer
       Header={
         <Container>
-          <HeaderSecondary title="History" />
+          <HeaderSecondary title={i18n.t('viewedPosts')} />
         </Container>
       }
       safeAreaView
