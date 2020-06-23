@@ -30,7 +30,7 @@ const AsyncComponent: FC<AsyncComponentProps> = ({
     if (status === 'loading' && isDataEmpty) {
       Content = Request;
     } else if (status === 'failure') {
-      Content = Failure;
+      Content = netInfoState.isConnected ? Failure : Success;
     } else if (status === 'success' && isDataEmpty) {
       Content = Empty;
     } else {
