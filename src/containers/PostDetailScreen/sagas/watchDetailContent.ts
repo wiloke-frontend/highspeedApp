@@ -12,7 +12,7 @@ function* handlePostDetail({ payload: endpoint }: PostDetailRequest) {
     const res: AxiosResponse<PostDetail> = yield call(fetchAPI.request, { url: endpoint });
     yield put(getPostDetail.success({ data: res.data, endpoint }));
   } catch {
-    yield put(getPostDetail.failure({ message: 'Loi cmmnr', endpoint }));
+    yield put(getPostDetail.failure({ message: 'Error', endpoint }));
   }
 }
 

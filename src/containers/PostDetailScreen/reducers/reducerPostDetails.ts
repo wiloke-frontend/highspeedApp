@@ -1,6 +1,7 @@
 import { getPostDetail, getFavorite, postFavorite, postView } from 'containers/PostDetailScreen/actions/actionPostDetail';
 import { PostDetail } from 'api/PostDetail';
 import { createReducer, handleAction, ActionTypes, handleActions } from 'utils/functions/reduxActions';
+import getPostDetailMax50 from 'utils/functions/getPostDetailMax50';
 
 type PostDetailAction = ActionTypes<typeof getPostDetail | typeof getFavorite | typeof postFavorite | typeof postView>;
 
@@ -20,19 +21,21 @@ export const postDetails = createReducer<PostDetailState, PostDetailAction>(init
       status: 'loading',
     },
   })),
-  handleAction('@getPostDetailSuccess', (state, action) => ({
-    ...state,
-    [action.payload.endpoint]: {
-      status: 'success',
-      data: action.payload.data.data,
-      message: '',
-    },
-  })),
+  handleAction('@getPostDetailSuccess', (state, action) => {
+    return getPostDetailMax50({
+      ...state,
+      [action.payload.endpoint]: {
+        status: 'success',
+        data: action.payload.data.data,
+        message: '',
+      },
+    });
+  }),
   handleAction('@getPostDetailFailure', (state, action) => ({
     ...state,
     [action.payload.endpoint]: {
       status: 'failure',
-      data: {},
+      data: state[action.payload.endpoint].data,
       message: action.payload.message,
     },
   })),

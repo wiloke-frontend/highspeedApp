@@ -118,4 +118,6 @@ export const en = {
   nightMode: 'Night mode',
   before: 'Before',
   after: 'After',
+  viewedPosts: 'Viewed posts',
+  trending: 'Trending',
 };

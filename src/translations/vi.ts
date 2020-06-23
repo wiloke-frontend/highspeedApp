@@ -118,4 +118,6 @@ export const vi = {
   nightMode: 'Chế độ tối',
   before: 'Trước',
   after: 'Sau',
+  viewedPosts: 'Bài viết đã xem',
+  trending: 'Xu hướng',
 };
