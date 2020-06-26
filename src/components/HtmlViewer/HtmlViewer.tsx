@@ -1,5 +1,5 @@
-import React, { PureComponent, CSSProperties, Fragment } from 'react';
-import { StyleProp, ViewStyle, Platform, TextStyle } from 'react-native';
+import React, { PureComponent, CSSProperties, Fragment, MouseEvent } from 'react';
+import { StyleProp, ViewStyle, TextStyle } from 'react-native';
 import HTML, { AttrType, PassPropsType, ChildrenType } from 'react-native-render-html';
 import { encode, decode } from 'he';
 import { WebView } from 'react-native-webview';
@@ -15,6 +15,7 @@ import YtbAndVimeoVideo from 'components/YtbAndVimeoVideo/YtbAndVimeoVideo';
 import isClassHtml from 'utils/functions/checkClass';
 import MenuRestaurant from 'components/Restaurant/MenuRestaurant';
 import { RestaurantItemProps } from 'components/Restaurant/RestaurantItem';
+import isIOS from 'shared/utils/isIOS';
 
 export interface HtmlViewerProps {
   html: string;
@@ -29,8 +30,6 @@ export interface HtmlViewerProps {
   colorBase?: string;
   imageLoading?: boolean;
 }
-
-const IOS = Platform.OS === 'ios';
 
 type DefaultProps = Pick<
   HtmlViewerProps,
@@ -53,12 +52,12 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     imageLoading: false,
   };
 
-  _handleLinkPress = (_event: React.MouseEvent, href: string) => {
+  private handleLinkPress = (_event: MouseEvent, href: string) => {
     deepLinking(href);
   };
 
   // chỉnh lại react-code-highlight
-  _getHTML = () => {
+  private getHTML = () => {
     const { html } = this.props;
     return html
       .replace(/<p><\/p>|\s*(font-family|font-weight)\s*:\s*.+?\s*;\s*/g, '')
@@ -68,21 +67,21 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
       });
   };
 
-  _renderBlockquote = (_attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
+  private renderBlockquote = (_attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
     const { theme } = this.props;
     return (
       <View key={passProps.key} style={[styles.blockquote, { borderLeftColor: theme?.colors.primary }]}>
-        {IOS ? <Text style={styles.blockquoteText}>{children}</Text> : children}
+        {isIOS ? <Text style={styles.blockquoteText}>{children}</Text> : children}
       </View>
     );
   };
 
-  _renderImage = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
+  private renderImage = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
     const { imageLoading } = this.props;
     return <Image key={passProps.key} uri={attr.src} containerStyle={styles.image} loading={imageLoading} />;
   };
 
-  _renderFigure = (_attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
+  private renderFigure = (_attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
     return (
       <View key={passProps.key} tachyons="mb1">
         {children}
@@ -90,7 +89,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     );
   };
 
-  _renderFigcaption = (_attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
+  private renderFigcaption = (_attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
     return (
       <Text key={passProps.key} style={styles.figcaption}>
         {children}
@@ -98,7 +97,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     );
   };
 
-  _renderCodeHighLight = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
+  private renderCodeHighLight = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
     if (!isClassHtml(attr, 'react-code-highlight')) {
       return null;
     }
@@ -113,7 +112,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     );
   };
 
-  _renderRestaurant = (attr: AttrType, passProps: PassPropsType) => {
+  private renderRestaurant = (attr: AttrType, passProps: PassPropsType) => {
     const dataItems = JSON.parse(attr['data-items']);
     const dataHeading: string = attr['data-heading'];
     const dataSubHeading: string = attr['data-sub-heading'];
@@ -127,7 +126,7 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     );
   };
 
-  _renderDiv = (attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
+  private renderDiv = (attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
     if (isClassHtml(attr, 'react-compare-image')) {
       // const { containerMaxWidth } = this.props;
       const beforeImageUri = attr['data-image-before'];
@@ -151,13 +150,13 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     }
 
     if (isClassHtml(attr, 'wil-restaurant-block')) {
-      return this._renderRestaurant(attr, passProps);
+      return this.renderRestaurant(attr, passProps);
     }
 
     return children;
   };
 
-  _renderIframe = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
+  private renderIframe = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
     const { containerMaxWidth } = this.props;
     if (!attr.src) {
       return null;
@@ -211,20 +210,20 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     return (
       <HTML
         {...otherProps}
-        html={`<div style="${_htmlWrapCssString}">${this._getHTML()}</div>`}
+        html={`<div style="${_htmlWrapCssString}">${this.getHTML()}</div>`}
         imagesMaxWidth={containerMaxWidth}
         containerStyle={containerStyle}
         renderers={{
-          blockquote: this._renderBlockquote,
-          img: this._renderImage,
-          figure: this._renderFigure,
-          figcaption: this._renderFigcaption,
-          div: this._renderDiv,
-          code: this._renderCodeHighLight,
-          iframe: this._renderIframe,
+          blockquote: this.renderBlockquote,
+          img: this.renderImage,
+          figure: this.renderFigure,
+          figcaption: this.renderFigcaption,
+          div: this.renderDiv,
+          code: this.renderCodeHighLight,
+          iframe: this.renderIframe,
           // li: this._renderGallaryGrid,
         }}
-        onLinkPress={this._handleLinkPress}
+        onLinkPress={this.handleLinkPress}
         tagsStyles={{ ...tagsStaticStyles, a: { color: theme?.colors.primary }, li: { color: colorBase || theme?.colors.dark2 } }}
       />
     );
