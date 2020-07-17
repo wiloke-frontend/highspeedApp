@@ -23,7 +23,6 @@ interface Config<ResponseDataT, AxiosDataReturnT> {
 }
 
 const { CancelToken } = axios;
-const source = CancelToken.source();
 
 export default class ConfigureAxios {
   private axiosInstance: AxiosInstance;
@@ -33,15 +32,21 @@ export default class ConfigureAxios {
   public constructor({ configure, setAccessToken, setRefreshToken }: Configure) {
     this.setAccessToken = setAccessToken;
     this.setRefreshToken = setRefreshToken;
-    this.axiosInstance = axios.create({ cancelToken: source.token, ...configure });
+    this.axiosInstance = axios.create(configure);
   }
 
-  public create = () => {
-    return this.axiosInstance;
-  };
-
-  public sagaCancelAxiosRequest = (cancel: string) => {
-    (this.axiosInstance as AxiosInstance & { [key: string]: unknown })[cancel] = source.cancel;
+  public create = (sagaCancel = '') => {
+    return {
+      request: (requestConfig: AxiosRequestConfig) => {
+        const source = CancelToken.source();
+        const request = this.axiosInstance({ ...requestConfig, cancelToken: source.token });
+        if (!!sagaCancel) {
+          // @ts-ignore
+          request[sagaCancel] = source.cancel;
+        }
+        return request;
+      },
+    };
   };
 
   public accessToken = ({ setCondition }: AccessTokenParams) => {
