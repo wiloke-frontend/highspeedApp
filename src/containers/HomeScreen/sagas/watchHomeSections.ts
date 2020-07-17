@@ -13,7 +13,8 @@ import { Categories } from 'api/Categories';
 function* handleSections(dataHomeSkeleton: Home['data']) {
   try {
     const resHomeSections: (AxiosResponse<HomeSection | Categories> | string)[] = yield all(
-      dataHomeSkeleton.reduce<(CallEffect | string)[]>((arr, sectionSkeleton) => {
+      [1].reduce<(CallEffect | string)[]>((arr, _item, index) => {
+        const sectionSkeleton = dataHomeSkeleton[index];
         return [
           ...arr,
           ...[
