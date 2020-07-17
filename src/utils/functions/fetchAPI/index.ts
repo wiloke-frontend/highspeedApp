@@ -42,9 +42,7 @@ const axiosConfig = new ConfigureAxios({
   },
 });
 
-const fetchAPI = axiosConfig.create();
-
-axiosConfig.sagaCancelAxiosRequest(CANCEL);
+const fetchAPI = axiosConfig.create(CANCEL);
 
 axiosConfig.accessToken({
   setCondition(config) {
