@@ -21,16 +21,16 @@ function RestaurantItem({ content, img, newPrice, oldPrice, saleContent, title, 
     !!link && WebBrowser.openBrowserAsync(link);
   };
   return (
-    <TouchableOpacity tachyons={['pa1', 'flexRow', 'justifyBetween']} activeOpacity={1} onPress={_handleLink}>
-      <View tachyons={['pa1', 'flexRow']}>
+    <TouchableOpacity tachyons={['flexRow', 'justifyBetween']} activeOpacity={1} onPress={_handleLink}>
+      <View tachyons={['flexRow']}>
         <View style={styles.image}>
           <Image uri={img} tachyons={['br3', 'absolute', 'z1']} height="100%" />
         </View>
         <View tachyons={['justifyCenter', 'w60', 'ph2']}>
-          <Text size={14} color="dark1" style={styles.uppercase} tachyons={['b']}>
+          <Text size={14} color="dark1" type="h4">
             {title}
           </Text>
-          <Text size={12} ellipsizeMode="tail" numberOfLines={1}>
+          <Text size={12} numberOfLines={1} style={styles.text}>
             {content}
           </Text>
           {!!saleContent && (
@@ -49,7 +49,7 @@ function RestaurantItem({ content, img, newPrice, oldPrice, saleContent, title, 
           {newPrice}
         </Text>
         {!!oldPrice && (
-          <Text size={14} style={styles.lineThrough} tachyons={['ph1']}>
+          <Text size={14} style={styles.lineThrough} color="dark3" tachyons={['ph1']}>
             {oldPrice}
           </Text>
         )}

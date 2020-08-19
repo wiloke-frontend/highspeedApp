@@ -114,14 +114,12 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
 
   private renderRestaurant = (attr: AttrType, passProps: PassPropsType) => {
     const dataItems = JSON.parse(attr['data-items']);
-    const dataHeading: string = attr['data-heading'];
-    const dataSubHeading: string = attr['data-sub-heading'];
     const menus: RestaurantItemProps[] = Object.keys(dataItems).map(key => {
       return dataItems[key];
     });
     return (
       <Fragment key={passProps.key}>
-        <MenuRestaurant heading={dataHeading} subHeading={dataSubHeading} menus={menus} />
+        <MenuRestaurant menus={menus} />
       </Fragment>
     );
   };
