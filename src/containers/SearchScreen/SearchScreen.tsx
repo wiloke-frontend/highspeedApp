@@ -25,7 +25,7 @@ const SearchScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
   const searchResult = useSelector(searchResultSelector);
   const historyPosts = useSelector(historyPostsSelector);
   const [value, setValue] = useState('');
-  const netInfoState = useNetInfo();
+  const netInfo = useNetInfo();
 
   const handleSearch = (value: string) => {
     setValue(value);
@@ -63,7 +63,7 @@ const SearchScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
     <NavigationSuspense>
       <ScrollView
         contentContainerStyle={tachyons.mt2}
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
       >
@@ -122,7 +122,7 @@ const SearchScreen: ScreenFC<ScreenParams> = ({ navigation }) => {
             Empty={<Empty />}
           />
         </View>
-      ) : netInfoState.isConnected ? (
+      ) : netInfo.isConnected ? (
         DefaultContent
       ) : (
         DefaultContentOffline

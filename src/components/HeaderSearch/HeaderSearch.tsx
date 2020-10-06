@@ -26,6 +26,7 @@ function HeaderSearch({ backButtonEnabled = false, onSearch = () => {} }: Header
             borderColor="transparent"
             backgroundColor="gray2"
             clearButtonMode="while-editing"
+            autoCorrect={false}
             Left={<Icons.Feather name="search" size={20} color="dark3" style={{ marginHorizontal: 10 }} />}
             onChangeText={_handleChangeText}
             onClearText={_handleChangeText}

@@ -81,6 +81,7 @@ export default class Form<TResult> extends PureComponent<FormProps<TResult>> {
           // returnKeyLabel={index !== fields.length - 1 ? 'Next' : 'Login'}
           autoCapitalize="none"
           placeholderTextColor="#999"
+          autoCorrect={false}
         />
       </FormItem>
     );
