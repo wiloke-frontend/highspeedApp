@@ -133,6 +133,7 @@ const Magazine: FC<MagazineProps> = ({
             {...flatListProps}
             data={dataRemoveFirstItem}
             keyExtractor={handleKeyExtractor}
+            keyboardShouldPersistTaps="handled"
             ListHeaderComponent={
               <View tachyons="mb3">
                 <Link push="PostDetailNotGetureDistance" params={firstItem} activeOpacity={0.8}>
