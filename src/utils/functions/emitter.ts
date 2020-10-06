@@ -13,6 +13,7 @@ interface Events<TListener> {
 
 export default class Emitter<TType extends Type, TListener extends Listener, TPayload = any> {
   events: Events<TListener> = {};
+
   id: Id = 1;
 
   emit(type: TType, payload: TPayload) {
