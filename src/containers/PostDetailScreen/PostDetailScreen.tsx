@@ -196,8 +196,9 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
             </Container>
             <BarHeightSpacer />
           </ScrollView>
-
-          <DetailSpeech postDetailContent={postDetail?.data?.description || ''} />
+          {!!postDetail?.data?.languageSpeech && (
+            <DetailSpeech postDetailContent={postDetail?.data?.description || ''} languageSpeech={postDetail?.data?.languageSpeech} />
+          )}
         </View>
       );
     };

@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import { View } from 'shared';
-import TextToSpeech from 'components/TextToSpeech/TextToSpeech';
+import TextToSpeech, { TextToSpeechProps } from 'components/TextToSpeech/TextToSpeech';
 
 export interface DetailSpeechProps {
   postDetailContent: string;
+  languageSpeech: TextToSpeechProps['lang'];
 }
 
-const DetailSpeech: FC<DetailSpeechProps> = ({ postDetailContent }) => {
+const DetailSpeech: FC<DetailSpeechProps> = ({ postDetailContent, languageSpeech }) => {
   const text = postDetailContent
     // Cho tất cả thành 1 dòng
     .replace(/\n/g, '')
@@ -19,10 +20,17 @@ const DetailSpeech: FC<DetailSpeechProps> = ({ postDetailContent }) => {
     // Sau đó xoá hết tất cả các thẻ html mở và đóng
     .replace(/^<.*>$/gm, '')
     // Làm đẹp đoạn text
+    .replace(/\s+/g, ' ')
+    // Tìm thẻ code có chứa data-children và cho xuống dòng
+    .replace(/data-children="/g, 'data-children="\n')
+    // Xoá tất cả các thẻ code có chứa data-children ( giữ lại content của data-children )
+    .replace(/<code.*data-children="/g, '')
+    // Làm đẹp đoạn text
     .replace(/\s+/g, ' ');
+
   return (
     <View tachyons={['absolute', 'right1', 'bottom1', 'z5']}>
-      <TextToSpeech lang="en-US" text={text} />
+      <TextToSpeech lang={languageSpeech} text={text} />
     </View>
   );
 };

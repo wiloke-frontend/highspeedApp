@@ -1,7 +1,7 @@
 import React, { PureComponent, CSSProperties, Fragment, MouseEvent } from 'react';
 import { StyleProp, ViewStyle, TextStyle } from 'react-native';
 import HTML, { AttrType, PassPropsType, ChildrenType } from 'react-native-render-html';
-import { encode, decode } from 'he';
+import { decode } from 'he';
 import { WebView } from 'react-native-webview';
 import { Image, View, Text, withTheme, Theme } from 'shared';
 import deepLinking from 'utils/functions/deepLinking';
@@ -37,7 +37,6 @@ type DefaultProps = Pick<
 >;
 
 const CONTAINER_PADDING = 10;
-const WTF = '<--WTF-->';
 
 class HtmlViewer extends PureComponent<HtmlViewerProps> {
   static defaultProps: DefaultProps = {
@@ -56,15 +55,9 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     deepLinking(href);
   };
 
-  // chỉnh lại react-code-highlight
   private getHTML = () => {
     const { html } = this.props;
-    return html
-      .replace(/<p><\/p>|\s*(font-family|font-weight)\s*:\s*.+?\s*;\s*/g, '')
-      .replace(/<\/code>/g, `${WTF}\n</code>\n\n`)
-      .replace(/class=.*react-code-highlight.*([\s\S]*?)(?=<\/code>\n)/g, (match, p1) => {
-        return `data-children="${encode(p1)}" ${match}`;
-      });
+    return html.replace(/<p><\/p>|\s*(font-family|font-weight)\s*:\s*.+?\s*;\s*/g, '');
   };
 
   private renderBlockquote = (_attr: AttrType, children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
@@ -97,14 +90,12 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
     );
   };
 
-  private renderCodeHighLight = (attr: AttrType, _children: ChildrenType, _convertedCSSStyles: CSSProperties, passProps: PassPropsType) => {
-    if (!isClassHtml(attr, 'react-code-highlight')) {
+  private renderCodeHighLight = (attr: AttrType, passProps: PassPropsType) => {
+    if (!attr['data-children']) {
       return null;
     }
     const language = attr['data-language'];
-    const code = decode(attr['data-children'])
-      .trim()
-      .replace(WTF, '');
+    const code = decode(attr['data-children']);
     return (
       <CodeHighLight key={passProps.key} language={language}>
         {code}
@@ -149,6 +140,10 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
 
     if (isClassHtml(attr, 'wil-restaurant-block')) {
       return this.renderRestaurant(attr, passProps);
+    }
+
+    if (isClassHtml(attr, 'react-code-highlight')) {
+      return this.renderCodeHighLight(attr, passProps);
     }
 
     return children;
@@ -217,7 +212,6 @@ class HtmlViewer extends PureComponent<HtmlViewerProps> {
           figure: this.renderFigure,
           figcaption: this.renderFigcaption,
           div: this.renderDiv,
-          code: this.renderCodeHighLight,
           iframe: this.renderIframe,
           // li: this._renderGallaryGrid,
         }}
