@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNetInfo } from '@react-native-community/netinfo';
 import { View, Container, FlatList, useMount } from 'shared';
 import SectionLoading from 'containers/HomeScreen/SectionLoading';
 import Retry from 'components/Retry/Retry';
@@ -15,9 +16,12 @@ const HomeScreen: ScreenFC = ({ navigation }) => {
   const homeMounted = useHomeMounted();
   const homeSkeleton = useSelector(homeSkeletonSelector);
   const homeSections = useSelector(homeSectionsSelector);
+  const netInfo = useNetInfo();
 
   useMount(() => {
-    homeMounted();
+    if (!netInfo.isConnected) {
+      homeMounted();
+    }
   });
 
   // return (

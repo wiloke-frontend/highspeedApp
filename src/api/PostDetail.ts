@@ -1,6 +1,7 @@
 import { FeaturedImage } from 'api/FeaturedImage';
 import { Author } from 'api/Author';
 import { DateSplit, DateFull } from 'api/Date';
+import { TextToSpeechProps } from 'components/TextToSpeech/TextToSpeech';
 
 export interface CategoryItem {
   id: number;
@@ -74,6 +75,7 @@ export interface PostDetailData {
     data: PostFormatData;
   };
   link: string;
+  languageSpeech: TextToSpeechProps['lang'];
 }
 
 export interface PostDetail {
