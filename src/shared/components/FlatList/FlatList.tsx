@@ -117,7 +117,7 @@ export function FlatList<ItemT>({
       renderItem={info => {
         return (
           <>
-            <ItemWrap style={[itemWrapStyle, gapItemStyle]}>{renderItem(info)}</ItemWrap>
+            <ItemWrap style={[itemWrapStyle, gapItemStyle]}>{renderItem?.(info)}</ItemWrap>
             {renderItemFixed(info.index)}
           </>
         );

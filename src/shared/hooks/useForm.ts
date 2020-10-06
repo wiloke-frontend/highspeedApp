@@ -78,7 +78,7 @@ export function useForm<ResultT extends Result>() {
     };
   };
   const onSubmit = <EventT extends any>(handleSubmit: HandleSubmit<ResultT>) => (event: EventT) => {
-    event.preventDefault();
+    (event as any).preventDefault && (event as any).preventDefault();
     setResult(getNewResult);
     setErrors(getNewErrors);
     handleSubmit({
