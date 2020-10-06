@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import * as Speech from 'expo-speech';
 import { View, Text, Container, Toast, useTheme } from 'shared';
 import DetailCategories from './DetailCategories';
 import DetailContent from './DetailContent';
@@ -27,6 +28,7 @@ import HtmlViewer from 'components/HtmlViewer/HtmlViewer';
 import getHtmlViewerTextStyles from 'utils/functions/getHtmlViewerTextStyles';
 import BarHeightSpacer from 'components/BarHeightSpacer/BarHeightSpacer';
 import ScreenContainer from 'components/ScreenContainer/ScreenContainer';
+import DetailSpeech from './DetailSpeech';
 
 // import DetailTutorial from './DetailTutorial';
 
@@ -149,9 +151,11 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
               navigation.addListener('didBlur', () => {
                 postView.cancel();
                 getRelatedPosts.cancel();
+                Speech.stop();
               });
             }
           }}
+          tachyons={['relative', 'z5']}
         >
           <ScrollView showsVerticalScrollIndicator={false}>
             <Container tachyons="ph3">
@@ -192,6 +196,9 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
             </Container>
             <BarHeightSpacer />
           </ScrollView>
+          {!!postDetail?.data?.languageSpeech && (
+            <DetailSpeech postDetailContent={postDetail?.data?.description || ''} languageSpeech={postDetail?.data?.languageSpeech} />
+          )}
         </View>
       );
     };
@@ -243,6 +250,7 @@ const PostDetailScreen: ScreenFC<PostDetailScreenParams> = ({ navigation }) => {
           postView.cancel();
           getRelatedPosts.cancel();
           getRelatedPosts.request({ endpoint: tabs[index]?.key });
+          Speech.stop();
           if (isLoggedIn) {
             getFavorite.request({
               endpoint: 'user/favorite',
