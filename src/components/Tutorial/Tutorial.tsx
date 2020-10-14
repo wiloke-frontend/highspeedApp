@@ -56,7 +56,7 @@ function Tutorial<ItemT>({ visible, data, renderItem, setText, onDone, ...rest }
                       <IconBox name="x" size="small" backgroundColor="gray2" />
                     </TouchableOpacity>
                   </View>
-                  <View style={styles.content}>{renderItem({ item, index, separators })}</View>
+                  <View style={styles.content}>{renderItem?.({ item, index, separators })}</View>
                   <View tachyons={['flexRow', 'justifyEnd', 'itemsCenter', 'pa2']}>
                     {index > 0 && (
                       <TouchableOpacity onPress={handleNavigate(index - 1)} tachyons={['ph2', 'pv1', 'flexRow', 'justifyCenter', 'itemsCenter']}>

@@ -70,7 +70,7 @@ const RootNavigator: FC<RootNavigatorProps> = ({ tabNavigatorData }) => {
   const RootStack = createStackNavigator(
     {
       RootTabNavigator: rootTabNavigatorValue(),
-      ...handleStackNavigators(),
+      ...(handleStackNavigators() as any),
     },
     {
       headerMode: 'none',

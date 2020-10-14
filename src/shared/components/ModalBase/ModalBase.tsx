@@ -50,6 +50,7 @@ export const ModalBaseUI: FC = memo(() => {
 
   const handleBackPress = () => {
     Event.emit('MODAL_BACK_PRESS');
+    return null;
   };
 
   const handleMount = (props: Omit<ModalBaseProps, 'onRequestClose'>) => {
