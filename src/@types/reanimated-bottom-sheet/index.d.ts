@@ -110,39 +110,73 @@ export default class BottomSheetBehavior extends React.Component<Props, State> {
     innerGestureHandlerRefs: React.RefObject<{}>[];
     callbackThreshold: number;
   };
+
   private readonly decayClock;
+
   private readonly panState;
+
   private readonly tapState;
+
   private readonly velocity;
+
   private readonly panMasterState;
+
   private readonly masterVelocity;
+
   private readonly isManuallySetValue;
+
   private readonly manuallySetValue;
+
   private readonly masterClockForOverscroll;
+
   private readonly preventDecaying;
+
   private readonly dragMasterY;
+
   private readonly dragY;
+
   private readonly translateMaster;
+
   private readonly panRef;
+
   private readonly master;
+
   private readonly tapRef;
+
   private readonly snapPoint;
+
   private readonly Y;
+
   private readonly clampingValue;
+
   private readonly onOpenStartValue;
+
   private readonly onOpenEndValue;
+
   private readonly onCloseStartValue;
+
   private readonly onCloseEndValue;
+
   snapTo: (index: number) => void;
+
   static renumber: (str: string) => number;
+
   private readonly runSpring;
+
   private readonly handleMasterPan;
+
   private readonly handlePan;
+
   private readonly handleTap;
+
   private readonly withEnhancedLimits;
+
   private readonly height;
+
   private readonly handleLayoutHeader;
+
   private readonly handleFullHeader;
+
   private readonly handleLayoutContent;
   constructor(props: Props);
   static getDerivedStateFromProps(props: Props, state: State | undefined): State;

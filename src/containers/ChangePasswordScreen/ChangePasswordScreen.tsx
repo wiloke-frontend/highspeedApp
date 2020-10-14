@@ -57,7 +57,7 @@ const ChangePasswordScreen: ScreenFC = ({ navigation }) => {
   };
 
   const _handleChangeResult = (payload: FormCallbackParams<ChangePasswordResult>) => {
-    if (payload.result['newpassword'] !== payload.result['confirmpassword']) {
+    if (payload.result.newpassword !== payload.result.confirmpassword) {
       setError(i18n.t('matchPassword'));
     } else setError('');
   };

@@ -26,7 +26,9 @@ const { CancelToken } = axios;
 
 export default class ConfigureAxios {
   private axiosInstance: AxiosInstance;
+
   private setAccessToken: () => string;
+
   private setRefreshToken: () => string;
 
   public constructor({ configure, setAccessToken, setRefreshToken }: Configure) {
