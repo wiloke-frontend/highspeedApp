@@ -13,7 +13,8 @@
     "test-ci": "cross-env CI=true jest --env=jsdom --passWithNoTests",
     "prettier": "prettier --ignore-path .eslintignore --parser json --write",
     "test-all": "yarn eslint && yarn test",
-    "api-test": "wil-api-test api-test"
+    "api-test": "wil-api-test api-test",
+    "update-turtle-cli-version": "./update-turtle-cli-version.sh"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
