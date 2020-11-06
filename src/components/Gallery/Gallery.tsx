@@ -26,15 +26,9 @@ const Gallery: FC<GalleryProps> = ({ data, onClose, ...rest }) => {
     setIndexImagesLoaded(indexImagesLoaded => [...indexImagesLoaded, index]);
   };
 
-  const handleDragEnd = (
-    event: NativeSyntheticEvent<
-      NativeScrollEvent & {
-        targetContentOffset?: { x: number; y: number };
-      }
-    >,
-  ) => {
-    if (!!event.nativeEvent?.targetContentOffset) {
-      const indexActive = event.nativeEvent.targetContentOffset.x / event.nativeEvent.layoutMeasurement.width;
+  const handleDragEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (!!event.nativeEvent?.contentOffset) {
+      const indexActive = Math.floor(event.nativeEvent.contentOffset.x / event.nativeEvent.layoutMeasurement.width);
       setIndexActive(indexActive);
     }
   };
@@ -97,7 +91,7 @@ const Gallery: FC<GalleryProps> = ({ data, onClose, ...rest }) => {
             initialNumToRender={2}
             showsHorizontalScrollIndicator={false}
             renderItem={renderGalleryItem}
-            onScrollEndDrag={handleDragEnd}
+            onMomentumScrollEnd={handleDragEnd}
           />
         </View>
       </View>
